@@ -1,0 +1,10 @@
+USE layanan;
+
+DROP TRIGGER IF EXISTS `hasil_lab_after_update`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_after_update` AFTER UPDATE ON `hasil_lab` FOR EACH ROW BEGIN
+	CALL layanan.storeNilaiKritisLab(OLD.ID);
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;

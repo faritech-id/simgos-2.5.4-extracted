@@ -1,0 +1,102 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk trigger master.onAfterUpdateRuangan
+DROP TRIGGER IF EXISTS `onAfterUpdateRuangan`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `onAfterUpdateRuangan` AFTER UPDATE ON `ruangan` FOR EACH ROW BEGIN
+	IF OLD.JENIS = 5 THEN
+		IF NOT EXISTS(SELECT 1 FROM master.jenis_kunjungan_ruangan WHERE RUANGAN = OLD.ID) THEN
+			INSERT INTO master.jenis_kunjungan_ruangan(JENIS_KUNJUNGAN, RUANGAN)
+			VALUES(NEW.JENIS_KUNJUNGAN, OLD.ID);
+		END IF;
+		
+		IF NEW.JENIS_KUNJUNGAN = 3 THEN 
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_mutasi WHERE RUANGAN = 0 AND MUTASI = OLD.ID) THEN
+				INSERT INTO master.ruangan_mutasi(RUANGAN, MUTASI)
+				VALUES(0, NEW.ID);
+			END IF;
+		ELSEIF NEW.JENIS_KUNJUNGAN = 4 THEN 	
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_laboratorium WHERE RUANGAN = 0 AND LABORATORIUM = OLD.ID) THEN
+				INSERT INTO master.ruangan_laboratorium(RUANGAN, LABORATORIUM)
+				VALUES(0, NEW.ID);
+			END IF;
+		ELSEIF NEW.JENIS_KUNJUNGAN = 5 THEN 
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_radiologi WHERE RUANGAN = 0 AND RADIOLOGI = OLD.ID) THEN
+				INSERT INTO master.ruangan_radiologi(RUANGAN, RADIOLOGI)
+				VALUES(0, NEW.ID);
+			END IF;		
+		ELSEIF NEW.JENIS_KUNJUNGAN = 11 THEN 						
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_farmasi WHERE RUANGAN = 0 AND FARMASI = OLD.ID) THEN
+				INSERT INTO master.ruangan_farmasi(RUANGAN, FARMASI)
+				VALUES(0, NEW.ID);
+			END IF;
+		ELSE
+			IF NEW.JENIS_KUNJUNGAN != 0 THEN 
+				IF NOT EXISTS(SELECT 1 FROM master.ruangan_konsul WHERE RUANGAN = 0 AND KONSUL = OLD.ID) THEN
+					INSERT INTO master.ruangan_konsul(RUANGAN, KONSUL)
+					VALUES(0, NEW.ID);
+				END IF;
+				
+				IF NEW.JENIS_KUNJUNGAN = 6 THEN 
+					IF NOT EXISTS(SELECT 1 FROM master.ruangan_operasi WHERE RUANGAN = 0 AND OPERASI = OLD.ID) THEN
+						INSERT INTO master.ruangan_operasi(RUANGAN, OPERASI)
+						VALUES(0, NEW.ID);
+					END IF;
+				END IF;
+			END IF;
+		END IF;
+	END IF;	
+	
+	IF OLD.JENIS = 5 THEN
+		UPDATE master.jenis_kunjungan_ruangan
+		   SET STATUS = NEW.STATUS,
+		   	 JENIS_KUNJUNGAN = NEW.JENIS_KUNJUNGAN
+		 WHERE RUANGAN = OLD.ID;
+		
+		UPDATE master.ruangan_konsul SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND KONSUL = OLD.ID;
+		UPDATE master.ruangan_mutasi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND MUTASI = OLD.ID;
+		UPDATE master.ruangan_laboratorium SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND LABORATORIUM = OLD.ID;
+		UPDATE master.ruangan_radiologi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND RADIOLOGI = OLD.ID;
+		UPDATE master.ruangan_operasi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND OPERASI = OLD.ID;
+		UPDATE master.ruangan_farmasi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND FARMASI = OLD.ID;
+		
+		IF NEW.STATUS = 0 THEN
+			UPDATE master.ruang_kamar SET STATUS = NEW.STATUS WHERE RUANGAN = OLD.ID;
+		END IF;
+		
+		IF NEW.JENIS_KUNJUNGAN != OLD.JENIS_KUNJUNGAN THEN
+			IF OLD.JENIS_KUNJUNGAN = 3 THEN 
+				DELETE FROM master.ruangan_mutasi WHERE MUTASI = OLD.ID;
+			ELSEIF OLD.JENIS_KUNJUNGAN = 4 THEN 
+				DELETE FROM master.ruangan_laboratorium WHERE LABORATORIUM = OLD.ID;
+			ELSEIF OLD.JENIS_KUNJUNGAN = 5 THEN 
+				DELETE FROM master.ruangan_radiologi WHERE RADIOLOGI = OLD.ID;
+			ELSEIF OLD.JENIS_KUNJUNGAN = 11 THEN 
+				DELETE FROM master.ruangan_farmasi WHERE FARMASI = OLD.ID;
+			ELSE
+				IF OLD.JENIS_KUNJUNGAN != 0 THEN 
+					DELETE FROM master.ruangan_konsul WHERE KONSUL = OLD.ID;
+					DELETE FROM master.ruangan_operasi WHERE OPERASI = OLD.ID;
+				END IF;
+			END IF;
+		END IF;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

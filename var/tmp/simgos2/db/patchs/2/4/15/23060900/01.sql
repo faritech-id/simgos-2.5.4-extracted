@@ -1,0 +1,4 @@
+USE `medicalrecord`;
+
+ALTER TABLE `jadwal_kontrol`
+	ADD COLUMN `BERULANG` TINYINT NOT NULL DEFAULT '0' AFTER `RUANGAN`;

@@ -1,0 +1,3 @@
+USE `aplikasi`;
+INSERT INTO `properti_config` VALUES (70, 'PRINT_NAME_ETIKET_PER_RUANGAN', 'FALSE', 'Jika TRUE maka Nama Printer Etiket di tambah kode / ID ruangan di belakang nama (Contoh: CetakEtiket-10100101');
+INSERT INTO `properti_config` VALUES (71, 'PRINT_NAME_RESEP_PER_RUANGAN', 'FALSE', 'Jika TRUE maka Nama Printer Etiket di tambah kode / ID ruangan di belakang nama (Contoh: CetakResep-10100101');

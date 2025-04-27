@@ -1,0 +1,3 @@
+use `aplikasi`;
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('130304', 'PENUNJANG', 3, 'Penunjang', 1, 'rekammedis-pemeriksaan-penunjang-workspace', NULL, NULL, 1, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('13030401', 'EEG', 4, 'EEG', 1, 'rekammedis.pemeriksaan.penunjang.eeg.Workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);

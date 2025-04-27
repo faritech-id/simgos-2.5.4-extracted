@@ -1,0 +1,3 @@
+USE lis;
+
+DROP PROCEDURE IF EXISTS `storeHasilLabToHIS_LM`;

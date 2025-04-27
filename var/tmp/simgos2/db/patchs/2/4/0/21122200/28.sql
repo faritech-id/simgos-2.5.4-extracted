@@ -1,0 +1,4 @@
+USE medicalrecord;
+
+ALTER TABLE `jadwal_kontrol`
+	ADD COLUMN `DOKTER` SMALLINT NULL DEFAULT NULL AFTER `TUJUAN`;

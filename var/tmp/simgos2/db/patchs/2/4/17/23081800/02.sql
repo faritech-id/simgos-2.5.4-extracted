@@ -1,0 +1,3 @@
+USE aplikasi;
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('1314', 'PEMANTAUAN', 2, 'Pemantauan', 1, 'rekammedis.pemantauan.Workspace', NULL, 'fas fa-binoculars', 1, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 14);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('131401', 'HD INTRADIALITIK', 3, 'HD Intradialitik', 1, 'rekammedis-pemantauan-hdintradialitik-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);

@@ -1,0 +1,63 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk procedure informasi.list10DiagnosaRJKemkes
+DROP PROCEDURE IF EXISTS `list10DiagnosaRJKemkes`;
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `list10DiagnosaRJKemkes`(
+	IN `PTGL_AWAL` DATE,
+	IN `PTGL_AKHIR` DATE
+)
+BEGIN
+	DECLARE VTEXT TEXT;
+	DECLARE VTANGGAL DATE;
+	DECLARE DATA_NOT_FOUND TINYINT DEFAULT FALSE;
+	DECLARE CR_TANGGAL CURSOR FOR
+		SELECT TANGGAL
+		  FROM master.tanggal
+		 WHERE TANGGAL BETWEEN PTGL_AWAL AND PTGL_AKHIR;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET DATA_NOT_FOUND = TRUE;
+	
+	SET VTEXT = '';
+	
+	OPEN CR_TANGGAL;
+	EOF: LOOP
+		FETCH CR_TANGGAL INTO VTANGGAL;
+		
+		IF DATA_NOT_FOUND THEN
+			LEAVE EOF;
+		END IF;
+		
+		SET VTEXT = CONCAT(VTEXT, '
+		(SELECT r.ID ID_DIAG, SUM(VALUE) JUMLAH_KASUS, DATE_FORMAT(TANGGAL, ''%d-%m-%Y'') TANGGAL
+		  FROM informasi.diagnosa_rj r
+		 WHERE TANGGAL = ''', VTANGGAL, '''','
+		   AND NOT LEFT(r.ID, 1) IN (''R'',''V'',''W'',''X'',''Y'',''Z'')
+		 GROUP BY r.ID
+		 ORDER BY VALUE DESC LIMIT 10) UNION ');
+	END LOOP;
+	CLOSE CR_TANGGAL;
+	
+	SET VTEXT = REVERSE(SUBSTRING(REVERSE(VTEXT), 7));
+	 
+	SET @sqlText = VTEXT; 
+ 	
+	PREPARE stmt FROM @sqlText;
+	EXECUTE stmt;
+	DEALLOCATE PREPARE stmt;
+END//
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,1 @@
+REPLACE INTO `master`.`group_pemeriksaan` (`JENIS`, `KODE`, `LEVEL`, `DESKRIPSI`, `REF_ID`, `STATUS`) VALUES (3, '10', 1, 'Visite Dokter', NULL, 1);

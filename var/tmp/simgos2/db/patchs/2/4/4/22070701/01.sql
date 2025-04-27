@@ -1,0 +1,4 @@
+USE `master`;
+
+ALTER TABLE `pasien`
+	ADD COLUMN `BAHASA` VARCHAR(50) NOT NULL DEFAULT '1' COMMENT 'Bahasa yang dikuasai' AFTER `SUKU`;

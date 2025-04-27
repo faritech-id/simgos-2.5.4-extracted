@@ -1,0 +1,4 @@
+USE `layanan`;
+ALTER TABLE `order_detil_resep`
+	DROP PRIMARY KEY,
+	ADD PRIMARY KEY (`ORDER_ID`, `FARMASI`, `GROUP_RACIKAN`);

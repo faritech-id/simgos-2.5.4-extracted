@@ -1,0 +1,1 @@
+REPLACE INTO aplikasi.`properti_config` (`ID`, `NAMA`, `VALUE`) VALUES (51, 'AKTIFKAN_LOG_PENGGUNA_REQUEST_URI', 'FALSE');

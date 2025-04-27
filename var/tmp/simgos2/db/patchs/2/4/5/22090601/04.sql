@@ -1,0 +1,3 @@
+USE `aplikasi`;
+
+REPLACE INTO `properti_config` (`ID`, `NAMA`, `VALUE`) VALUES (43, 'AKTIFKAN_VALIDASI_BATAS_LAYANAN_OBAT', 'FALSE');

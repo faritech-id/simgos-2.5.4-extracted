@@ -1,0 +1,3 @@
+USE medicalrecord;
+ALTER TABLE `kondisi_sosial`
+	ADD COLUMN `SEDIH` TINYINT(3) NULL DEFAULT '0' AFTER `BUNUH_DIRI`;

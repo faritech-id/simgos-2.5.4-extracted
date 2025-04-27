@@ -1,0 +1,7 @@
+Name,Description,Parent,AddressField,Required,UUID
+Country,Country level,NULL,country,true,1a57c4df-mechanical-4e6f-9c5d-a7b4c9f71b75
+Province,Province level,Country,stateProvince,true,2b68d5ef-mechanical-4e6f-9c5d-a7b4c9f71b76
+District/City,District or City level,Province,district,true,3c79e6ff-mechanical-4e6f-9c5d-a7b4c9f71b77
+Sub-district,Sub-district level,District/City,cityVillage,true,4d80f7ff-mechanical-4e6f-9c5d-a7b4c9f71b78
+RT,RT (Neighborhood Unit),Sub-district,rt,false,5e91g8ff-mechanical-4e6f-9c5d-a7b4c9f71b79
+RW,RW (Community Unit),Sub-district,rw,false,6f02h9ff-mechanical-4e6f-9c5d-a7b4c9f71b80 

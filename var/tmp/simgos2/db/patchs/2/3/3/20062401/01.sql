@@ -1,0 +1,6 @@
+USE aplikasi;
+
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('12', 'PEMBAYARAN', 1, '', 1, NULL, NULL, 0, 0, 'pembayaran', 1, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('14', 'LAPORAN', 1, 'Laporan', 1, 'laporan.Workspace', 'x-fa fa-file-text-o', 0, 1, 'laporan', 1, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('20', 'INFORMASI', 1, 'Informasi', 1, 'informasi.Workspace', 'x-fa fa-stack-exchange', 1, 1, 'informasi', 1, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('21', 'PENJUALAN', 1, 'Penjualan', 1, 'penjualan.Workspace', 'x-fa fa-cart-plus', 0, 1, 'penjualan', 1, 0, 0, 0, 0, 0);

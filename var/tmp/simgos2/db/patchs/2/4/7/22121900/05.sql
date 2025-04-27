@@ -1,0 +1,15 @@
+USE `kemkes-ihs`;
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (45, 'ServiceRequest', 'identifier', 'http://sys-ids.kemkes.go.id/servicerequest', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (46, 'ServiceRequest', 'status', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (47, 'ServiceRequest', 'intent', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (48, 'ServiceRequest', 'category', 'http://snomed.info/sct', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (49, 'ServiceRequest', 'priority', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (50, 'Specimen', 'identifier', 'http://sys-ids.kemkes.go.id/specimen', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (51, 'Specimen', 'status', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (52, 'Specimen', 'type', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (53, 'Observation', 'identifier', 'http://sys-ids.kemkes.go.id/observation', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (54, 'Observation', 'status', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (55, 'unit term', '', 'http://unitsofmeasure.org', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (56, 'DiagnosticReport', 'identifier', 'http://sys-ids.kemkes.go.id/diagnostic', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (57, 'DiagnosticReport', 'status', '', 1);
+REPLACE INTO `code_reference` (`id`, `resources`, `entity`, `system`, `status`) VALUES (58, 'DiagnosticReport', 'category', 'http://terminology.hl7.org/CodeSystem/v2-0074', 1);

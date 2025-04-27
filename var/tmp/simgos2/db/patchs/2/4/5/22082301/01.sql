@@ -1,0 +1,4 @@
+USE `layanan`;
+
+ALTER TABLE `order_detil_resep`
+	ADD COLUMN `DOSIS` VARCHAR(250) NOT NULL DEFAULT '""' AFTER `JUMLAH`;

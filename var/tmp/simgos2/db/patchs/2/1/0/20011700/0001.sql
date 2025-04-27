@@ -1,0 +1,160 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Win64
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Membuang struktur basisdata untuk inventory
+USE `inventory`;
+
+-- membuang struktur untuk procedure inventory.getHargaBarang
+DROP PROCEDURE IF EXISTS `getHargaBarang`;
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getHargaBarang`(
+	IN `PBARANG` SMALLINT,
+	OUT `PTARIF_ID` INT,
+	OUT `PTARIF` DECIMAL(60,2),
+	IN `PTANGGAL` DATE
+)
+BEGIN
+	SELECT ID, HARGA_JUAL INTO PTARIF_ID, PTARIF 
+	  FROM `inventory`.harga_barang
+	 WHERE BARANG = PBARANG AND MASA_BERLAKU <= PTANGGAL
+	  
+	 ORDER BY MASA_BERLAKU DESC, ID DESC LIMIT 1;
+	 
+	IF FOUND_ROWS() = 0 THEN
+		SET PTARIF_ID = NULL;
+		SET PTARIF = 0;
+	END IF;
+END//
+DELIMITER ;
+
+
+-- Membuang struktur basisdata untuk pembayaran
+USE `pembayaran`;
+
+-- membuang struktur untuk procedure pembayaran.storeFarmasi
+DROP PROCEDURE IF EXISTS `storeFarmasi`;
+DELIMITER //
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `storeFarmasi`(
+	IN `PKUNJUNGAN` CHAR(19),
+	IN `PLAYANAN_FARMASI` CHAR(11),
+	IN `PFARMASI` SMALLINT,
+	IN `PJUMLAH` DECIMAL(60,2)
+)
+BEGIN
+	DECLARE VNOPEN CHAR(10);
+	DECLARE VTAGIHAN CHAR(10);
+	DECLARE VJENIS_KUNJUNGAN TINYINT;
+	DECLARE VTARIF_ID INT;
+	DECLARE VTARIF DECIMAL(60,2);
+	DECLARE VKELAS SMALLINT DEFAULT 0;
+	DECLARE VPAKET SMALLINT DEFAULT NULL;
+	DECLARE VQTY DECIMAL(60,2) DEFAULT 0;
+	DECLARE VPAKET_DETIL INT DEFAULT 0;
+	DECLARE VBARANG_RUANGAN BIGINT;
+	DECLARE VTANGGAL DATETIME;
+	DECLARE VTGL_PENDAFTARAN DATETIME;
+	DECLARE VKUNJUNGAN_YG_MERESEP CHAR(19);
+	DECLARE VJUMLAH DECIMAL(60,2) DEFAULT 1.0;
+	DECLARE VJUMLAH_RINCIAN DECIMAL(60,2) DEFAULT 1.0;
+	DECLARE VPENJAMIN SMALLINT;
+
+	SELECT k.NOPEN, r.JENIS_KUNJUNGAN, IF(kr.TITIPAN = 1, kr.TITIPAN_KELAS, IF(rk.KELAS IS NULL, 0, rk.KELAS)) KELAS, p.PAKET, k.MASUK, kr.NOMOR, p.TANGGAL
+	  INTO VNOPEN, VJENIS_KUNJUNGAN, VKELAS, VPAKET, VTANGGAL, VKUNJUNGAN_YG_MERESEP, VTGL_PENDAFTARAN
+	  FROM pendaftaran.kunjungan k
+	  		 LEFT JOIN layanan.order_resep ores ON ores.NOMOR = k.REF
+	  		 LEFT JOIN pendaftaran.kunjungan kr ON kr.NOMOR = ores.KUNJUNGAN
+	  		 LEFT JOIN master.ruang_kamar_tidur rkt ON rkt.ID = kr.RUANG_KAMAR_TIDUR
+			 LEFT JOIN master.ruang_kamar rk ON rk.ID = rkt.RUANG_KAMAR,
+	  		 master.ruangan r,
+	  		 pendaftaran.pendaftaran p
+	 WHERE k.RUANGAN = r.ID
+	   AND k.NOMOR = PKUNJUNGAN
+		AND k.NOPEN = p.NOMOR
+		AND k.`STATUS` = 2
+	 LIMIT 1;
+	
+	IF FOUND_ROWS() > 0 THEN
+		SET VTAGIHAN = pembayaran.getIdTagihan(VNOPEN);
+		
+		SET VJUMLAH = pembayaran.getJumlahItemRincianPaket(VTAGIHAN, PFARMASI, 2) + PJUMLAH;
+				
+		SELECT pt.PENJAMIN INTO VPENJAMIN
+		  FROM pembayaran.penjamin_tagihan pt 
+		 WHERE pt.TAGIHAN = VTAGIHAN
+		   AND pt.KE = 1
+		 LIMIT 1;
+		 
+		IF FOUND_ROWS() = 0 THEN
+			SET VPENJAMIN = 1; 
+		END IF;
+		
+		IF pembayaran.isFinalTagihan(VTAGIHAN) = 0 THEN
+		BEGIN
+			DECLARE VSISA_PAKET DECIMAL(60,2) DEFAULT 0;
+			DECLARE VSISA DECIMAL(60,2) DEFAULT 0;
+			
+			SET VSISA = PJUMLAH;
+			
+			IF NOT VPAKET IS NULL OR VPAKET > 0 THEN
+				CALL master.inPaket(VPAKET, 2, PFARMASI, VQTY, VPAKET_DETIL);
+				IF VJUMLAH < VQTY THEN
+					SET VSISA_PAKET = PJUMLAH;
+					SET VSISA = 0;
+				ELSE
+					SET VSISA_PAKET = PJUMLAH - (VJUMLAH - VQTY);					
+					IF VSISA_PAKET > 0 THEN
+						SET VSISA = PJUMLAH - VSISA_PAKET;
+					END IF;					
+				END IF;	
+				
+				IF VTAGIHAN != '' AND VPAKET_DETIL > 0 AND VSISA_PAKET > 0 THEN
+					CALL pembayaran.storeRincianTagihanPaket(VTAGIHAN, VPAKET_DETIL, PLAYANAN_FARMASI, VTANGGAL, VSISA_PAKET, 1);
+				END IF;
+			END IF;
+			
+			IF VTAGIHAN != '' AND (VPAKET_DETIL = 0 OR VSISA > 0) THEN
+			BEGIN
+				DECLARE VKELAS_SBLM SMALLINT;
+				DECLARE VKATEGORI CHAR(10);
+				
+				SELECT b.KATEGORI INTO VKATEGORI
+				  FROM inventory.barang b
+				 WHERE b.ID = PFARMASI;
+								
+				CALL inventory.getHargaBarang(PFARMASI, VTARIF_ID, VTARIF, VTGL_PENDAFTARAN);
+								
+				SET VKELAS_SBLM = pembayaran.getKelasRJMengikutiKelasRIYgPertama(VTAGIHAN, VKUNJUNGAN_YG_MERESEP);
+				IF VKELAS_SBLM > 0 THEN
+					SET VKELAS = VKELAS_SBLM;
+				END IF;
+				
+				IF NOT VKATEGORI IS NULL THEN
+					IF LEFT(VKATEGORI, 3) IN ('101', '102') THEN
+						SET VTARIF = master.getTarifMarginPenjaminFarmasi(VPENJAMIN, 1, VTARIF, VTGL_PENDAFTARAN);
+						SET VTARIF = master.getTarifFarmasiPerKelas(VKELAS, VTARIF);
+					END IF;
+				END IF;
+				
+				CALL pembayaran.storeRincianTagihan(VTAGIHAN, PLAYANAN_FARMASI, 4, VTARIF_ID, VSISA, VTARIF, VKELAS, 0, 0);		
+			END;
+			END IF;
+		END;
+		END IF;	
+	END IF;
+END//
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

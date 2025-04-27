@@ -1,0 +1,4 @@
+USE `master`;
+
+ALTER TABLE `kartu_identitas_pasien`
+	CHANGE COLUMN `NOMOR` `NOMOR` VARCHAR(25) NOT NULL AFTER `NORM`;

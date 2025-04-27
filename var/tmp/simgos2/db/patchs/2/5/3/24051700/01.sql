@@ -1,0 +1,3 @@
+UPDATE aplikasi.properti_config
+   SET VALUE = JSON_SET(VALUE, '$.footer', 'Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Balai Sertifikasi Elektronik (BSrE), BSSN<br>Untuk verifikasi keaslian tanda tangan elektronik, silahkan unggah dokumen pada laman <a style="color: #1678c5" href="https://tte.kominfo.go.id/verifyPDF">https://tte.kominfo.go.id/verifyPDF</a>.')
+ WHERE ID = 87;

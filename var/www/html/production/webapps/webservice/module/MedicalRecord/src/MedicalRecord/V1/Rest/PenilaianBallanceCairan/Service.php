@@ -1,0 +1,126 @@
+<?php
+namespace MedicalRecord\V1\Rest\PenilaianBallanceCairan;
+
+use DBService\DatabaseService;
+use Laminas\Db\Sql\TableIdentifier;
+use Laminas\Db\Sql\Select;
+use DBService\System;
+use DBService\Service as DBService;
+use DBService\generator\Generator;
+use Aplikasi\V1\Rest\Pengguna\PenggunaService;
+use General\V1\Rest\Referensi\ReferensiService;
+use Pendaftaran\V1\Rest\Kunjungan\KunjunganService;
+use MedicalRecord\V1\Rest\PenilaianBallanceCairanDetail\Service as PenilaianBallanceCairanDetailService;
+
+
+class Service extends DBService {
+	private $pengguna;
+	private $referensi;
+	private $kunjungan;
+	private $ballancecairandetail;
+
+	protected $references = [
+		"Kunjungan" => true
+	];
+
+	public function __construct($includeReferences = true, $references = []) {
+		$this->config["entityName"] = "MedicalRecord\\V1\\Rest\\PenilaianBallanceCairan\\PenilaianBallanceCairanEntity";
+		$this->table = DatabaseService::get("SIMpel")->get(new TableIdentifier("penilaian_ballance_cairan", "medicalrecord"));
+		$this->entity = new PenilaianBallanceCairanEntity();
+		$this->ballancecairandetail = new PenilaianBallanceCairanDetailService();
+		
+		$this->referensi = new ReferensiService();
+		$this->pengguna = new PenggunaService();
+
+		$this->setReferences($references);
+		
+		$this->includeReferences = $includeReferences;
+		if($includeReferences) {
+			if($this->references['Kunjungan']) $this->kunjungan = new KunjunganService(true, [
+				'Ruangan' => true,
+				'Referensi' => false,
+				'Pendaftaran' => false,
+				'RuangKamarTidur' => false,
+				'PasienPulang' => false,
+				'Pembatalan' => false,
+				'Perujuk' => false,
+				'Mutasi' => false
+			]);
+		}
+	}
+	
+	protected function onAfterSaveCallback($id, $data) {
+		$this->SimpanDetil($data, $id);
+	}
+	
+	private function SimpanDetil($data, $id) {
+		if(isset($data['BALLANCE_CAIRAN_DETAIL'])) {
+			foreach($data['BALLANCE_CAIRAN_DETAIL'] as $dtl) {
+				$dtl['BALLANCE_CAIRAN'] = $id;
+				$this->ballancecairandetail->simpanData($dtl, true);
+			}
+		}
+	}
+
+	public function load($params = [], $columns = ['*'], $orders = []) {
+		$data = parent::load($params, $columns, $orders);
+
+		foreach($data as &$entity) {
+			$result = $this->referensi->load(['JENIS' => 248, 'ID' => $entity['URINE_WARNAH']]);
+			if(count($result) > 0) $entity['REFERENSI']['URINE_WARNAH'] = $result[0];
+
+			$result = $this->referensi->load(['JENIS' => 249, 'ID' => $entity['FASES_TESKTUR']]);
+			if(count($result) > 0) $entity['REFERENSI']['FASES_TESKTUR'] = $result[0];
+
+			$result = $this->referensi->load(['JENIS' => 250, 'ID' => $entity['FASES_WARNAH']]);
+			if(count($result) > 0) $entity['REFERENSI']['FASES_WARNAH'] = $result[0];
+
+			$result = $this->ballancecairandetail->load(['BALLANCE_CAIRAN' => $entity['ID']]);
+			if(count($result) > 0) $entity['REFERENSI']['KELOMPOK'] = $result;
+
+			if(!empty($entity['OLEH'])) {
+				$pengguna = $this->pengguna->getPegawai($entity['OLEH']);
+				if($pengguna) $entity['REFERENSI']['PETUGAS'] = $pengguna;
+			}
+			if($this->references['Kunjungan']) {
+				$this->kunjungan->setReferences(json_decode(json_encode([						
+					"Ruangan" => [
+						"COLUMNS" => ['DESKRIPSI']
+					]		
+				])), true);
+				$kunjungan = $this->kunjungan->load(['NOMOR' => $entity['KUNJUNGAN']]);
+				if(count($kunjungan) > 0) $entity['REFERENSI']['KUNJUNGAN'] = $kunjungan[0];
+			}
+		}	
+
+		return $data;
+	}
+
+	protected function queryCallback(Select &$select, &$params, $columns, $orders) {
+		if(!System::isNull($params, 'STATUS')) {
+			$status = $params['STATUS'];
+			$params['penilaian_ballance_cairan.STATUS'] = $status;
+			unset($params['STATUS']);
+		}
+
+		if(!System::isNull($params, 'ID')) {
+			$id = $params['ID'];
+			$params['penilaian_ballance_cairan.ID'] = $id;
+			unset($params['ID']);
+		}
+		
+		if(!System::isNull($params, 'HISTORY')) {
+			unset($params['HISTORY']);
+			$select->join(['k'=>new TableIdentifier('kunjungan', 'pendaftaran')], 'k.NOMOR = penilaian_ballance_cairan.KUNJUNGAN', []);
+			$select->join(['p'=>new TableIdentifier('pendaftaran', 'pendaftaran')], 'p.NOMOR = k.NOPEN', []);
+			$select->where("k.FINAL_HASIL = 1");
+			
+			if(!System::isNull($params, 'NORM')) {
+				$norm = $params['NORM'];
+				$params['p.NORM'] = $norm;
+				unset($params['NORM']);
+			}
+		}
+	}
+
+}

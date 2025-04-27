@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CetakJobList" language="groovy" pageWidth="269" pageHeight="396" columnWidth="242" leftMargin="19" rightMargin="8" topMargin="56" bottomMargin="14" uuid="647ea45d-6557-4dbf-a774-1646dbbd7560">
+	<property name="ireport.zoom" value="3.890613690150007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="83"/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="104"/>
+	<parameter name="PKUNJUNGAN" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PJENIS" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL layanan.CetakJobListLab($P{PKUNJUNGAN},$P{PJENIS})]]>
+	</queryString>
+	<field name="STATUS_CITO" class="java.lang.String"/>
+	<field name="NORM" class="java.lang.String"/>
+	<field name="NAMALENGKAP" class="java.lang.String"/>
+	<field name="J_KELAMIN" class="java.lang.String"/>
+	<field name="TGL_LAHIR" class="java.lang.String"/>
+	<field name="UMUR" class="java.lang.String"/>
+	<field name="NOMOR_KUNJUNGAN" class="java.lang.String"/>
+	<field name="TGL_KUNJUNGAN" class="java.lang.String"/>
+	<field name="UNIT_SEBELUMNYA" class="java.lang.String"/>
+	<field name="STATUSPENGUNJUNG" class="java.lang.String"/>
+	<field name="TINDAKAN" class="java.lang.String"/>
+	<field name="CARA_BAYAR" class="java.lang.String"/>
+	<field name="DIAGNOSA" class="java.lang.String"/>
+	<field name="DOKTER" class="java.lang.String"/>
+	<group name="Group1" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{TINDAKAN}]]></groupExpression>
+		<groupHeader>
+			<band height="1"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="1"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="124" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="220" height="10" uuid="41801897-8a6d-4b75-abf2-956fbff95d4c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CETAKAN JOB LIST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="13" width="59" height="10" uuid="8b3b8318-6d3e-4503-9fd0-e80201bde93f">
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Status Order]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="54" width="59" height="10" uuid="8c6b0c9c-3531-46d4-a2cd-cc96123ff0d7"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Jenis Kelamin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="64" width="59" height="10" uuid="71b9e067-d27a-4a1c-b650-a4ca9a22c5ad"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Tgl Lahir / Umur ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="74" width="59" height="10" uuid="444b40ef-7f44-4639-a2a6-462779430194"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[No Kunjungan ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="84" width="59" height="10" uuid="58f6de17-7f05-4893-a891-66842a3b275d"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Tgl Kunjungan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="94" width="59" height="10" uuid="00faa8cd-f5a7-4ce7-a03c-76c9d5eddad6"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Unit Asal ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="104" width="59" height="10" uuid="d293078a-23b3-4433-8516-607a21ee2568"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Status Pasien ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="114" width="59" height="10" uuid="0624c435-fdb8-4c5e-9f47-e9a7bc1feaac"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Cara Bayar ]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="59" y="13" width="161" height="10" uuid="8d744a48-6f13-4c4a-8cb3-133d7e4ecd6e">
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{STATUS_CITO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="65" y="23" width="155" height="19" uuid="bcc9d2d9-d4ba-4155-a1d5-b9911623f617"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="59" y="42" width="161" height="12" uuid="94b97b58-a784-4efb-a227-13b474e7b764"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{NAMALENGKAP}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="54" width="161" height="10" uuid="c21a5a93-ee20-4d68-a9a6-b7706f46866b"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{J_KELAMIN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="64" width="161" height="10" uuid="f41e6ddf-c3c3-472a-9b0c-6784deec8388"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{TGL_LAHIR}+'('+$F{UMUR}+')']]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="74" width="161" height="10" uuid="088be12b-2cfe-4332-800d-1aa1ea6e64ab"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{NOMOR_KUNJUNGAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="84" width="161" height="10" uuid="e3d91f1f-4aa4-4238-ab59-0794d88cdfff"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{TGL_KUNJUNGAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="94" width="161" height="10" uuid="20a85f26-80c1-428d-b141-046205b06eb6"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{UNIT_SEBELUMNYA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="104" width="161" height="10" uuid="e5cffa94-88d6-4964-9152-5260e071fb9c"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{STATUSPENGUNJUNG}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="114" width="161" height="10" uuid="85b1de25-c965-4d5b-b9a9-7fe429a78173"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[': '+$F{CARA_BAYAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="23" width="6" height="19" uuid="ae68ae01-ea52-4242-b460-56efde647627"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="42" width="59" height="12" uuid="3a088243-28a0-4149-9c77-ccf3794a9d0a"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Nama Pasien]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="23" width="59" height="19" uuid="94a3145d-e792-4a60-a6cd-0c3b15511217"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[No RM]]></text>
+			</staticText>
+		</band>
+		<band height="10">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="65" y="0" width="155" height="10" uuid="0d95894e-65f9-4301-8cdd-c32e956a1931"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOKTER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="59" height="10" uuid="c6d2182a-63e5-4946-a87f-05b94b205dbc"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Dokter Pengirim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="0" width="6" height="10" uuid="1765dc9b-af82-4b6c-b246-620acf172b6c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="10">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="65" y="0" width="155" height="10" uuid="0d521a90-87a8-4238-923f-ebbce8c48aab"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIAGNOSA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="59" height="10" uuid="c46f03c2-ac88-4065-877c-5adaae5d6d27"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Diagnosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="59" y="0" width="6" height="10" uuid="c1b0490d-f10e-4d9f-a1dc-28c56e962655"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="10" uuid="d1c5452e-025f-40b8-a65f-7d5763e1591a"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Job List : ]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="10" width="220" height="10" uuid="d43a8546-1690-4f81-a179-4486b5cae7a6"/>
+				<textElement markup="html">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TINDAKAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

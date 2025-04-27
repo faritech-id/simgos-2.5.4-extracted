@@ -1,0 +1,46 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.8
+-- Server version:               8.0.23 - MySQL Community Server - GPL
+-- Server OS:                    Linux
+-- HeidiSQL Version:             11.2.0.6213
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for medicalrecord
+USE `medicalrecord`;
+
+-- Dumping structure for table medicalrecord.batuk
+CREATE TABLE IF NOT EXISTS `batuk` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `KUNJUNGAN` char(19) NOT NULL,
+  `DEMAM` tinyint NOT NULL DEFAULT '0' COMMENT '1=Ya; 0=Tidak',
+  `DEMAM_KETERANGAN` varchar(500) DEFAULT NULL COMMENT 'Ya di isi',
+  `BERKERINGAT_MALAM_HARI_TANPA_AKTIFITAS` tinyint NOT NULL DEFAULT '0' COMMENT '1=Ya; 0=Tidak',
+  `BERKERINGAT_MALAM_HARI_TANPA_AKTIFITAS_KETERANGAN` varchar(500) DEFAULT NULL COMMENT 'Ya di isi',
+  `BEPERGIAN_DARI_DAERAH_WABAH` tinyint NOT NULL DEFAULT '0' COMMENT '1=Ya; 0=Tidak',
+  `BEPERGIAN_DARI_DAERAH_WABAH_KETERANGAN` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'Ya di isi',
+  `PEMAKAIAN_OBAT_JANGKA_PANJANG` tinyint NOT NULL DEFAULT '0' COMMENT '1=Ya; 0=Tidak',
+  `PEMAKAIAN_OBAT_JANGKA_PANJANG_KETERANGAN` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'Ya di isi',
+  `BERAT_BADAN_TURUN_TANPA_SEBAB` tinyint NOT NULL DEFAULT '0' COMMENT '1=Ya; 0=Tidak',
+  `BERAT_BADAN_TURUN_TANPA_SEBAB_KETERANGAN` varchar(500) DEFAULT NULL COMMENT 'Ya di isi',
+  `TANGGAL` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `OLEH` smallint NOT NULL DEFAULT '0',
+  `STATUS` tinyint NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `KUNJUNGAN` (`KUNJUNGAN`),
+  KEY `STATUS` (`STATUS`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

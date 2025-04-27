@@ -1,0 +1,1597 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.XXX.XXX
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               12.0.0.6468
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Membuang struktur basisdata untuk pembayaran
+USE `pembayaran`;
+
+-- membuang struktur untuk procedure pembayaran.prosesPerhitunganBPJS
+DROP PROCEDURE IF EXISTS `prosesPerhitunganBPJS`;
+DELIMITER //
+CREATE PROCEDURE `prosesPerhitunganBPJS`(
+	IN `PTAGIHAN` CHAR(10),
+	IN `PREF_ID` CHAR(19),
+	IN `PJENIS` TINYINT,
+	IN `PTOTAL` DECIMAL(60,2),
+	IN `PINSERTED` TINYINT,
+	IN `PKELAS` SMALLINT
+)
+BEGIN
+	DECLARE VTANGGAL, VBERLAKU DATE;
+	DECLARE VMODE CHAR(1);
+	
+	SELECT DATE(t.TANGGAL)
+	  INTO VTANGGAL
+	  FROM pembayaran.tagihan t
+	 WHERE t.ID = PTAGIHAN;
+	 
+	IF NOT VTANGGAL IS NULL THEN
+		SELECT VALUE
+		  INTO VBERLAKU
+		  FROM aplikasi.properti_config pc
+		 WHERE pc.ID = 59;
+		 
+		IF VBERLAKU IS NULL THEN
+			CALL pembayaran.prosesPerhitunganBPJSSebelum2023(PTAGIHAN, PREF_ID, PJENIS, PTOTAL, PINSERTED, PKELAS);
+		ELSE
+			IF VTANGGAL < VBERLAKU THEN
+				CALL pembayaran.prosesPerhitunganBPJSSebelum2023(PTAGIHAN, PREF_ID, PJENIS, PTOTAL, PINSERTED, PKELAS);
+			ELSE
+				SELECT VALUE
+				  INTO VMODE
+				  FROM aplikasi.properti_config pc
+				 WHERE pc.ID = 60;
+				 
+				IF NOT VMODE IS NULL THEN
+					IF VMODE = 1 THEN
+						CALL pembayaran.prosesPerhitunganBPJSMode1(PTAGIHAN, PREF_ID, PJENIS, PTOTAL, PINSERTED, PKELAS);
+					ELSEIF VMODE = 2 THEN
+						CALL pembayaran.prosesPerhitunganBPJSMode2(PTAGIHAN, PREF_ID, PJENIS, PTOTAL, PINSERTED, PKELAS);
+					END IF;
+				END IF;
+			END IF;
+		END IF;
+		
+		# Kalkulasi subsidi
+		BEGIN
+			DECLARE VTOTAL_JAMINAN_BERIKUT DECIMAL(60,2);
+			
+			SELECT SUM(TOTAL)
+			  INTO VTOTAL_JAMINAN_BERIKUT
+			  FROM pembayaran.penjamin_tagihan pt
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.KE > 1;
+			   
+			SET VTOTAL_JAMINAN_BERIKUT = IFNULL(VTOTAL_JAMINAN_BERIKUT, 0);
+			
+			UPDATE pembayaran.penjamin_tagihan pt,
+				    pembayaran.subsidi_tagihan st
+				SET st.TOTAL = IF(VTOTAL_JAMINAN_BERIKUT > st.TOTAL, 0, st.TOTAL - VTOTAL_JAMINAN_BERIKUT)
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND st.TAGIHAN = pt.TAGIHAN
+			   AND st.ID = pt.SUBSIDI_TAGIHAN
+				AND pt.PENJAMIN = 2;
+		END;
+	END IF;
+END//
+DELIMITER ;
+
+-- membuang struktur untuk procedure pembayaran.prosesPerhitunganBPJSMode1
+DROP PROCEDURE IF EXISTS `prosesPerhitunganBPJSMode1`;
+DELIMITER //
+CREATE PROCEDURE `prosesPerhitunganBPJSMode1`(
+	IN `PTAGIHAN` CHAR(10),
+	IN `PREF_ID` CHAR(19),
+	IN `PJENIS` TINYINT,
+	IN `PTOTAL` DECIMAL(60,2),
+	IN `PINSERTED` TINYINT,
+	IN `PKELAS` SMALLINT
+)
+BEGIN
+	DECLARE VKELAS_HAK SMALLINT;
+	DECLARE VKELAS_RAWAT SMALLINT;
+	DECLARE VTARIF_NAIK_KELAS DECIMAL(60,2);
+	DECLARE VTOTAL_TAGIHAN, VTOTAL_TAGIHAN_RS DECIMAL(60,2);
+	DECLARE VNAIK_KELAS TINYINT DEFAULT FALSE;
+	DECLARE VTOTAL DECIMAL(60,2);
+	DECLARE VTOTAL_TARIF_KELAS2 DECIMAL(60,2);
+	DECLARE VTOTAL_TARIF_KELAS1 DECIMAL(60,2);
+	DECLARE ATURAN_JKN_MENGIKUTI_KEBIJAKAN_RS TINYINT DEFAULT FALSE;
+	DECLARE VINTENSIF TINYINT DEFAULT 0;
+	
+	SELECT pt.NAIK_KELAS INTO VNAIK_KELAS 
+	  FROM pembayaran.penjamin_tagihan pt 
+	 WHERE pt.TAGIHAN = PTAGIHAN 
+	   AND pt.PENJAMIN = 2 
+	 LIMIT 1;	
+	 
+	IF FOUND_ROWS() > 0 THEN
+		SELECT p.KELAS, hg.TOTALTARIF
+				 , hg.TARIFSP + hg.TARIFSR + hg.TARIFSI + hg.TARIFSD + hg.TARIFSA + hg.TARIFKLS2
+				 , hg.TARIFSP + hg.TARIFSR + hg.TARIFSI + hg.TARIFSD + hg.TARIFSA + hg.TARIFKLS1
+		  INTO VKELAS_HAK, VTOTAL, VTOTAL_TARIF_KELAS2, VTOTAL_TARIF_KELAS1
+		  FROM pendaftaran.penjamin p
+		  	    , pembayaran.tagihan_pendaftaran tp
+		  	    LEFT JOIN inacbg.hasil_grouping hg ON tp.PENDAFTARAN = hg.NOPEN
+		 WHERE p.JENIS = 2
+		   AND tp.PENDAFTARAN = p.NOPEN
+		   AND tp.TAGIHAN = PTAGIHAN					 
+		   AND tp.`STATUS` = 1
+		   AND tp.UTAMA = 1
+		 LIMIT 1;
+		 
+		UPDATE pembayaran.penjamin_tagihan pt
+		   SET pt.TOTAL = VTOTAL
+		   	 , pt.TARIF_INACBG_KELAS1 = IF(pt.KELAS_KLAIM = 3, VTOTAL, VTOTAL_TARIF_KELAS1)
+		 WHERE pt.TAGIHAN = PTAGIHAN
+		   AND pt.PENJAMIN = 2;
+		
+		SET VKELAS_RAWAT = PKELAS;				
+		
+		SELECT grk.KELAS INTO VKELAS_HAK
+		  FROM master.group_referensi_kelas grk
+		 WHERE grk.REFERENSI_KELAS = VKELAS_HAK;
+		
+		IF PJENIS = 2 THEN
+			 SELECT grk.KELAS INTO VKELAS_RAWAT
+			   FROM master.group_referensi_kelas grk
+			  WHERE grk.REFERENSI_KELAS = VKELAS_RAWAT;
+			  
+			IF VKELAS_RAWAT = 0 THEN
+				SET VKELAS_RAWAT = VKELAS_HAK;
+			END IF;
+		ELSE
+			SELECT grk.KELAS INTO VKELAS_RAWAT
+			  FROM master.group_referensi_kelas grk
+			 WHERE grk.REFERENSI_KELAS = VKELAS_RAWAT;						
+		END IF;
+		
+		IF VKELAS_RAWAT > 2 THEN
+			SET VNAIK_KELAS = FALSE;
+			
+			IF VKELAS_RAWAT > VKELAS_HAK THEN
+				SET VNAIK_KELAS = TRUE;
+			END IF;
+			
+			IF VKELAS_RAWAT > 3 THEN
+				IF NOT PINSERTED THEN
+					UPDATE pembayaran.penjamin_tagihan pt
+					   SET pt.TOTAL_TAGIHAN_VIP = IF(pt.TOTAL_TAGIHAN_VIP <= 0, 0, pt.TOTAL_TAGIHAN_VIP - PTOTAL)
+					 WHERE pt.TAGIHAN = PTAGIHAN
+					   AND pt.PENJAMIN = 2;
+				END IF;
+				
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_TAGIHAN_VIP = pt.TOTAL_TAGIHAN_VIP + PTOTAL
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;	
+		
+			IF VKELAS_RAWAT > 4 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_DIATAS_VIP = 1
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			IF VKELAS_RAWAT > 3 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_KELAS_VIP = 1
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			IF VKELAS_RAWAT > 2 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_KELAS = IF(VNAIK_KELAS, 1, 0)
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+		ELSE
+			IF VKELAS_RAWAT > VKELAS_HAK THEN
+				SET VNAIK_KELAS = TRUE;
+				SET VTARIF_NAIK_KELAS = IF(VKELAS_RAWAT = 2, VTOTAL_TARIF_KELAS2, VTOTAL_TARIF_KELAS1);				
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.NAIK_KELAS = 1
+					    , pt.TOTAL_NAIK_KELAS = VTARIF_NAIK_KELAS
+				   	 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+		END IF;
+		
+		IF VNAIK_KELAS THEN
+			IF PJENIS = 2 THEN
+			BEGIN
+				DECLARE VLAMA_NAIK SMALLINT;
+				
+				SELECT SUM(rt.JUMLAH) 
+				  INTO VLAMA_NAIK
+				  FROM pembayaran.rincian_tagihan rt
+				  		 , pembayaran.penjamin_tagihan pt
+				  		 , pendaftaran.kunjungan k
+				  		 	LEFT JOIN master.group_referensi_kelas grk2 ON grk2.REFERENSI_KELAS = k.TITIPAN_KELAS
+						 , master.ruang_kamar_tidur rkt
+						 , master.ruang_kamar rk
+						 , master.group_referensi_kelas grk
+				 WHERE rt.TAGIHAN = PTAGIHAN
+				   AND rt.JENIS = 2
+				   AND pt.TAGIHAN = rt.TAGIHAN
+				   AND pt.PENJAMIN = 2
+					AND k.NOMOR = rt.REF_ID
+					AND rkt.ID = k.RUANG_KAMAR_TIDUR
+					AND rk.ID = rkt.RUANG_KAMAR
+					AND grk.REFERENSI_KELAS = rk.KELAS
+					AND (grk.KELAS = pt.KELAS OR (k.TITIPAN = 1 AND grk2.KELAS = pt.KELAS));
+			
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.LAMA_NAIK = VLAMA_NAIK
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END;
+			END IF;
+		END IF;	
+		
+		IF VKELAS_RAWAT <= VKELAS_HAK THEN
+		BEGIN
+			IF NOT PINSERTED THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_TAGIHAN_HAK = pt.TOTAL_TAGIHAN_HAK - PTOTAL
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			
+			UPDATE pembayaran.penjamin_tagihan pt
+			   SET pt.TOTAL_TAGIHAN_HAK = pt.TOTAL_TAGIHAN_HAK + PTOTAL
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.PENJAMIN = 2;
+		END;
+		END IF;
+		
+		BEGIN
+			DECLARE VTOTAL_JAMINAN DECIMAL(60,2);
+			DECLARE VTOTAL_TAGIHAN_HAK DECIMAL(60,2);
+			DECLARE VNAIK_KELAS_VIP TINYINT;
+			DECLARE VNAIK_KELAS TINYINT;
+			DECLARE VNAIK_DIATAS_VIP TINYINT;
+			DECLARE VSELISIH DECIMAL(60,2);
+			DECLARE VSUBSIDI DECIMAL(60,2) DEFAULT 0;
+			DECLARE VSUBSIDI_TAGIHAN INT;
+			DECLARE VSELISIH_MINIMAL, VTOTAL_TAGIHAN_VIP DECIMAL(60,2) DEFAULT 0;
+			DECLARE VMINTARIFINACBGPERSEN SMALLINT;
+			DECLARE VKELAS_KLAIM SMALLINT;
+			DECLARE VTARIF_INACBG_KELAS1, VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE DECIMAL(60,2);
+			
+			SELECT CAST(pc.VALUE AS SIGNED) INTO VMINTARIFINACBGPERSEN
+			  FROM aplikasi.properti_config pc
+			 WHERE pc.ID = 16;
+				 
+			IF FOUND_ROWS() = 0 THEN
+				SET VMINTARIFINACBGPERSEN = 0;
+			END IF;
+			
+			SELECT pt.TOTAL, pt.TOTAL_NAIK_KELAS, pt.NAIK_KELAS, pt.NAIK_KELAS_VIP, pt.NAIK_DIATAS_VIP
+					 , pt.TOTAL_TAGIHAN_HAK, pt.SUBSIDI_TAGIHAN, pt.SELISIH_MINIMAL, pt.TOTAL_TAGIHAN_VIP, pt.KELAS_KLAIM, pt.TARIF_INACBG_KELAS1
+					 , pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE, t.TOTAL
+			  INTO VTOTAL_JAMINAN, VTARIF_NAIK_KELAS, VNAIK_KELAS, VNAIK_KELAS_VIP, VNAIK_DIATAS_VIP
+			  	    , VTOTAL_TAGIHAN_HAK, VSUBSIDI_TAGIHAN, VSELISIH_MINIMAL, VTOTAL_TAGIHAN_VIP, VKELAS_KLAIM, VTARIF_INACBG_KELAS1
+			  	    , VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE, VTOTAL_TAGIHAN_RS
+			  FROM pembayaran.penjamin_tagihan pt,
+			  		 pembayaran.tagihan t
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.PENJAMIN = 2
+				AND t.ID = pt.TAGIHAN;
+			   
+			IF FOUND_ROWS() > 0 THEN
+			BEGIN					
+				SET VSELISIH = VTOTAL_TAGIHAN_RS - VTOTAL_JAMINAN;
+				SET VSELISIH = IF(VSELISIH <= 0, 0, VSELISIH);
+														
+				IF VSELISIH > 0 THEN
+					IF VNAIK_KELAS = 0 AND VNAIK_KELAS_VIP = 0 THEN
+						SET VSUBSIDI = VSELISIH;					
+					END IF;
+				END IF;
+				
+				IF VNAIK_KELAS_VIP = 1 OR VNAIK_DIATAS_VIP = 1 THEN
+				BEGIN
+					DECLARE VSELMIN DECIMAL(60, 2);
+					DECLARE VSELMAX DECIMAL(60, 2);
+					DECLARE VSELTGHN DECIMAL(60, 2);			
+											
+					SET VSELMAX = VTARIF_INACBG_KELAS1 * (75/100);
+					SET VSELTGHN = VTOTAL_TAGIHAN_VIP - VTARIF_INACBG_KELAS1;
+					SET VSELTGHN = IF(VSELTGHN <= 0, 0, VSELTGHN);
+					
+			   	IF VSELISIH > 0 THEN
+				   	IF VKELAS_KLAIM = 3 THEN
+				   		IF VTOTAL_TAGIHAN_VIP <= VSELMAX THEN
+						   	SET VSELISIH_MINIMAL = VTOTAL_TAGIHAN_VIP;
+						   ELSE
+						   	SET VSELISIH_MINIMAL = VSELMAX;
+						   END IF;
+				   	ELSE
+				   		IF VTOTAL_TAGIHAN_VIP <= VSELMAX THEN
+						   	SET VSELISIH_MINIMAL = VTOTAL_TAGIHAN_VIP;
+						   ELSE
+						   	SET VSELISIH_MINIMAL = VSELMAX;
+						   END IF;
+				   	END IF;
+				   ELSE
+				   	SET VSELISIH_MINIMAL = 0;
+				   END IF;
+				   
+				   UPDATE pembayaran.penjamin_tagihan pt
+					   SET pt.TOTAL_NAIK_KELAS = IF(VSELISIH > 0, pt.TARIF_INACBG_KELAS1, VTOTAL_TAGIHAN_RS),
+							 pt.SELISIH_MINIMAL = VSELISIH_MINIMAL
+					 WHERE pt.TAGIHAN = PTAGIHAN
+			   		AND pt.PENJAMIN = 2;
+					
+			   	SET VSUBSIDI = 0;
+			   	UPDATE pembayaran.subsidi_tagihan st
+			   	   SET st.TOTAL = VSUBSIDI
+			   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+				END;
+				ELSE
+					IF VNAIK_KELAS = 1 THEN
+						SET VSUBSIDI = 0;
+				   	UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+					END IF;
+				END IF;
+			END;
+			END IF;
+			
+			IF VSUBSIDI > 0 THEN
+				IF VSUBSIDI_TAGIHAN > 0 THEN
+					IF EXISTS(
+						SELECT 1
+						  FROM pembayaran.subsidi_tagihan st
+						 WHERE st.ID = VSUBSIDI_TAGIHAN
+						   AND st.`STATUS` = 1
+						 LIMIT 1) THEN
+						UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+				   ELSE
+				   	SET VSUBSIDI_TAGIHAN = 0;
+					END IF;
+				END IF;
+				
+				IF VSUBSIDI_TAGIHAN = 0 THEN
+					INSERT INTO pembayaran.subsidi_tagihan(TAGIHAN, TOTAL, TANGGAL)
+					     VALUES(PTAGIHAN, VSUBSIDI, NOW());
+					SET VSUBSIDI_TAGIHAN = LAST_INSERT_ID();
+					
+					UPDATE pembayaran.penjamin_tagihan pt
+					   SET pt.SUBSIDI_TAGIHAN = VSUBSIDI_TAGIHAN
+					 WHERE pt.TAGIHAN = PTAGIHAN
+			   		AND pt.PENJAMIN = 2;				   
+				END IF;
+			END IF;								
+		END;
+	ELSE
+		DELETE FROM pembayaran.subsidi_tagihan WHERE TAGIHAN = PTAGIHAN;
+	END IF;
+END//
+DELIMITER ;
+
+-- membuang struktur untuk procedure pembayaran.prosesPerhitunganBPJSMode2
+DROP PROCEDURE IF EXISTS `prosesPerhitunganBPJSMode2`;
+DELIMITER //
+CREATE PROCEDURE `prosesPerhitunganBPJSMode2`(
+	IN `PTAGIHAN` CHAR(10),
+	IN `PREF_ID` CHAR(19),
+	IN `PJENIS` TINYINT,
+	IN `PTOTAL` DECIMAL(60,2),
+	IN `PINSERTED` TINYINT,
+	IN `PKELAS` SMALLINT
+)
+BEGIN
+	DECLARE VKELAS_HAK SMALLINT;
+	DECLARE VKELAS_RAWAT SMALLINT;
+	DECLARE VTARIF_NAIK_KELAS DECIMAL(60,2);
+	DECLARE VTOTAL_TAGIHAN, VTOTAL_TAGIHAN_RS DECIMAL(60,2);
+	DECLARE VNAIK_KELAS TINYINT DEFAULT FALSE;
+	DECLARE VTOTAL DECIMAL(60,2);
+	DECLARE VTOTAL_TARIF_KELAS2 DECIMAL(60,2);
+	DECLARE VTOTAL_TARIF_KELAS1 DECIMAL(60,2);
+	DECLARE ATURAN_JKN_MENGIKUTI_KEBIJAKAN_RS TINYINT DEFAULT FALSE;
+	DECLARE VINTENSIF TINYINT DEFAULT 0;
+	
+	SELECT pt.NAIK_KELAS INTO VNAIK_KELAS 
+	  FROM pembayaran.penjamin_tagihan pt 
+	 WHERE pt.TAGIHAN = PTAGIHAN 
+	   AND pt.PENJAMIN = 2 
+	 LIMIT 1;	
+	 
+	IF FOUND_ROWS() > 0 THEN
+		SELECT p.KELAS, hg.TOTALTARIF
+				 , hg.TARIFSP + hg.TARIFSR + hg.TARIFSI + hg.TARIFSD + hg.TARIFSA + hg.TARIFKLS2
+				 , hg.TARIFSP + hg.TARIFSR + hg.TARIFSI + hg.TARIFSD + hg.TARIFSA + hg.TARIFKLS1
+		  INTO VKELAS_HAK, VTOTAL, VTOTAL_TARIF_KELAS2, VTOTAL_TARIF_KELAS1
+		  FROM pendaftaran.penjamin p
+		  	    , pembayaran.tagihan_pendaftaran tp
+		  	    LEFT JOIN inacbg.hasil_grouping hg ON tp.PENDAFTARAN = hg.NOPEN
+		 WHERE p.JENIS = 2
+		   AND tp.PENDAFTARAN = p.NOPEN
+		   AND tp.TAGIHAN = PTAGIHAN					 
+		   AND tp.`STATUS` = 1
+		   AND tp.UTAMA = 1
+		 LIMIT 1;
+		 
+		UPDATE pembayaran.penjamin_tagihan pt
+		   SET pt.TOTAL = VTOTAL
+		   	 , pt.TARIF_INACBG_KELAS1 = IF(pt.KELAS_KLAIM = 3, VTOTAL, VTOTAL_TARIF_KELAS1)
+		 WHERE pt.TAGIHAN = PTAGIHAN
+		   AND pt.PENJAMIN = 2;
+		
+		SET VKELAS_RAWAT = PKELAS;				
+		
+		SELECT grk.KELAS INTO VKELAS_HAK
+		  FROM master.group_referensi_kelas grk
+		 WHERE grk.REFERENSI_KELAS = VKELAS_HAK;
+		
+		IF PJENIS = 2 THEN
+			 SELECT grk.KELAS INTO VKELAS_RAWAT
+			   FROM master.group_referensi_kelas grk
+			  WHERE grk.REFERENSI_KELAS = VKELAS_RAWAT;
+			  
+			IF VKELAS_RAWAT = 0 THEN
+				SET VKELAS_RAWAT = VKELAS_HAK;
+			END IF;
+		ELSE
+			SELECT grk.KELAS INTO VKELAS_RAWAT
+			  FROM master.group_referensi_kelas grk
+			 WHERE grk.REFERENSI_KELAS = VKELAS_RAWAT;						
+		END IF;
+		
+		IF VKELAS_RAWAT > 2 THEN
+			SET VNAIK_KELAS = FALSE;
+			
+			IF VKELAS_RAWAT > VKELAS_HAK THEN
+				SET VNAIK_KELAS = TRUE;
+			END IF;
+			
+			IF VKELAS_RAWAT > 3 THEN
+				IF NOT PINSERTED THEN
+					UPDATE pembayaran.penjamin_tagihan pt
+						   SET pt.TOTAL_TAGIHAN_VIP = IF(pt.TOTAL_TAGIHAN_VIP <= 0, 0, pt.TOTAL_TAGIHAN_VIP - PTOTAL)
+						 WHERE pt.TAGIHAN = PTAGIHAN
+						   AND pt.PENJAMIN = 2;
+				END IF;
+					
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_TAGIHAN_VIP = pt.TOTAL_TAGIHAN_VIP + PTOTAL
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+				   
+				IF PJENIS = 3 OR PJENIS = 2 THEN
+				BEGIN
+					DECLARE VEKSEKUSI TINYINT DEFAULT 0;
+					IF PJENIS = 2 THEN
+						SET VEKSEKUSI = 1;
+					ELSE
+						IF EXISTS(
+							SELECT 1 
+							  FROM layanan.tindakan_medis tm,
+							  	 	 `master`.group_pemeriksaan gp,
+							  		 `master`.mapping_group_pemeriksaan mgp
+							 WHERE tm.ID = PREF_ID
+							   AND gp.JENIS = 3
+							   AND gp.KODE = '10' 
+							   AND mgp.GROUP_PEMERIKSAAN_ID = gp.ID
+							   AND mgp.PEMERIKSAAN = tm.TINDAKAN
+							 LIMIT 1
+							) THEN
+							SET VEKSEKUSI = 1;
+						END IF; 
+					END IF;
+					
+					IF VEKSEKUSI = 1 THEN
+						IF NOT PINSERTED THEN
+							UPDATE pembayaran.penjamin_tagihan pt
+							   SET pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE = IF(pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE = 0, 0, pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE - PTOTAL)
+							 WHERE pt.TAGIHAN = PTAGIHAN
+							   AND pt.PENJAMIN = 2;
+						END IF;
+						
+						UPDATE pembayaran.penjamin_tagihan pt
+						   SET pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE = pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE + PTOTAL
+						 WHERE pt.TAGIHAN = PTAGIHAN
+						   AND pt.PENJAMIN = 2;
+					END IF;
+				END;
+				END IF;
+			END IF;
+			
+			IF VKELAS_RAWAT > 4 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_DIATAS_VIP = 1
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			IF VKELAS_RAWAT > 3 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_KELAS_VIP = 1
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			IF VKELAS_RAWAT > 2 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_KELAS = IF(VNAIK_KELAS, 1, 0)
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+		ELSE
+			IF VKELAS_RAWAT > VKELAS_HAK THEN
+				SET VNAIK_KELAS = TRUE;
+				SET VTARIF_NAIK_KELAS = IF(VKELAS_RAWAT = 2, VTOTAL_TARIF_KELAS2, VTOTAL_TARIF_KELAS1);				
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.NAIK_KELAS = 1
+					    , pt.TOTAL_NAIK_KELAS = VTARIF_NAIK_KELAS
+				   	 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+		END IF;
+		
+		IF VNAIK_KELAS THEN
+			IF PJENIS = 2 THEN
+			BEGIN
+				DECLARE VLAMA_NAIK SMALLINT;
+				
+				SELECT SUM(rt.JUMLAH) 
+				  INTO VLAMA_NAIK
+				  FROM pembayaran.rincian_tagihan rt
+				  		 , pembayaran.penjamin_tagihan pt
+				  		 , pendaftaran.kunjungan k
+				  		 	LEFT JOIN master.group_referensi_kelas grk2 ON grk2.REFERENSI_KELAS = k.TITIPAN_KELAS
+						 , master.ruang_kamar_tidur rkt
+						 , master.ruang_kamar rk
+						 , master.group_referensi_kelas grk
+				 WHERE rt.TAGIHAN = PTAGIHAN
+				   AND rt.JENIS = 2
+				   AND pt.TAGIHAN = rt.TAGIHAN
+				   AND pt.PENJAMIN = 2
+					AND k.NOMOR = rt.REF_ID
+					AND rkt.ID = k.RUANG_KAMAR_TIDUR
+					AND rk.ID = rkt.RUANG_KAMAR
+					AND grk.REFERENSI_KELAS = rk.KELAS
+					AND (grk.KELAS = pt.KELAS OR (k.TITIPAN = 1 AND grk2.KELAS = pt.KELAS));
+			
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.LAMA_NAIK = VLAMA_NAIK
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END;
+			END IF;
+		END IF;	
+		
+		IF VKELAS_RAWAT <= VKELAS_HAK THEN
+		BEGIN
+			IF NOT PINSERTED THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_TAGIHAN_HAK = pt.TOTAL_TAGIHAN_HAK - PTOTAL
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			
+			UPDATE pembayaran.penjamin_tagihan pt
+			   SET pt.TOTAL_TAGIHAN_HAK = pt.TOTAL_TAGIHAN_HAK + PTOTAL
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.PENJAMIN = 2;
+		END;
+		END IF;
+		
+		BEGIN
+			DECLARE VTOTAL_JAMINAN DECIMAL(60,2);
+			DECLARE VTOTAL_TAGIHAN_HAK DECIMAL(60,2);
+			DECLARE VNAIK_KELAS_VIP TINYINT;
+			DECLARE VNAIK_KELAS TINYINT;
+			DECLARE VNAIK_DIATAS_VIP TINYINT;
+			DECLARE VSELISIH DECIMAL(60,2);
+			DECLARE VSUBSIDI DECIMAL(60,2) DEFAULT 0;
+			DECLARE VSUBSIDI_TAGIHAN INT;
+			DECLARE VSELISIH_MINIMAL, VTOTAL_TAGIHAN_VIP DECIMAL(60,2) DEFAULT 0;
+			DECLARE VMINTARIFINACBGPERSEN SMALLINT;
+			DECLARE VKELAS_KLAIM SMALLINT;
+			DECLARE VTARIF_INACBG_KELAS1, VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE DECIMAL(60,2);
+			
+			SELECT CAST(pc.VALUE AS SIGNED) INTO VMINTARIFINACBGPERSEN
+			  FROM aplikasi.properti_config pc
+			 WHERE pc.ID = 16;
+				 
+			IF FOUND_ROWS() = 0 THEN
+				SET VMINTARIFINACBGPERSEN = 0;
+			END IF;
+			
+			SELECT pt.TOTAL, pt.TOTAL_NAIK_KELAS, pt.NAIK_KELAS, pt.NAIK_KELAS_VIP, pt.NAIK_DIATAS_VIP
+					 , pt.TOTAL_TAGIHAN_HAK, pt.SUBSIDI_TAGIHAN, pt.SELISIH_MINIMAL, pt.TOTAL_TAGIHAN_VIP, pt.KELAS_KLAIM, pt.TARIF_INACBG_KELAS1
+					 , pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE, t.TOTAL
+			  INTO VTOTAL_JAMINAN, VTARIF_NAIK_KELAS, VNAIK_KELAS, VNAIK_KELAS_VIP, VNAIK_DIATAS_VIP
+			  	    , VTOTAL_TAGIHAN_HAK, VSUBSIDI_TAGIHAN, VSELISIH_MINIMAL, VTOTAL_TAGIHAN_VIP, VKELAS_KLAIM, VTARIF_INACBG_KELAS1
+			  	    , VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE, VTOTAL_TAGIHAN_RS
+			  FROM pembayaran.penjamin_tagihan pt,
+			  		 pembayaran.tagihan t
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.PENJAMIN = 2
+				AND t.ID = pt.TAGIHAN;
+			   
+			IF FOUND_ROWS() > 0 THEN
+			BEGIN					
+				SET VSELISIH = VTOTAL_TAGIHAN_RS - VTOTAL_JAMINAN;
+				SET VSELISIH = IF(VSELISIH <= 0, 0, VSELISIH);
+														
+				IF VSELISIH > 0 THEN
+					IF VNAIK_KELAS = 0 AND VNAIK_KELAS_VIP = 0 THEN
+						SET VSUBSIDI = VSELISIH;					
+					END IF;
+				END IF;
+				
+				IF VNAIK_KELAS_VIP = 1 OR VNAIK_DIATAS_VIP = 1 THEN
+				BEGIN
+					DECLARE VSELMIN DECIMAL(60, 2);
+					DECLARE VSELMAX DECIMAL(60, 2);
+					DECLARE VSELTGHN DECIMAL(60, 2);			
+											
+					SET VSELMAX = VTARIF_INACBG_KELAS1 * (75/100);
+					SET VSELTGHN = VTOTAL_TAGIHAN_VIP - VTARIF_INACBG_KELAS1;
+					SET VSELTGHN = IF(VSELTGHN <= 0, 0, VSELTGHN);
+					
+			   	IF VSELISIH > 0 THEN
+				   	IF VKELAS_KLAIM = 3 THEN
+				   		IF VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE <= VSELMAX THEN
+						   	SET VSELISIH_MINIMAL = VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE;
+						   ELSE
+						   	SET VSELISIH_MINIMAL = VSELMAX;
+						   END IF;
+				   	ELSE
+				   		IF VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE <= VSELMAX THEN
+						   	SET VSELISIH_MINIMAL = VTOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE;
+						   ELSE
+						   	SET VSELISIH_MINIMAL = VSELMAX;
+						   END IF;
+				   	END IF;
+				   ELSE
+				   	SET VSELISIH_MINIMAL = 0;
+				   END IF;
+				   
+				   UPDATE pembayaran.penjamin_tagihan pt
+					   SET pt.TOTAL_NAIK_KELAS = IF(VSELISIH > 0, pt.TARIF_INACBG_KELAS1, VTOTAL_TAGIHAN_RS),
+							 pt.SELISIH_MINIMAL = VSELISIH_MINIMAL
+					 WHERE pt.TAGIHAN = PTAGIHAN
+			   		AND pt.PENJAMIN = 2;
+					
+			   	SET VSUBSIDI = 0;
+			   	UPDATE pembayaran.subsidi_tagihan st
+			   	   SET st.TOTAL = VSUBSIDI
+			   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+				END;
+				ELSE
+					IF VNAIK_KELAS = 1 THEN
+						SET VSUBSIDI = 0;
+				   	UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+					END IF;
+				END IF;
+			END;
+			END IF;
+			
+			IF VSUBSIDI > 0 THEN
+				IF VSUBSIDI_TAGIHAN > 0 THEN
+					IF EXISTS(
+						SELECT 1
+						  FROM pembayaran.subsidi_tagihan st
+						 WHERE st.ID = VSUBSIDI_TAGIHAN
+						   AND st.`STATUS` = 1
+						 LIMIT 1) THEN
+						UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+				   ELSE
+				   	SET VSUBSIDI_TAGIHAN = 0;
+					END IF;
+				END IF;
+				
+				IF VSUBSIDI_TAGIHAN = 0 THEN
+					INSERT INTO pembayaran.subsidi_tagihan(TAGIHAN, TOTAL, TANGGAL)
+					     VALUES(PTAGIHAN, VSUBSIDI, NOW());
+					SET VSUBSIDI_TAGIHAN = LAST_INSERT_ID();
+					
+					UPDATE pembayaran.penjamin_tagihan pt
+					   SET pt.SUBSIDI_TAGIHAN = VSUBSIDI_TAGIHAN
+					 WHERE pt.TAGIHAN = PTAGIHAN
+			   		AND pt.PENJAMIN = 2;				   
+				END IF;
+			END IF;								
+		END;
+	ELSE
+		DELETE FROM pembayaran.subsidi_tagihan WHERE TAGIHAN = PTAGIHAN;
+	END IF;
+END//
+DELIMITER ;
+
+-- membuang struktur untuk procedure pembayaran.prosesPerhitunganBPJSSebelum2023
+DROP PROCEDURE IF EXISTS `prosesPerhitunganBPJSSebelum2023`;
+DELIMITER //
+CREATE PROCEDURE `prosesPerhitunganBPJSSebelum2023`(
+	IN `PTAGIHAN` CHAR(10),
+	IN `PREF_ID` CHAR(19),
+	IN `PJENIS` TINYINT,
+	IN `PTOTAL` DECIMAL(60,2),
+	IN `PINSERTED` TINYINT,
+	IN `PKELAS` SMALLINT
+)
+BEGIN
+	DECLARE VKELAS_HAK SMALLINT;
+	DECLARE VKELAS_RAWAT SMALLINT;
+	DECLARE VTARIF_NAIK_KELAS DECIMAL(60,2);
+	DECLARE VTOTAL_TAGIHAN DECIMAL(60,2);
+	DECLARE VNAIK_KELAS TINYINT DEFAULT FALSE;
+	DECLARE VTOTAL DECIMAL(60,2);
+	DECLARE VTOTAL_TARIF_KELAS2 DECIMAL(60,2);
+	DECLARE VTOTAL_TARIF_KELAS1 DECIMAL(60,2);
+	DECLARE ATURAN_JKN_MENGIKUTI_KEBIJAKAN_RS TINYINT DEFAULT FALSE;
+	DECLARE VINTENSIF TINYINT DEFAULT 0;
+	
+	SELECT pt.NAIK_KELAS INTO VNAIK_KELAS 
+	  FROM pembayaran.penjamin_tagihan pt 
+	 WHERE pt.TAGIHAN = PTAGIHAN 
+	   AND pt.PENJAMIN = 2 
+	 LIMIT 1;	
+	 
+	IF FOUND_ROWS() > 0 THEN
+		SET VTOTAL_TAGIHAN = pembayaran.getTotalTagihan(PTAGIHAN);
+		
+		SELECT p.KELAS, hg.TOTALTARIF
+				 , hg.TARIFSP + hg.TARIFSR + hg.TARIFSI + hg.TARIFSD + hg.TARIFSA + hg.TARIFKLS2
+				 , hg.TARIFSP + hg.TARIFSR + hg.TARIFSI + hg.TARIFSD + hg.TARIFSA + hg.TARIFKLS1
+		  INTO VKELAS_HAK, VTOTAL, VTOTAL_TARIF_KELAS2, VTOTAL_TARIF_KELAS1
+		  FROM pendaftaran.penjamin p
+		  	    , pembayaran.tagihan_pendaftaran tp
+		  	    LEFT JOIN inacbg.hasil_grouping hg ON tp.PENDAFTARAN = hg.NOPEN
+		 WHERE p.JENIS = 2
+		   AND tp.PENDAFTARAN = p.NOPEN
+		   AND tp.TAGIHAN = PTAGIHAN					 
+		   AND tp.`STATUS` = 1
+		   AND tp.UTAMA = 1
+		 LIMIT 1;
+		 
+		UPDATE pembayaran.penjamin_tagihan pt
+		   SET pt.TOTAL = VTOTAL
+		   	 , pt.TARIF_INACBG_KELAS1 = IF(pt.KELAS_KLAIM = 3, VTOTAL, VTOTAL_TARIF_KELAS1)
+		 WHERE pt.TAGIHAN = PTAGIHAN
+		   AND pt.PENJAMIN = 2;
+		
+		SET VKELAS_RAWAT = PKELAS;				
+		
+		SELECT grk.KELAS INTO VKELAS_HAK
+		  FROM master.group_referensi_kelas grk
+		 WHERE grk.REFERENSI_KELAS = VKELAS_HAK;
+		
+		IF PJENIS = 2 THEN
+			 SELECT grk.KELAS INTO VKELAS_RAWAT
+			   FROM master.group_referensi_kelas grk
+			  WHERE grk.REFERENSI_KELAS = VKELAS_RAWAT;
+			  
+			IF VKELAS_RAWAT = 0 THEN
+				SET VKELAS_RAWAT = VKELAS_HAK;
+			END IF;
+		ELSE
+			SELECT grk.KELAS INTO VKELAS_RAWAT
+			  FROM master.group_referensi_kelas grk
+			 WHERE grk.REFERENSI_KELAS = VKELAS_RAWAT;						
+		END IF;
+		
+		IF VKELAS_RAWAT > 3 THEN
+			SET VNAIK_KELAS = TRUE;
+			
+			IF PJENIS = 3 OR PJENIS = 2 THEN
+				IF EXISTS(SELECT 1
+				  FROM aplikasi.properti_config pc
+				 WHERE pc.ID = 57
+				   AND VALUE = 'TRUE') THEN
+				BEGIN
+					DECLARE VEKSEKUSI TINYINT DEFAULT 0;
+					IF PJENIS = 2 THEN
+						SET VEKSEKUSI = 1;
+					ELSE
+						IF EXISTS(
+							SELECT 1 
+							  FROM layanan.tindakan_medis tm,
+							  	 	 `master`.group_pemeriksaan gp,
+							  		 `master`.mapping_group_pemeriksaan mgp
+							 WHERE tm.ID = PREF_ID
+							   AND gp.JENIS = 3
+							   AND gp.KODE = '10' 
+							   AND mgp.GROUP_PEMERIKSAAN_ID = gp.ID
+							   AND mgp.PEMERIKSAAN = tm.TINDAKAN
+							 LIMIT 1
+							) THEN
+							SET VEKSEKUSI = 1;
+						END IF; 
+					END IF;
+					
+					IF VEKSEKUSI = 1 THEN
+						IF NOT PINSERTED THEN
+							UPDATE pembayaran.penjamin_tagihan pt
+							   SET pt.TOTAL_TAGIHAN_VIP = IF(pt.TOTAL_TAGIHAN_VIP = 0, 0, pt.TOTAL_TAGIHAN_VIP - PTOTAL)
+							 WHERE pt.TAGIHAN = PTAGIHAN
+							   AND pt.PENJAMIN = 2;
+						END IF;
+						
+						UPDATE pembayaran.penjamin_tagihan pt
+						   SET pt.TOTAL_TAGIHAN_VIP = pt.TOTAL_TAGIHAN_VIP + PTOTAL
+						 WHERE pt.TAGIHAN = PTAGIHAN
+						   AND pt.PENJAMIN = 2;
+					END IF;
+				END;
+				END IF;
+			END IF;
+			
+			IF VKELAS_RAWAT > 4 THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_DIATAS_VIP = 1
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			ELSE
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_NAIK_KELAS = pt.TARIF_INACBG_KELAS1
+						 , pt.NAIK_KELAS_VIP = 1
+						 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+		ELSE
+			IF VKELAS_RAWAT > VKELAS_HAK THEN
+				SET VNAIK_KELAS = TRUE;
+				SET VTARIF_NAIK_KELAS = IF(VKELAS_RAWAT = 2, VTOTAL_TARIF_KELAS2, VTOTAL_TARIF_KELAS1);				
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.NAIK_KELAS = 1
+					    , pt.TOTAL_NAIK_KELAS = VTARIF_NAIK_KELAS
+				   	 , pt.KELAS = IF(VKELAS_RAWAT >= pt.KELAS, VKELAS_RAWAT, pt.KELAS)
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+		END IF;
+		
+		IF VNAIK_KELAS THEN
+			IF PJENIS = 2 THEN
+			BEGIN
+				DECLARE VLAMA_NAIK SMALLINT;
+				
+				SELECT SUM(rt.JUMLAH) 
+				  INTO VLAMA_NAIK
+				  FROM pembayaran.rincian_tagihan rt
+				  		 , pembayaran.penjamin_tagihan pt
+				  		 , pendaftaran.kunjungan k
+				  		 	LEFT JOIN master.group_referensi_kelas grk2 ON grk2.REFERENSI_KELAS = k.TITIPAN_KELAS
+						 , master.ruang_kamar_tidur rkt
+						 , master.ruang_kamar rk
+						 , master.group_referensi_kelas grk
+				 WHERE rt.TAGIHAN = PTAGIHAN
+				   AND rt.JENIS = 2
+				   AND pt.TAGIHAN = rt.TAGIHAN
+				   AND pt.PENJAMIN = 2
+					AND k.NOMOR = rt.REF_ID
+					AND rkt.ID = k.RUANG_KAMAR_TIDUR
+					AND rk.ID = rkt.RUANG_KAMAR
+					AND grk.REFERENSI_KELAS = rk.KELAS
+					AND (grk.KELAS = pt.KELAS OR (k.TITIPAN = 1 AND grk2.KELAS = pt.KELAS));
+			
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.LAMA_NAIK = VLAMA_NAIK
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END;
+			END IF;
+			
+			IF EXISTS(SELECT 1
+				  FROM aplikasi.properti_config pc
+				 WHERE pc.ID = 9
+				   AND VALUE = 'TRUE') THEN
+			BEGIN			
+				DECLARE VTOTAL_HAK_KELAS DECIMAL(60,2);   
+				DECLARE VTOTAL_NAIK_KELAS DECIMAL(60,2);
+				
+				SET ATURAN_JKN_MENGIKUTI_KEBIJAKAN_RS = TRUE;
+
+				SELECT SUM(rt.JUMLAH * master.getTarifRuangRawat(VKELAS_HAK, IF(pc.VALUE = 'TRUE', p.TANGGAL, k.MASUK)))
+						 , SUM(rt.JUMLAH * rt.TARIF)
+				  INTO VTOTAL_HAK_KELAS, VTOTAL_NAIK_KELAS
+				  FROM pembayaran.rincian_tagihan rt
+				  		 , pendaftaran.kunjungan k
+				  		 	LEFT JOIN master.group_referensi_kelas grk2 ON grk2.REFERENSI_KELAS = k.TITIPAN_KELAS
+						 , master.ruang_kamar_tidur rkt
+						 , master.ruang_kamar rk
+						 , master.group_referensi_kelas grk
+						 , pendaftaran.pendaftaran p
+						 , aplikasi.properti_config pc
+				 WHERE rt.TAGIHAN = PTAGIHAN
+				   AND rt.JENIS = 2
+					AND k.NOMOR = rt.REF_ID
+					AND rkt.ID = k.RUANG_KAMAR_TIDUR
+					AND rk.ID = rkt.RUANG_KAMAR
+					AND grk.REFERENSI_KELAS = rk.KELAS
+					AND (grk.KELAS > VKELAS_HAK OR (k.TITIPAN = 1 AND grk2.KELAS > VKELAS_HAK))
+					AND p.NOMOR = k.NOPEN
+					AND pc.ID = 9;
+					
+				IF FOUND_ROWS() > 0 THEN
+					IF NOT ISNULL(VTOTAL_HAK_KELAS) AND NOT ISNULL(VTOTAL_NAIK_KELAS) THEN			
+						UPDATE pembayaran.penjamin_tagihan pt
+						   SET pt.TOTAL = VTOTAL_HAK_KELAS
+						   	 , pt.TOTAL_NAIK_KELAS = VTOTAL_NAIK_KELAS
+						 WHERE pt.TAGIHAN = PTAGIHAN
+						   AND pt.PENJAMIN = 2;
+					END IF;
+				END IF;
+			END;	
+			END IF;
+		END IF;
+		
+		IF VKELAS_RAWAT <= VKELAS_HAK THEN
+		BEGIN
+			IF NOT PINSERTED THEN
+				UPDATE pembayaran.penjamin_tagihan pt
+				   SET pt.TOTAL_TAGIHAN_HAK = pt.TOTAL_TAGIHAN_HAK - PTOTAL
+				 WHERE pt.TAGIHAN = PTAGIHAN
+				   AND pt.PENJAMIN = 2;
+			END IF;
+			
+			UPDATE pembayaran.penjamin_tagihan pt
+			   SET pt.TOTAL_TAGIHAN_HAK = pt.TOTAL_TAGIHAN_HAK + PTOTAL
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.PENJAMIN = 2;
+		END;
+		END IF;
+		
+		BEGIN
+			DECLARE VTOTAL_JAMINAN DECIMAL(60,2);
+			DECLARE VTOTAL_TAGIHAN_HAK DECIMAL(60,2);
+			DECLARE VNAIK_KELAS_VIP TINYINT;
+			DECLARE VNAIK_KELAS TINYINT;
+			DECLARE VNAIK_DIATAS_VIP TINYINT;
+			DECLARE VSELISIH DECIMAL(60,2);
+			DECLARE VSUBSIDI DECIMAL(60,2) DEFAULT 0;
+			DECLARE VSUBSIDI_TAGIHAN INT;
+			DECLARE VSELISIH_MINIMAL, VTOTAL_TAGIHAN_VIP DECIMAL(60,2) DEFAULT 0;
+			DECLARE VMINTARIFINACBGPERSEN SMALLINT;
+			
+			SELECT CAST(pc.VALUE AS SIGNED) INTO VMINTARIFINACBGPERSEN
+			  FROM aplikasi.properti_config pc
+			 WHERE pc.ID = 16;
+				 
+			IF FOUND_ROWS() = 0 THEN
+				SET VMINTARIFINACBGPERSEN = 0;
+			END IF;
+			
+			SELECT pt.TOTAL, pt.TOTAL_NAIK_KELAS, pt.NAIK_KELAS, pt.NAIK_KELAS_VIP, pt.NAIK_DIATAS_VIP, pt.TOTAL_TAGIHAN_HAK, pt.SUBSIDI_TAGIHAN, pt.SELISIH_MINIMAL, pt.TOTAL_TAGIHAN_VIP
+			  INTO VTOTAL_JAMINAN, VTARIF_NAIK_KELAS, VNAIK_KELAS, VNAIK_KELAS_VIP, VNAIK_DIATAS_VIP, VTOTAL_TAGIHAN_HAK, VSUBSIDI_TAGIHAN, VSELISIH_MINIMAL, VTOTAL_TAGIHAN_VIP
+			  FROM pembayaran.penjamin_tagihan pt
+			 WHERE pt.TAGIHAN = PTAGIHAN
+			   AND pt.PENJAMIN = 2;
+			   
+			IF FOUND_ROWS() > 0 THEN
+			BEGIN					
+				SET VSELISIH = VTOTAL_TAGIHAN - VTOTAL_JAMINAN;
+				SET VSELISIH = IF(VSELISIH <= 0, 0, VSELISIH);
+														
+				IF VSELISIH > 0 THEN
+					IF VNAIK_KELAS = 0 AND VNAIK_KELAS_VIP = 0 THEN
+						SET VSUBSIDI = VSELISIH;
+					ELSE
+						IF VNAIK_DIATAS_VIP = 1 THEN
+							IF VTOTAL_TAGIHAN_HAK > VTOTAL_JAMINAN THEN
+								SET VSUBSIDI = VTOTAL_TAGIHAN_HAK - VTOTAL_JAMINAN;
+							END IF;						
+						END IF;														
+					END IF;
+				END IF;
+				
+				IF VNAIK_KELAS_VIP = 1 THEN
+				BEGIN
+					DECLARE VSEL DECIMAL(60,2);
+					DECLARE VSELMIN DECIMAL(60, 2);
+					DECLARE VSELMAX DECIMAL(60, 2);		
+											
+					SET VSEL = VTOTAL_TAGIHAN - VTARIF_NAIK_KELAS;
+					SET VSELMIN = VTARIF_NAIK_KELAS * (VMINTARIFINACBGPERSEN/100);
+					SET VSELMAX = VTARIF_NAIK_KELAS * (75/100);
+					
+					IF NOT EXISTS(SELECT 1 FROM aplikasi.properti_config pc WHERE pc.ID = 20 AND pc.VALUE = 'TRUE') THEN
+						IF VMINTARIFINACBGPERSEN != 75 THEN
+							IF VSEL <= VSELMIN THEN
+								SET VSELISIH_MINIMAL = VSELMIN;
+							ELSE
+								IF VSEL > VSELMAX THEN
+									SET VSELISIH_MINIMAL = VSELMAX;
+								ELSE
+									SET VSELISIH_MINIMAL = VSEL;
+								END IF;
+							END IF;
+						ELSE
+							SET VSELISIH_MINIMAL = VSELMAX;
+						END IF;
+						
+						UPDATE pembayaran.penjamin_tagihan pt
+						   SET pt.SELISIH_MINIMAL = VSELISIH_MINIMAL
+						 WHERE pt.TAGIHAN = PTAGIHAN
+				   		AND pt.PENJAMIN = 2;
+				   ELSE
+				   	IF EXISTS(SELECT 1
+						  FROM aplikasi.properti_config pc
+						 WHERE pc.ID = 57
+						   AND VALUE = 'TRUE') THEN
+						   IF VTOTAL_TAGIHAN_VIP <= VSELMAX THEN
+						   	SET VSELISIH_MINIMAL = VTOTAL_TAGIHAN_VIP;
+						   ELSE
+						   	SET VSELISIH_MINIMAL = VSELMAX;
+						   END IF;
+						   
+						   UPDATE pembayaran.penjamin_tagihan pt
+							   SET pt.SELISIH_MINIMAL = VSELISIH_MINIMAL
+							 WHERE pt.TAGIHAN = PTAGIHAN
+					   		AND pt.PENJAMIN = 2;
+						END IF;
+						
+				   	SET VSUBSIDI = 0;
+				   	UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+					END IF;
+				END;
+				ELSE
+					IF VNAIK_KELAS = 1 THEN
+						SET VSUBSIDI = 0;
+				   	UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+					END IF;
+				END IF;
+			END;
+			END IF;
+			
+			IF ATURAN_JKN_MENGIKUTI_KEBIJAKAN_RS THEN
+				SET VSUBSIDI = 0;
+			END IF;
+			
+			IF VSUBSIDI > 0 THEN
+				IF VSUBSIDI_TAGIHAN > 0 THEN
+					IF EXISTS(
+						SELECT 1
+						  FROM pembayaran.subsidi_tagihan st
+						 WHERE st.ID = VSUBSIDI_TAGIHAN
+						   AND st.`STATUS` = 1
+						 LIMIT 1) THEN
+						UPDATE pembayaran.subsidi_tagihan st
+				   	   SET st.TOTAL = VSUBSIDI
+				   	 WHERE st.ID = VSUBSIDI_TAGIHAN;
+				   ELSE
+				   	SET VSUBSIDI_TAGIHAN = 0;
+					END IF;
+				END IF;
+				
+				IF VSUBSIDI_TAGIHAN = 0 THEN
+					INSERT INTO pembayaran.subsidi_tagihan(TAGIHAN, TOTAL, TANGGAL)
+					     VALUES(PTAGIHAN, VSUBSIDI, NOW());
+					SET VSUBSIDI_TAGIHAN = LAST_INSERT_ID();
+					
+					UPDATE pembayaran.penjamin_tagihan pt
+					   SET pt.SUBSIDI_TAGIHAN = VSUBSIDI_TAGIHAN
+					 WHERE pt.TAGIHAN = PTAGIHAN
+			   		AND pt.PENJAMIN = 2;				   
+				END IF;
+			END IF;								
+		END;
+	ELSE
+		DELETE FROM pembayaran.subsidi_tagihan WHERE TAGIHAN = PTAGIHAN;
+	END IF;
+END//
+DELIMITER ;
+
+-- membuang struktur untuk procedure pembayaran.reStoreTagihan
+DROP PROCEDURE IF EXISTS `reStoreTagihan`;
+DELIMITER //
+CREATE PROCEDURE `reStoreTagihan`(
+	IN `PTAGIHAN` CHAR(10)
+)
+BEGIN
+	DECLARE VNORM INT;
+	DECLARE VPENDAFTARAN CHAR(10);
+	DECLARE VPAKET SMALLINT DEFAULT NULL;
+	DECLARE VKARTU CHAR(11);
+	DECLARE VKARCIS CHAR(11);
+	DECLARE VTARIF_ID INT;
+	DECLARE VTARIF DECIMAL(60,2);
+	DECLARE VQTY DECIMAL(60,2);
+	DECLARE VPAKET_DETIL INT DEFAULT 0;
+	DECLARE VJENIS_KUNJUNGAN SMALLINT;
+	DECLARE VTANGGAL_PENDAFTARAN DATETIME;
+	DECLARE VKELAS SMALLINT DEFAULT 0;
+	DECLARE VKUNJUNGAN_TMP, VREF CHAR(19);
+	DECLARE VTANGGAL_TAGIHAN DATETIME DEFAULT NULL;
+	DECLARE VTGL_DAFTAR_PASIEN DATETIME;
+	DECLARE VPASIEN_BARU TINYINT DEFAULT 0;
+	DECLARE VAKTIF_TARIF_ADM_BERDASARKAN_JENIS_PASIEN TINYINT DEFAULT FALSE;	
+	
+	IF pembayaran.isFinalTagihan(PTAGIHAN) = 0 THEN		
+		SELECT t.TANGGAL, p.TANGGAL INTO VTANGGAL_TAGIHAN, VTGL_DAFTAR_PASIEN
+		  FROM pembayaran.tagihan t, master.pasien p
+		 WHERE t.ID = PTAGIHAN
+		   AND t.JENIS = 1
+			AND p.NORM = t.REF
+		 LIMIT 1;
+		 
+		SET VPASIEN_BARU = IF(DATE(VTGL_DAFTAR_PASIEN) = DATE(VTANGGAL_TAGIHAN), 1, 0);
+				
+		IF EXISTS(SELECT 1
+			  FROM aplikasi.properti_config pc
+			 WHERE pc.ID = 23
+			   AND VALUE = 'TRUE') THEN		
+			SET VAKTIF_TARIF_ADM_BERDASARKAN_JENIS_PASIEN = TRUE;
+		END IF;
+				
+		UPDATE pembayaran.tagihan t
+		   SET t.TOTAL = 0
+		   	 , t.PROSEDUR_NON_BEDAH = 0
+		   	 , t.PROSEDUR_BEDAH = 0
+		   	 , t.KONSULTASI = 0
+		   	 , t.TENAGA_AHLI = 0
+		   	 , t.KEPERAWATAN = 0
+		   	 , t.PENUNJANG = 0
+		   	 , t.RADIOLOGI = 0
+		   	 , t.LABORATORIUM = 0
+		   	 , t.BANK_DARAH = 0
+		   	 , t.REHAB_MEDIK = 0
+		   	 , t.AKOMODASI = 0
+		   	 , t.AKOMODASI_INTENSIF = 0
+		   	 , t.OBAT = 0
+		   	 , t.OBAT_KRONIS = 0
+		   	 , t.OBAT_KEMOTERAPI = 0
+		   	 , t.ALKES = 0
+		   	 , t.BMHP = 0
+		   	 , t.SEWA_ALAT = 0
+		   	 , t.RAWAT_INTENSIF = 0
+		   	 , t.LAMA_RAWAT_INTENSIF = 0
+		 WHERE t.ID = PTAGIHAN
+		   AND t.STATUS = 1;		   
+		
+		UPDATE pembayaran.penjamin_tagihan pt
+		   SET pt.TOTAL_NAIK_KELAS = 0,
+		   	 pt.NAIK_KELAS = 0,
+		   	 pt.NAIK_KELAS_VIP = 0,
+		   	 pt.NAIK_DIATAS_VIP = 0,
+		   	 pt.TOTAL_TAGIHAN_HAK = 0,	   	
+		   	 pt.KELAS = 0,
+		   	 pt.LAMA_NAIK = 0,
+		   	 pt.TOTAL_TAGIHAN_VIP = 0,
+		   	 pt.TOTAL_TAGIHAN_VIP_AKOMODASI_DAN_VISITE = 0
+		 WHERE pt.TAGIHAN = PTAGIHAN;
+		 
+		UPDATE pembayaran.penjamin_tagihan pt,
+		       pembayaran.subsidi_tagihan st
+		   SET st.TOTAL = 0
+		 WHERE pt.TAGIHAN = PTAGIHAN
+		   AND st.TAGIHAN = pt.TAGIHAN
+			AND st.ID = pt.SUBSIDI_TAGIHAN;
+			
+		IF NOT EXISTS(SELECT 1 FROM pembayaran.penjamin_tagihan pt WHERE pt.TAGIHAN = PTAGIHAN AND pt.KE = 1) THEN
+			UPDATE pembayaran.subsidi_tagihan st
+			   SET st.TOTAL = 0
+			WHERE st.TAGIHAN = PTAGIHAN
+			  AND st.`STATUS` = 1;
+		END IF;
+		 		   		
+		SELECT rt.REF_ID INTO VKARTU
+		  FROM pembayaran.rincian_tagihan rt,
+		  		 master.tarif_administrasi ta
+		 WHERE rt.TAGIHAN = PTAGIHAN
+		 	AND rt.JENIS = 1
+		   AND ta.ID = rt.TARIF_ID	   
+		   AND ta.ADMINISTRASI = 1;
+		   		
+		INSERT INTO pembayaran.rincian_tagihan_temp(TANGGAL, TAGIHAN, REF_ID, JENIS, TARIF_ID, JUMLAH, TARIF, STATUS)
+		  SELECT NOW(), TAGIHAN, REF_ID, JENIS, TARIF_ID, JUMLAH, TARIF, STATUS
+		    FROM pembayaran.rincian_tagihan WHERE TAGIHAN = PTAGIHAN;
+						
+		DELETE FROM pembayaran.rincian_tagihan WHERE TAGIHAN = PTAGIHAN;		
+		DELETE FROM pembayaran.rincian_tagihan_paket WHERE TAGIHAN = PTAGIHAN;		
+		
+		SELECT p.NOMOR, p.PAKET, p.TANGGAL, tp.REF
+		  INTO VPENDAFTARAN, VPAKET, VTANGGAL_PENDAFTARAN, VREF
+		  FROM pembayaran.tagihan_pendaftaran tp,
+		  		 pendaftaran.pendaftaran p
+		 WHERE tp.TAGIHAN = PTAGIHAN
+		   AND p.NOMOR = tp.PENDAFTARAN
+		   AND tp.UTAMA = 1
+		 LIMIT 1;
+		 
+		IF VPENDAFTARAN IS NULL THEN
+			SET VTANGGAL_PENDAFTARAN = NOW();
+		END IF;
+		
+		IF VREF = '' THEN
+			IF VPAKET > 0 OR NOT VPAKET IS NULL THEN
+				CALL master.getTarifPaket(VPAKET, VTANGGAL_PENDAFTARAN, VTARIF_ID, VTARIF);
+				CALL pembayaran.storeRincianTagihan(PTAGIHAN, VPENDAFTARAN, 5, VTARIF_ID, 1, VTARIF, 0, 0, 0);
+			END IF;
+					
+			IF (VPAKET > 0 OR NOT VPAKET IS NULL) AND NOT VKARTU IS NULL THEN
+				CALL master.inPaket(VPAKET, 3, 1, NULL, VQTY, VPAKET_DETIL);
+				IF VPAKET_DETIL > 0 THEN
+					CALL pembayaran.storeRincianTagihanPaket(PTAGIHAN, VPAKET_DETIL, VKARTU, VTANGGAL_PENDAFTARAN, 1, 1);
+				END IF;
+			END IF;
+			
+			IF VPAKET_DETIL = 0 AND NOT VKARTU IS NULL THEN
+			BEGIN
+				IF NOT VAKTIF_TARIF_ADM_BERDASARKAN_JENIS_PASIEN THEN						   
+					CALL master.getTarifAdministrasi(1, 0, VTANGGAL_PENDAFTARAN, VTARIF_ID, VTARIF);
+				ELSE
+					CALL master.getTarifAdministrasiBerdasarkanJenisPasien(1, 0, VTANGGAL_PENDAFTARAN, VPASIEN_BARU, VTARIF_ID, VTARIF);
+				END IF;
+				
+				SELECT k.NOMOR, IF(rk.KELAS IS NULL, -1, IF(k.TITIPAN = 1, k.TITIPAN_KELAS, rk.KELAS)) 
+				  INTO VKUNJUNGAN_TMP, VKELAS
+				  FROM pendaftaran.kunjungan k
+				       LEFT JOIN master.ruang_kamar_tidur rkt ON rkt.ID = k.RUANG_KAMAR_TIDUR
+				 		 LEFT JOIN master.ruang_kamar rk ON rk.ID = rkt.RUANG_KAMAR
+				 WHERE k.NOPEN = VPENDAFTARAN			   
+				   AND k.REF IS NULL
+				   AND NOT k.`STATUS` = 0;
+				
+				IF NOT VKELAS IS NULL THEN
+					IF VKELAS < 0 THEN			
+						SET VKELAS = pembayaran.getKelasRJMengikutiKelasRIYgPertama(PTAGIHAN, VKUNJUNGAN_TMP);
+						IF VKELAS < 0 THEN
+							SET VKELAS = 0;
+						END IF;
+					END IF;
+				END IF;						
+				
+				CALL pembayaran.storeRincianTagihan(PTAGIHAN, VKARTU, 1, VTARIF_ID, 1, VTARIF, VKELAS, 0, 0);
+			END;
+			END IF;
+							
+			BEGIN
+				DECLARE VUTAMA TINYINT;
+				DECLARE VJENIS_ADM TINYINT;
+				DECLARE DATA_NOT_FOUND TINYINT DEFAULT FALSE;
+				DECLARE CR_TAGIHAN_PENDAFTARAN CURSOR FOR
+					SELECT tp.PENDAFTARAN, tp.UTAMA
+					  FROM pembayaran.tagihan_pendaftaran tp
+					 WHERE tp.TAGIHAN = PTAGIHAN
+					   AND tp.STATUS = 1
+					 ORDER BY tp.UTAMA DESC;
+				DECLARE CONTINUE HANDLER FOR NOT FOUND SET DATA_NOT_FOUND = TRUE;
+				
+				OPEN CR_TAGIHAN_PENDAFTARAN;
+				EOF: LOOP
+					FETCH CR_TAGIHAN_PENDAFTARAN INTO VPENDAFTARAN, VUTAMA;
+					
+					IF DATA_NOT_FOUND THEN
+						UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+						LEAVE EOF;
+					END IF;
+					
+					IF VUTAMA = 0 THEN					
+						IF EXISTS(SELECT 1
+							  FROM aplikasi.properti_config pc
+							 WHERE pc.ID = 22
+							   AND VALUE = 'TRUE') THEN
+							UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+							LEAVE EOF;
+						END IF;
+					END IF;
+					
+					SELECT kp.ID, kp.JENIS
+					  INTO VKARCIS, VJENIS_ADM
+					  FROM cetakan.karcis_pasien kp
+					 WHERE kp.NOPEN = VPENDAFTARAN
+					   AND kp.`STATUS` = 1
+					 LIMIT 1;
+					
+					CALL pembayaran.storeAdministrasiKarcis(VPENDAFTARAN, VKARCIS, VJENIS_ADM, PTAGIHAN);
+				END LOOP;
+				CLOSE CR_TAGIHAN_PENDAFTARAN;
+			END;
+		END IF;
+				
+		BEGIN			
+			DECLARE DATA_NOT_FOUND TINYINT DEFAULT FALSE;
+			DECLARE CR_TAGIHAN_PENDAFTARAN CURSOR FOR
+				SELECT PENDAFTARAN
+				  FROM pembayaran.tagihan_pendaftaran
+				 WHERE TAGIHAN = PTAGIHAN
+				   AND STATUS = 1;
+			DECLARE CONTINUE HANDLER FOR NOT FOUND SET DATA_NOT_FOUND = TRUE;
+			
+			OPEN CR_TAGIHAN_PENDAFTARAN;
+			EOF: LOOP
+				FETCH CR_TAGIHAN_PENDAFTARAN INTO VPENDAFTARAN;
+				
+				IF DATA_NOT_FOUND THEN
+					UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+					LEAVE EOF;
+				END IF;
+								
+				BEGIN					
+					DECLARE VKUNJUNGAN CHAR(19);
+					DECLARE VJENIS_KUNJUNGAN TINYINT;
+					DECLARE KUNJUNGAN_NOT_FOUND TINYINT DEFAULT FALSE;
+					DECLARE CR_KUNJUNGAN CURSOR FOR					
+						SELECT k.NOMOR, r.JENIS_KUNJUNGAN
+						  FROM pendaftaran.pendaftaran p,
+						  		 pendaftaran.kunjungan k,
+						  		 master.ruangan r
+						 WHERE k.NOPEN = p.NOMOR
+						   AND k.`STATUS` > 0
+						   AND r.ID = k.RUANGAN
+						   AND p.NOMOR = VPENDAFTARAN;
+					DECLARE CONTINUE HANDLER FOR NOT FOUND SET KUNJUNGAN_NOT_FOUND = TRUE;
+					
+					OPEN CR_KUNJUNGAN;
+					EOF_KUNJUNGAN: LOOP
+						FETCH CR_KUNJUNGAN INTO VKUNJUNGAN, VJENIS_KUNJUNGAN;						
+						
+						IF KUNJUNGAN_NOT_FOUND THEN
+							UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+							LEAVE EOF_KUNJUNGAN;
+						END IF;
+												
+						IF VJENIS_KUNJUNGAN = 3 THEN							
+							CALL pembayaran.storeAkomodasi(VKUNJUNGAN);
+						END IF;					
+												
+						BEGIN							
+							DECLARE VTINDAKAN_MEDIS CHAR(11);
+							DECLARE VTINDAKAN SMALLINT;
+							DECLARE TINDAKAN_MEDIS_NOT_FOUND TINYINT DEFAULT FALSE;							
+							DECLARE CR_TINDAKAN_MEDIS CURSOR FOR
+								SELECT ID, TINDAKAN
+								  FROM layanan.tindakan_medis tm
+								 WHERE tm.KUNJUNGAN = VKUNJUNGAN
+								   AND tm.`STATUS` > 0;
+							DECLARE CONTINUE HANDLER FOR NOT FOUND SET TINDAKAN_MEDIS_NOT_FOUND = TRUE;
+							
+							OPEN CR_TINDAKAN_MEDIS;
+							TINDAKAN_MEDIS_EOF: LOOP
+								FETCH CR_TINDAKAN_MEDIS INTO VTINDAKAN_MEDIS, VTINDAKAN;
+								
+								IF TINDAKAN_MEDIS_NOT_FOUND THEN
+									UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+									LEAVE TINDAKAN_MEDIS_EOF;
+								END IF;
+								
+								CALL pembayaran.storeTindakanMedis(VKUNJUNGAN, VTINDAKAN_MEDIS, VTINDAKAN);
+							END LOOP;
+							CLOSE CR_TINDAKAN_MEDIS;
+						END;
+												
+						BEGIN
+							DECLARE VLAYANAN_FARMASI CHAR(11);
+							DECLARE VFARMASI SMALLINT;
+							DECLARE VJUMLAH DECIMAL(60,2);
+							DECLARE FARMASI_NO_FOUND TINYINT DEFAULT FALSE;						
+							DECLARE CR_FARMASI CURSOR FOR
+								SELECT f.ID, f.FARMASI, f.JUMLAH - SUM(IF(rf.JUMLAH IS NULL, 0, rf.JUMLAH)) JUMLAH
+								  FROM layanan.farmasi f
+								  		 LEFT JOIN layanan.retur_farmasi rf ON rf.ID_FARMASI = f.ID
+								 WHERE f.KUNJUNGAN = VKUNJUNGAN
+								   AND f.`STATUS` = 2 AND f.TINDAKAN_PAKET = 0 
+								 GROUP BY ID
+								 HAVING JUMLAH > 0;
+							DECLARE CONTINUE HANDLER FOR NOT FOUND SET FARMASI_NO_FOUND = TRUE;
+								 
+							OPEN CR_FARMASI;
+							FARMASI_EOF: LOOP
+								FETCH CR_FARMASI INTO VLAYANAN_FARMASI, VFARMASI, VJUMLAH;
+								
+								IF FARMASI_NO_FOUND THEN
+									UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+									LEAVE FARMASI_EOF;
+								END IF;
+								
+								 CALL pembayaran.storeFarmasi(VKUNJUNGAN, VLAYANAN_FARMASI, VFARMASI, VJUMLAH);
+							END LOOP;
+							CLOSE CR_FARMASI;
+						END;
+												
+						CALL pembayaran.storeO2(VKUNJUNGAN);
+					END LOOP;
+					CLOSE CR_KUNJUNGAN;
+				END;							
+			END LOOP;
+			CLOSE CR_TAGIHAN_PENDAFTARAN;		   
+		END;
+	END IF;
+END//
+DELIMITER ;
+
+-- membuang struktur untuk procedure pembayaran.storeRincianTagihan
+DROP PROCEDURE IF EXISTS `storeRincianTagihan`;
+DELIMITER //
+CREATE PROCEDURE `storeRincianTagihan`(
+	IN `PTAGIHAN` CHAR(10),
+	IN `PREF_ID` CHAR(19),
+	IN `PJENIS` TINYINT,
+	IN `PTARIF_ID` INT,
+	IN `PJUMLAH` DECIMAL(10,2),
+	IN `PTARIF` DECIMAL(60,2),
+	IN `PKELAS` SMALLINT,
+	IN `PPERSENTASE_DISKON` TINYINT,
+	IN `PDISKON` DECIMAL(60,2)
+)
+BEGIN
+	DECLARE VTARIF DECIMAL(60,2);
+	DECLARE VJML DECIMAL(10,2);
+	DECLARE VJML2 DECIMAL(10,2);
+	DECLARE VSTATUS TINYINT;
+	DECLARE VPERSENTASE_DISKON TINYINT;
+	DECLARE VDISKON TINYINT;
+	DECLARE VINSERTED TINYINT DEFAULT TRUE;
+	DECLARE VTOTAL DECIMAL(60, 2);
+	DECLARE VTOTAL2 DECIMAL(60, 2) DEFAULT 0;
+	
+	SET VTOTAL = (PJUMLAH * (PTARIF - IF(PPERSENTASE_DISKON = 0, PDISKON, (PTARIF * (PDISKON/100)))));
+	SET VJML2 = PJUMLAH;
+	
+	SELECT TARIF, JUMLAH, PERSENTASE_DISKON, DISKON, STATUS INTO VTARIF, VJML, VPERSENTASE_DISKON, VDISKON, VSTATUS FROM pembayaran.rincian_tagihan WHERE TAGIHAN = PTAGIHAN AND REF_ID = PREF_ID AND JENIS = PJENIS;
+	
+	IF	FOUND_ROWS() > 0 THEN		
+		SET VTOTAL2 = (VJML * (VTARIF - IF(VPERSENTASE_DISKON = 0, VDISKON, (VTARIF * (VDISKON/100)))));
+		IF VTARIF != PTARIF THEN
+			UPDATE pembayaran.tagihan
+			   SET TOTAL = TOTAL - VTOTAL2
+			 WHERE ID = PTAGIHAN;
+			 
+			UPDATE pembayaran.tagihan
+			   SET TOTAL = TOTAL + VTOTAL
+			 WHERE ID = PTAGIHAN;
+		ELSE 
+			IF VSTATUS = 0 THEN
+				UPDATE pembayaran.tagihan
+				   SET TOTAL = TOTAL + VTOTAL
+				 WHERE ID = PTAGIHAN;
+			END IF;
+		END IF;
+		
+		UPDATE pembayaran.rincian_tagihan 
+		   SET TARIF_ID = PTARIF_ID,
+		   	 JUMLAH = PJUMLAH,
+		   	 TARIF = PTARIF,
+		   	 PERSENTASE_DISKON = PPERSENTASE_DISKON,
+		   	 DISKON = PDISKON,
+		   	 STATUS = 1
+		 WHERE TAGIHAN = PTAGIHAN
+		 	AND REF_ID = PREF_ID
+			AND JENIS = PJENIS;
+			
+		SET VINSERTED = FALSE;
+		SET VJML2 = VJML2 - VJML;
+	ELSE
+		INSERT INTO pembayaran.rincian_tagihan(TAGIHAN, REF_ID, JENIS, TARIF_ID, JUMLAH, TARIF, PERSENTASE_DISKON, DISKON)
+		VALUES(PTAGIHAN, PREF_ID, PJENIS, PTARIF_ID, PJUMLAH, PTARIF, PPERSENTASE_DISKON, PDISKON);
+		
+		UPDATE pembayaran.tagihan
+		   SET TOTAL = TOTAL + VTOTAL
+		 WHERE ID = PTAGIHAN;
+		 
+		 SET VTARIF = 0;
+		 SET VJML = 0;
+	END IF;
+	
+	SET VTOTAL = VTOTAL - VTOTAL2;
+	
+	BEGIN
+		DECLARE VREF_ID CHAR(5);
+		DECLARE VMANUAL TINYINT;
+		DECLARE VSUCCESS TINYINT DEFAULT TRUE;
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET VSUCCESS = FALSE;
+		SELECT LEFT(r.REF_ID, 1), pt.MANUAL INTO VREF_ID, VMANUAL
+		  FROM pembayaran.penjamin_tagihan pt,
+		  	    master.referensi r
+		 WHERE pt.TAGIHAN = PTAGIHAN
+		   AND pt.KE = 1
+		   AND r.ID = pt.PENJAMIN
+			AND r.JENIS = 10
+		 LIMIT 1;
+		 
+		IF VSUCCESS THEN		
+		   IF VREF_ID = '1' THEN
+				CALL pembayaran.prosesPerhitunganAturan1(PTAGIHAN, PREF_ID, PJENIS, VTOTAL, VINSERTED, PKELAS);
+			END IF;
+				
+			IF VREF_ID = '2' THEN
+				CALL pembayaran.prosesPerhitunganBPJS(PTAGIHAN, PREF_ID, PJENIS, VTOTAL, VINSERTED, PKELAS);
+			END IF;
+			
+			IF VREF_ID = '3' AND VMANUAL = 0 THEN
+				CALL pembayaran.prosesPerhitunganAturan3(PTAGIHAN, PREF_ID, PJENIS, VTOTAL, VINSERTED, PKELAS);
+			END IF;
+			
+			IF VREF_ID = '4' AND VMANUAL = 0 THEN
+				CALL pembayaran.prosesPerhitunganJasaRaharja(PTAGIHAN, PREF_ID, PJENIS, VTOTAL, VINSERTED, PKELAS);
+			END IF;
+		END IF;
+	END;
+	
+	CALL pembayaran.prosesDistribusiTarif(PTAGIHAN, PREF_ID, PJENIS, VJML2, VTOTAL, VINSERTED, PKELAS);
+END//
+DELIMITER ;
+
+-- membuang struktur untuk function pembayaran.getTotalTagihan
+DROP FUNCTION IF EXISTS `getTotalTagihan`;
+DELIMITER //
+CREATE FUNCTION `getTotalTagihan`(
+	`PTAGIHAN` CHAR(10)
+) RETURNS decimal(60,2)
+    DETERMINISTIC
+BEGIN
+	DECLARE VTOTAL DECIMAL(60, 2);
+	
+	SELECT p.JENIS, pt.NAIK_KELAS, pt.TOTAL_NAIK_KELAS, pt.NAIK_KELAS_VIP, pt.TARIF_INACBG_KELAS1, pt.SELISIH_MINIMAL
+	  INTO @VJENIS, @VNAIK_KELAS, @VTOTAL_NAIK_KELAS, @VNAIK_KELAS_VIP, @VTARIF_INACBG_KELAS1, @VSELISIH_MINIMAL
+	  FROM pembayaran.penjamin_tagihan pt,
+	  		 pembayaran.tagihan_pendaftaran tp,
+	  		 pendaftaran.penjamin p
+	 WHERE pt.TAGIHAN = PTAGIHAN
+	   AND pt.KE = 1
+	   AND tp.TAGIHAN = pt.TAGIHAN
+	   AND tp.UTAMA = 1
+	   AND tp.`STATUS` = 1
+	   AND p.NOPEN = tp.PENDAFTARAN;
+	   
+	SELECT TOTAL INTO VTOTAL
+	  FROM pembayaran.tagihan
+	 WHERE ID = PTAGIHAN
+	   AND STATUS != 0;
+
+	IF VTOTAL IS NULL THEN
+		SET VTOTAL = 0;
+	ELSE
+		IF NOT @VJENIS IS NULL THEN
+			SET VTOTAL = IF(@VJENIS = 2 AND @VNAIK_KELAS = 1,
+				@VTOTAL_NAIK_KELAS, 
+				IF(@VJENIS = 2 AND @VNAIK_KELAS_VIP = 1, @VTARIF_INACBG_KELAS1, VTOTAL)
+				) + IFNULL(@VSELISIH_MINIMAL, 0);
+		END IF;
+	END IF;
+	
+	RETURN VTOTAL;
+END//
+DELIMITER ;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

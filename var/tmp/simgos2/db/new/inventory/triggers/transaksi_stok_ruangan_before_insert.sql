@@ -1,0 +1,82 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk trigger inventory.transaksi_stok_ruangan_before_insert
+DROP TRIGGER IF EXISTS `transaksi_stok_ruangan_before_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+DELIMITER //
+CREATE TRIGGER `transaksi_stok_ruangan_before_insert` BEFORE INSERT ON `transaksi_stok_ruangan` FOR EACH ROW BEGIN
+	DECLARE VSTOK_SEBELUMNYA DECIMAL(60,2);
+	DECLARE VTAMBAH_ATAU_KURANG CHAR(1);
+	DECLARE VTANGGAL DATE;
+	
+	 
+	SET NEW.ID = (
+		SELECT CONCAT(LPAD(NEW.BARANG_RUANGAN, 8, '0'), CONCAT(DATE_FORMAT(NEW.TANGGAL, '%y%m%d%H%i%s')), IF(MAX(ID) IS NULL, '001', LPAD(RIGHT(MAX(ID), 3) + 1, 3, '0')))			
+		  FROM inventory.transaksi_stok_ruangan
+		 WHERE TANGGAL = NEW.TANGGAL
+		   AND BARANG_RUANGAN = NEW.BARANG_RUANGAN
+	);
+	
+	
+	SELECT STOK INTO VSTOK_SEBELUMNYA
+	  FROM inventory.transaksi_stok_ruangan
+	 WHERE BARANG_RUANGAN = NEW.BARANG_RUANGAN
+		AND ID < NEW.ID
+	 ORDER BY ID DESC LIMIT 1;
+	
+	
+	IF FOUND_ROWS() = 0 THEN
+		SET NEW.STOK = NEW.JUMLAH;
+	ELSE
+		
+		SELECT jts.TAMBAH_ATAU_KURANG INTO VTAMBAH_ATAU_KURANG
+		  FROM inventory.jenis_transaksi_stok jts
+		 WHERE jts.ID = NEW.JENIS;
+		 
+		IF FOUND_ROWS() > 0 THEN
+			
+			IF NEW.JENIS != 11 THEN
+				IF VTAMBAH_ATAU_KURANG = '+' THEN
+					SET NEW.STOK = VSTOK_SEBELUMNYA + NEW.JUMLAH;
+				ELSEIF VTAMBAH_ATAU_KURANG = '-' THEN
+					SET NEW.STOK = VSTOK_SEBELUMNYA - NEW.JUMLAH;
+				ELSE
+					SET NEW.STOK = VSTOK_SEBELUMNYA;
+				END IF;
+			ELSE
+				SET NEW.STOK = NEW.JUMLAH;
+			END IF;
+		END IF;
+	END IF;
+	
+	
+	IF NOT EXISTS(SELECT 1
+			FROM inventory.transaksi_stok_ruangan
+		  WHERE BARANG_RUANGAN = NEW.BARANG_RUANGAN
+			 AND ID > NEW.ID LIMIT 1) THEN
+	BEGIN
+		UPDATE inventory.barang_ruangan
+		   SET STOK = NEW.STOK,
+		   	 TANGGAL = NEW.TANGGAL,
+		   	 TRANSAKSI_STOK_RUANGAN = NEW.ID
+		 WHERE ID = NEW.BARANG_RUANGAN;
+	END;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

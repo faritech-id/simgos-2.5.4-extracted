@@ -1,0 +1,4 @@
+USE layanan;
+
+ALTER TABLE `hasil_rad`
+	ADD COLUMN `KRITIS` TINYINT NOT NULL DEFAULT 0 COMMENT '0=Kritis, 1=Tidak' AFTER `BTK`;

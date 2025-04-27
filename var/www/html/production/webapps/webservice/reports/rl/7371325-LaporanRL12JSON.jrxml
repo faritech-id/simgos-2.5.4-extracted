@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanRL12" language="groovy" pageWidth="1034" pageHeight="567" orientation="Landscape" columnWidth="1034" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="d27b40c5-1fc4-4119-8e4a-0dfa330e760a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="rl12json"/>
+	<parameter name="TGLAWAL" class="java.lang.String"/>
+	<parameter name="TGLAKHIR" class="java.lang.String"/>
+	<queryString language="JSON">
+		<![CDATA[]]>
+	</queryString>
+	<field name="KODERS" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="KODERS"/>
+		<fieldDescription><![CDATA[KODERS]]></fieldDescription>
+	</field>
+	<field name="NAMAINST" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="NAMAINST"/>
+		<fieldDescription><![CDATA[NAMAINST]]></fieldDescription>
+	</field>
+	<field name="KODEPROP" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="KODEPROP"/>
+		<fieldDescription><![CDATA[KODEPROP]]></fieldDescription>
+	</field>
+	<field name="KOTA" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="KOTA"/>
+		<fieldDescription><![CDATA[KOTA]]></fieldDescription>
+	</field>
+	<field name="TAHUN" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="TAHUN"/>
+		<fieldDescription><![CDATA[TAHUN]]></fieldDescription>
+	</field>
+	<field name="AWAL" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="AWAL"/>
+		<fieldDescription><![CDATA[AWAL]]></fieldDescription>
+	</field>
+	<field name="MASUK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="MASUK"/>
+		<fieldDescription><![CDATA[MASUK]]></fieldDescription>
+	</field>
+	<field name="PINDAHAN" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="PINDAHAN"/>
+		<fieldDescription><![CDATA[PINDAHAN]]></fieldDescription>
+	</field>
+	<field name="DIPINDAHKAN" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="DIPINDAHKAN"/>
+		<fieldDescription><![CDATA[DIPINDAHKAN]]></fieldDescription>
+	</field>
+	<field name="HIDUP" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="HIDUP"/>
+		<fieldDescription><![CDATA[HIDUP]]></fieldDescription>
+	</field>
+	<field name="MATI" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="MATI"/>
+		<fieldDescription><![CDATA[MATI]]></fieldDescription>
+	</field>
+	<field name="MATIKURANG48" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="MATIKURANG48"/>
+		<fieldDescription><![CDATA[MATIKURANG48]]></fieldDescription>
+	</field>
+	<field name="MATILEBIH48" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="MATILEBIH48"/>
+		<fieldDescription><![CDATA[MATILEBIH48]]></fieldDescription>
+	</field>
+	<field name="LD" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="LD"/>
+		<fieldDescription><![CDATA[LD]]></fieldDescription>
+	</field>
+	<field name="SISA" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="SISA"/>
+		<fieldDescription><![CDATA[SISA]]></fieldDescription>
+	</field>
+	<field name="HP" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="HP"/>
+		<fieldDescription><![CDATA[HP]]></fieldDescription>
+	</field>
+	<field name="JMLTT" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="JMLTT"/>
+		<fieldDescription><![CDATA[JMLTT]]></fieldDescription>
+	</field>
+	<field name="BOR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="BOR"/>
+		<fieldDescription><![CDATA[BOR]]></fieldDescription>
+	</field>
+	<field name="BORLK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="BORLK"/>
+		<fieldDescription><![CDATA[BORLK]]></fieldDescription>
+	</field>
+	<field name="BORPR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="BORPR"/>
+		<fieldDescription><![CDATA[BORPR]]></fieldDescription>
+	</field>
+	<field name="AVLOS" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="AVLOS"/>
+		<fieldDescription><![CDATA[AVLOS]]></fieldDescription>
+	</field>
+	<field name="AVLOSLK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="AVLOSLK"/>
+		<fieldDescription><![CDATA[AVLOSLK]]></fieldDescription>
+	</field>
+	<field name="AVLOSPR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="AVLOSPR"/>
+		<fieldDescription><![CDATA[AVLOSPR]]></fieldDescription>
+	</field>
+	<field name="BTO" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="BTO"/>
+		<fieldDescription><![CDATA[BTO]]></fieldDescription>
+	</field>
+	<field name="BTOLK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="BTOLK"/>
+		<fieldDescription><![CDATA[BTOLK]]></fieldDescription>
+	</field>
+	<field name="BTOPR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="BTOPR"/>
+		<fieldDescription><![CDATA[BTOPR]]></fieldDescription>
+	</field>
+	<field name="TOI" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="TOI"/>
+		<fieldDescription><![CDATA[TOI]]></fieldDescription>
+	</field>
+	<field name="TOILK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="TOILK"/>
+		<fieldDescription><![CDATA[TOILK]]></fieldDescription>
+	</field>
+	<field name="TOIPR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="TOIPR"/>
+		<fieldDescription><![CDATA[TOIPR]]></fieldDescription>
+	</field>
+	<field name="NDR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="NDR"/>
+		<fieldDescription><![CDATA[NDR]]></fieldDescription>
+	</field>
+	<field name="NDRLK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="NDRLK"/>
+		<fieldDescription><![CDATA[NDRLK]]></fieldDescription>
+	</field>
+	<field name="NDRPR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="NDRPR"/>
+		<fieldDescription><![CDATA[NDRPR]]></fieldDescription>
+	</field>
+	<field name="GDR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="GDR"/>
+		<fieldDescription><![CDATA[GDR]]></fieldDescription>
+	</field>
+	<field name="GDRLK" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="GDRLK"/>
+		<fieldDescription><![CDATA[GDRLK]]></fieldDescription>
+	</field>
+	<field name="GDRPR" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="GDRPR"/>
+		<fieldDescription><![CDATA[GDRPR]]></fieldDescription>
+	</field>
+	<field name="JMLKUNJUNGAN" class="java.math.BigDecimal">
+		<property name="net.sf.jasperreports.json.field.expression" value="JMLKUNJUNGAN"/>
+		<fieldDescription><![CDATA[JMLKUNJUNGAN]]></fieldDescription>
+	</field>
+	<variable name="NOURUT" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="17">
+			<staticText>
+				<reportElement x="352" y="0" width="117" height="17" uuid="353b2167-1612-427c-b978-50a33b322046"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="0" width="115" height="17" uuid="70fff68f-fd4d-469a-9da6-a89ebbd25c32"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode Propinsi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="0" width="89" height="17" uuid="a1ebaffe-b95b-4592-84db-ebb769178e14"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[KAB/KOTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="0" width="57" height="17" uuid="7149e411-7e1e-4233-b659-f13a589a321c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAHUN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="91" height="17" uuid="6cba555b-6f7b-46b6-836b-ffd30443789e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Koders]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="0" width="82" height="17" uuid="5bd1323f-a51d-446d-9081-88d49ca1ff74"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="551" y="0" width="85" height="17" uuid="890f0971-4a3b-403f-a6aa-fd4202beee44"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="636" y="0" width="68" height="17" uuid="bde682f4-a7b7-43cb-b240-301abf93fce8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="704" y="0" width="75" height="17" uuid="d33b6752-c961-4134-b7f6-587d8c83daa8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NDR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="779" y="0" width="128" height="17" uuid="800a6312-fd80-4ae4-b3d8-ed44f1117165"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GDR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="907" y="0" width="127" height="17" uuid="0f1bd34d-8f36-4825-a69e-fbea4c4a8990"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ratakunjungan]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField textAdjust="StretchHeight" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="352" y="0" width="117" height="18" uuid="9c8b5114-23b2-4987-99f6-b1078071781f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="91" y="0" width="115" height="18" uuid="3df5deb3-8636-44a4-a57c-f0193540b0d3"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{KODEPROP}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="206" y="0" width="89" height="18" uuid="117e6aab-dd2c-4280-8b83-853c6aa2355a"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{KOTA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="295" y="0" width="57" height="18" uuid="8b6aa79f-0b25-4ed1-bc5a-b183273a027e"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TAHUN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="91" height="18" uuid="910ea2b1-33c7-4272-a4ff-4b6a885f4cad"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{KODERS}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="469" y="0" width="82" height="18" uuid="bbe911c3-8d43-4ada-b997-28cccfdfbb71"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AVLOS}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="551" y="0" width="85" height="18" uuid="7b49b1cf-cb08-4bd7-a3c7-0e852a3bc506"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BTO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="636" y="0" width="68" height="18" uuid="f9a0e2f8-e24a-44b4-8be9-fa9e8205e9a9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOI}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="704" y="0" width="75" height="18" uuid="ad7e282f-354c-4a84-891b-46fc910ada0c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NDR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0000" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="779" y="0" width="128" height="18" uuid="66757473-9282-4826-a475-710d6c3de3cc"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GDR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="907" y="0" width="127" height="18" uuid="1eeb2eec-63dc-460c-8bfe-7c1485850b05"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JMLKUNJUNGAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

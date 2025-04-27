@@ -1,0 +1,3 @@
+USE `medicalrecord`;
+ALTER TABLE `tanda_vital`
+	ADD INDEX `WAKTU_PEMERIKSAAN` (`WAKTU_PEMERIKSAAN`);

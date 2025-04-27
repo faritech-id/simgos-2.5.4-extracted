@@ -1,0 +1,2 @@
+USE master;
+INSERT INTO `master`.`jenis_laporan_detil` (`JENIS`, `DESKRIPSI`, `REPORT_PARAMS`) VALUES ('13', 'Laporan Respon Time', '{\r\n  NAME: \'layanan.LaporanResponTime\',\r\n  TYPE: \'Pdf\', \r\n  EXT: \'pdf\',\r\n  PARAMETER: {\r\n   TGLAWAL: \'\',\r\n   TGLAKHIR: \'\',\r\n   RUANGAN:\'\',\r\n   TINDAKAN:\'\',\r\n   CARABAYAR:\'\',\r\n   DOKTER:\'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakLayanan\'\r\n}');

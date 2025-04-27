@@ -1,0 +1,2 @@
+UPDATE `master`.`referensi` SET `DESKRIPSI`='Non Spesialis/Subspesialis' WHERE  `JENIS`=26 AND `ID`=0;
+UPDATE `master`.`jenis_referensi` SET `DESKRIPSI`='Jenis Spesialis/Subspesialis', `SINGKATAN`='-' WHERE  `ID`=26;

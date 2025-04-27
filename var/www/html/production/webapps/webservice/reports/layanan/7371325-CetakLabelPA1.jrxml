@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CetakLabelPA4" language="groovy" columnCount="2" pageWidth="68" pageHeight="25" columnWidth="33" leftMargin="2" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c9069c98-01ee-43c0-8523-0a0b36708f98">
+	<property name="ireport.zoom" value="2.853116706110003"/>
+	<property name="ireport.x" value="343"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RSWS DEV"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="PKUNJUNGAN" class="java.lang.String"/>
+	<parameter name="PNOPA" class="java.lang.String"/>
+	<parameter name="PBAHAN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[CALL layanan.CetakLabelPA($P{PKUNJUNGAN}, $P{PNOPA},$P{PBAHAN})]]>
+	</queryString>
+	<field name="NOPA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOPA"/>
+	</field>
+	<field name="NORM" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NORM"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pendaftaran"/>
+		<fieldDescription><![CDATA[Nomor Rekam Medis]]></fieldDescription>
+	</field>
+	<field name="NAMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NAMA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pasien"/>
+	</field>
+	<field name="TGL_LAHIR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TGL_LAHIR"/>
+	</field>
+	<field name="BAHAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BAHAN"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="6"/>
+	</pageHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField textAdjust="ScaleFont">
+				<reportElement x="0" y="0" width="30" height="3" uuid="c044f542-cc9f-46df-984e-0ac997ac904d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="3" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PNOPA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="0" y="3" width="30" height="3" uuid="3316bb88-d1c3-48b0-91f6-0f8276de50c2">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="0" y="6" width="30" height="3" uuid="c234ba9f-b168-45f1-b76d-952749c41383">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="0" y="12" width="30" height="3" uuid="994e02d4-2858-4d3b-b3a2-8337a51b225c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PBAHAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="0" y="9" width="30" height="3" uuid="ef714129-286d-41fe-b68a-0370c09ff849">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TGL_LAHIR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="36" y="12" width="30" height="3" uuid="72f5bfa2-2e65-4d0f-abbf-8cb0ea22c36a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PBAHAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="36" y="0" width="30" height="3" uuid="ce994096-2c08-46b2-8a69-18265b43957a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="3" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PNOPA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="36" y="6" width="30" height="3" uuid="cf1945cd-846a-4378-b259-14c694a671cc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMA}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="36" y="9" width="30" height="3" uuid="0d9c10ac-b398-487d-85cb-f418a526bd76">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TGL_LAHIR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="36" y="3" width="30" height="3" uuid="ce1cdcb7-9917-4b1a-9ee7-1a769e253eb6">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="2" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

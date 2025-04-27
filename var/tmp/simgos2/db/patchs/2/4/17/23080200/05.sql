@@ -1,0 +1,18 @@
+USE `medicalrecord`;
+
+-- Dumping structure for table medicalrecord.rekonsiliasi_transfer
+CREATE TABLE IF NOT EXISTS `rekonsiliasi_transfer` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `KUNJUNGAN` char(19) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `PENDAFTARAN` char(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `TANGGAL` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `OLEH` smallint NOT NULL,
+  `STATUS` tinyint NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`) USING BTREE,
+  UNIQUE KEY `KUNJUNGAN_PENDAFTARAN` (`KUNJUNGAN`,`PENDAFTARAN`) USING BTREE,
+  KEY `KUNJUNGAN` (`KUNJUNGAN`) USING BTREE,
+  KEY `PENDAFTARAN` (`PENDAFTARAN`) USING BTREE,
+  KEY `STATUS` (`STATUS`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.

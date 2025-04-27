@@ -1,0 +1,4 @@
+USE layanan;
+
+ALTER TABLE `pasien_meninggal`
+	ADD COLUMN `NOMOR` CHAR(50) NOT NULL DEFAULT '' COMMENT 'Nomor Surat' AFTER `TANGGAL`;

@@ -1,0 +1,3 @@
+USE medicalrecord;
+ALTER TABLE `tanda_vital`
+	ADD COLUMN `EWSS` SMALLINT NOT NULL DEFAULT 0 AFTER `GCS`;

@@ -1,0 +1,57 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.8
+-- Versi server:                 8.0.26 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               12.0.0.6468
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Membuang struktur basisdata untuk master
+CREATE DATABASE IF NOT EXISTS `master`;
+USE `master`;
+
+-- membuang struktur untuk function master.getFormatNorm
+DROP FUNCTION IF EXISTS `getFormatNorm`;
+DELIMITER //
+CREATE FUNCTION `getFormatNorm`(
+	`PNORM` INT,
+	`PDELIMITER` CHAR(1)
+) RETURNS char(11) CHARSET latin1
+    DETERMINISTIC
+BEGIN
+	RETURN INSERT(INSERT(INSERT(LPAD(PNORM,8,'0'),3,0,PDELIMITER),6,0,PDELIMITER),9,0,PDELIMITER);
+END//
+DELIMITER ;
+
+-- membuang struktur untuk function master.getNamaDanGelar
+DROP FUNCTION IF EXISTS `getNamaDanGelar`;
+DELIMITER //
+CREATE FUNCTION `getNamaDanGelar`(
+	`PGELAR_DEPAN` VARCHAR(25),
+	`PNAMA` VARCHAR(75),
+	`PGELAR_BELAKANG` VARCHAR(35)
+) RETURNS varchar(135) CHARSET latin1
+    DETERMINISTIC
+BEGIN
+	RETURN CONCAT(
+		IF(PGELAR_DEPAN = '' OR PGELAR_DEPAN IS NULL, '', CONCAT(TRIM(PGELAR_DEPAN), '. '))
+		, TRIM(UPPER(PNAMA))
+		, IF(PGELAR_BELAKANG = '' OR PGELAR_BELAKANG IS NULL, '', CONCAT(', ', TRIM(PGELAR_BELAKANG)))
+	);
+END//
+DELIMITER ;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

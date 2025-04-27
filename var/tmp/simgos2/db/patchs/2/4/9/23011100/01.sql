@@ -1,0 +1,1 @@
+REPLACE INTO aplikasi.`properti_config` (`ID`, `NAMA`, `VALUE`) VALUES (55, 'OTOMATIS_GENERATE_NOMOR_KUITANSI', 'FALSE');

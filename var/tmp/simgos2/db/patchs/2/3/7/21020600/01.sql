@@ -1,0 +1,6 @@
+USE inventory;
+ALTER TABLE `penerimaan_barang`
+	ADD COLUMN `JENIS` TINYINT(4) NOT NULL DEFAULT '1' COMMENT '1 = penerimaan eksternal, 2 = penerimaan PO' AFTER `STATUS`,
+	ADD COLUMN `REF_PO` CHAR(15) NOT NULL AFTER `JENIS`,
+	ADD INDEX `JENIS` (`JENIS`),
+	ADD INDEX `REF_PO` (`REF_PO`);

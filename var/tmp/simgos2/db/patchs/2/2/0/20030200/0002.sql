@@ -1,0 +1,5 @@
+USE aplikasi;
+
+UPDATE `aplikasi`.`modules` SET `HAVE_CHILD`='1' WHERE  `ID`='2001';
+
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `ICON_CLS`, `HAVE_CHILD`) VALUES ('200101', 'TAMPILKAN IDENTITAS PASIEN', 3, '', 1, NULL, NULL, 0);

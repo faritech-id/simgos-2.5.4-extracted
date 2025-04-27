@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HasilLabMikroskopik" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94081f9c-9700-4ca8-b62f-75272798c4ce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="342"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="simrsgosv2-local"/>
+	<parameter name="P_KUNJUNGAN" class="java.lang.String"/>
+	<parameter name="REQUEST_REPORT_ID" class="java.lang.String"/>
+	<parameter name="PNIP" class="java.lang.String"/>
+	<parameter name="IMAGES_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[CALL layanan.CetakHasilPCR($P{P_KUNJUNGAN});]]>
+	</queryString>
+	<field name="KOTA" class="java.lang.String"/>
+	<field name="TGLSKRG" class="java.lang.String"/>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KUNJUNGAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BAHAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIAGNOSA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERAPI_ANTIBIOTIK" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HASIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KESIMPULAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ANJURAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATATAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TANGGAL_HASIL" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOKTER" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIMESTAMP" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OLEH" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA_DOKTER" class="java.lang.String"/>
+	<field name="NORM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Nomor Rekam Medis]]></fieldDescription>
+	</field>
+	<field name="PASIEN" class="java.lang.String"/>
+	<field name="DOKTER_ASAL" class="java.lang.String"/>
+	<field name="TGL_TERIMA" class="java.lang.String"/>
+	<field name="TGL_SELESAI" class="java.lang.String"/>
+	<field name="NOMOR_LAB" class="java.lang.String"/>
+	<field name="NOMOR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.label" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dokter"/>
+	</field>
+	<field name="IDPPK" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="253" splitType="Stretch">
+			<textField>
+				<reportElement x="221" y="61" width="248" height="20" uuid="3297e828-a902-442d-9746-017a97eb6b36"/>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="41" width="248" height="20" uuid="b68981e1-12aa-4035-908f-efaecabe3a84"/>
+				<textFieldExpression><![CDATA[$F{PASIEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="101" width="248" height="20" uuid="b777c5ac-b11e-458a-8f00-47cdc7b9cd3c"/>
+				<textFieldExpression><![CDATA[$F{DIAGNOSA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="81" width="248" height="20" uuid="bc4b2e09-9b64-4592-98f6-782bec436afe"/>
+				<textFieldExpression><![CDATA[$F{DOKTER_ASAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="121" width="248" height="20" uuid="61e76b2c-cabd-4e3c-8ea7-dc43677e2d98"/>
+				<textFieldExpression><![CDATA[$F{TERAPI_ANTIBIOTIK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="141" width="248" height="20" uuid="e3de47cd-1ea2-4999-8d21-f344087c1baa"/>
+				<textFieldExpression><![CDATA[$F{TGL_TERIMA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="161" width="248" height="20" uuid="e7d4f95f-a16e-41e1-add1-ee54b648c69e"/>
+				<textFieldExpression><![CDATA[$F{TGL_SELESAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="181" width="248" height="20" uuid="de23f418-a4b3-485f-8d91-109fed275e5f"/>
+				<textFieldExpression><![CDATA[$F{BAHAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="41" width="100" height="20" uuid="eac60f9a-9004-4b4b-b80a-374e21b3cb3d"/>
+				<text><![CDATA[Nama Penderita]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="61" width="100" height="20" uuid="6d1c345a-bca1-4992-9784-a28689c53e1b"/>
+				<text><![CDATA[No. RM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="82" width="100" height="20" uuid="6ed445ae-32f8-484b-a95e-bb2329278f2d"/>
+				<text><![CDATA[Dokter Pengirim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="102" width="100" height="20" uuid="bf2938c4-b12d-437c-abb8-44a9c5518f08"/>
+				<text><![CDATA[Diagnosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="122" width="100" height="20" uuid="1c75f724-8f34-4176-ae64-5c9d645da9dc"/>
+				<text><![CDATA[Terapi Antibiotik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="142" width="100" height="20" uuid="e0c6bccc-f79e-4458-8ea2-daf357efe91f"/>
+				<text><![CDATA[Tanggal Terima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="162" width="100" height="20" uuid="84ead4a9-4b54-43de-a0af-973cbc94272e"/>
+				<text><![CDATA[Tanggal Selesai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="182" width="100" height="20" uuid="1ce0f6db-21ef-4608-9a1a-f9bbb9037e83"/>
+				<text><![CDATA[Bahan Pemeriksaan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="162" width="10" height="20" uuid="d42d7d0a-1da3-49d0-86f1-799c4268c01c"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="142" width="10" height="20" uuid="1721eaaf-1957-4ea1-be9c-a9256c41da09"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="61" width="10" height="20" uuid="d0e99310-ac56-4f79-b355-bf03bae2044b"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="41" width="10" height="20" uuid="5a38daee-fec2-4268-aa5b-fc2047d28af3"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="82" width="10" height="20" uuid="3d04cd72-002a-44d4-acd7-10d8cd2606d0"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="122" width="10" height="20" uuid="d69ed2aa-a268-4559-b208-acb71be7a1ba"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="182" width="10" height="20" uuid="b0109eff-3e5d-41be-84f5-2c4ba5420eb7"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="102" width="10" height="20" uuid="ecaa3533-71a6-4ea7-a2ba-ecbba809e575"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="223" width="555" height="20" uuid="16ad2bee-7327-46ef-849f-d0ecdfbae3a9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HASIL PEMERIKSAAN POLYMERASI CHAIN REACTION (PCR)]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="3" width="117" height="20" uuid="fbaae396-68ba-4769-902b-7a945712f401"/>
+				<text><![CDATA[A. HASIL PCR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="3" width="327" height="20" uuid="3be336fd-427e-4dcc-9776-8f9bbec0bff6"/>
+				<textFieldExpression><![CDATA[": " + $F{HASIL}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<staticText>
+				<reportElement x="25" y="5" width="117" height="20" uuid="cf097f2d-23f5-47e0-8750-26c6ac30d41c"/>
+				<text><![CDATA[B. KESIMPULAN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="5" width="327" height="20" uuid="91eac6de-89a1-4700-8335-28e5f459d0f2"/>
+				<textFieldExpression><![CDATA[": " + $F{KESIMPULAN}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="24">
+			<staticText>
+				<reportElement x="25" y="0" width="117" height="20" uuid="078b3962-92ef-4b65-98a5-7967bad2a7dc"/>
+				<text><![CDATA[C. ANJURAN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="0" width="327" height="20" uuid="6e89e409-bd90-4bce-86bb-ee7c5547adea"/>
+				<textFieldExpression><![CDATA[": " + $F{ANJURAN}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="35">
+			<staticText>
+				<reportElement x="25" y="3" width="100" height="20" uuid="91ea78f3-c528-486b-a956-c3dd8aad89e2"/>
+				<text><![CDATA[D. CATATAN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="3" width="327" height="20" uuid="035157de-f00e-433f-ad8b-6708ca888fc4"/>
+				<textFieldExpression><![CDATA[": " + $F{CATATAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="150" splitType="Stretch">
+			<componentElement>
+				<reportElement stretchType="ElementGroupHeight" x="328" y="80" width="52" height="48" isPrintWhenDetailOverflows="true" uuid="f155b3d8-2554-4da0-ac77-fba5d244bed1">
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" margin="0">
+					<jr:codeExpression><![CDATA[$P{REQUEST_REPORT_ID}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="330" y="49" width="196" height="15" uuid="34dd8e68-ddfd-49d3-9bda-fe2fef276c49"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KOTA}+", "+$F{TGLSKRG}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="330" y="128" width="196" height="20" uuid="0db29437-05f2-499f-af91-e2fe0cb59490"/>
+				<textFieldExpression><![CDATA[$F{NAMA_DOKTER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="11" width="196" height="20" uuid="511c975f-8cce-410c-af9d-819c2a54f330"/>
+				<text><![CDATA[Terima Kasih atas Kerja samanya]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="64" width="196" height="20" uuid="a2dadc6a-b3d9-4b99-a75b-b6e3b14ae923"/>
+				<text><![CDATA[Dokter Penanggung Jawab]]></text>
+			</staticText>
+			<image>
+				<reportElement x="344" y="93" width="20" height="23" uuid="b819586f-7864-4c8b-9da3-52181c6cc13c">
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{IMAGES_PATH} +  $F{IDPPK}+".png"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,57 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk trigger layanan.onAfterInsertTindakanMedis
+DROP TRIGGER IF EXISTS `onAfterInsertTindakanMedis`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+DELIMITER //
+CREATE TRIGGER `onAfterInsertTindakanMedis` AFTER INSERT ON `tindakan_medis` FOR EACH ROW BEGIN
+	CALL pembayaran.storeTindakanMedis(NEW.KUNJUNGAN, NEW.ID, NEW.TINDAKAN);
+	
+	
+	INSERT INTO layanan.petugas_tindakan_medis(TINDAKAN_MEDIS, JENIS, MEDIS, KE, STATUS)
+	SELECT NEW.ID, ptm.JENIS, ptm.MEDIS, ptm.KE, ptm.`STATUS`
+	  FROM pendaftaran.kunjungan k,
+	  		 master.ruangan r ,
+	  		 layanan.tindakan_medis tm,
+	  		 layanan.petugas_tindakan_medis ptm
+	 WHERE k.NOMOR = NEW.KUNJUNGAN
+	   AND r.ID = k.RUANGAN
+	   AND r.JENIS_KUNJUNGAN = 4
+		AND tm.KUNJUNGAN = k.NOMOR
+		AND tm.`STATUS` = 1
+		AND ptm.TINDAKAN_MEDIS = tm.ID
+		AND ptm.JENIS = 1
+		AND ptm.KE = 1	
+		AND ptm.`STATUS` = 1
+	 ORDER BY tm.TANGGAL DESC LIMIT 1;
+	 
+	 IF EXISTS(SELECT 1 FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = 'lis') THEN
+		 INSERT INTO lis.order_item_log(HIS_ID, TANGGAL)
+		 SELECT NEW.ID, NEW.TANGGAL
+	      FROM master.tindakan_ruangan tr
+				  , master.ruangan_laboratorium rl
+	     WHERE tr.TINDAKAN = NEW.TINDAKAN
+		    AND tr.STATUS = 1
+		    AND rl.LABORATORIUM = tr.RUANGAN
+		    AND rl.RUANGAN = 0
+		    AND rl.ORDER_LIS = 1
+		    AND rl.STATUS = 1;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

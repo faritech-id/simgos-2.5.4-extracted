@@ -1,0 +1,3 @@
+use `aplikasi`;
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('1315', 'TINDAKAN / TERAPI', 2, 'Tindakan / Terapi', 1, 'rekammedis.tindakanterapi.Workspace', NULL, 'fas fa-binoculars', 1, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 14);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('131501', 'MMPI', 3, 'MMPI', 1, 'rekammedis.tindakanterapi.mmpi.Workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);

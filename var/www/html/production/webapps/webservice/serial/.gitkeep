@@ -1,0 +1,13 @@
+# File Java.inc
+
+- Change line `974`
+
+```php
+if(is_null($context) || $context[0]!="/")
+```
+
+menjadi
+
+```php
+if(is_null($context) || is_int($context))
+```

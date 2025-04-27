@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CetakRincianPiutang" pageWidth="612" pageHeight="792" columnWidth="564" leftMargin="24" rightMargin="24" topMargin="14" bottomMargin="14" uuid="d84ba5a7-048f-4251-9a1f-ebf63450da68">
+	<property name="ireport.zoom" value="1.4641000000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="104"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="PNORM" class="java.lang.String"/>
+	<parameter name="PTAGIHAN_PIUTANG" class="java.lang.String"/>
+	<parameter name="IMAGES_PATH" class="java.lang.String"/>
+	<parameter name="CETAK_HEADER" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[CALL pembayaran.CetakRincianPiutang( $P{PNORM} , $P{PTAGIHAN_PIUTANG} )]]>
+	</queryString>
+	<field name="PPK" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="PPK"/>
+		<property name="com.jaspersoft.studio.field.label" value="PPK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="TEMP_HEADER_RINCIAN"/>
+	</field>
+	<field name="NAMAINST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAMAINST"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAMAINST"/>
+	</field>
+	<field name="ALAMATINST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ALAMATINST"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALAMATINST"/>
+	</field>
+	<field name="KOTA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="KOTA"/>
+		<property name="com.jaspersoft.studio.field.label" value="KOTA"/>
+	</field>
+	<field name="KASIR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="KASIR"/>
+		<property name="com.jaspersoft.studio.field.label" value="KASIR"/>
+	</field>
+	<field name="NORM" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NORM"/>
+		<property name="com.jaspersoft.studio.field.label" value="NORM"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pasien"/>
+		<fieldDescription><![CDATA[Nomor Rekam Medis]]></fieldDescription>
+	</field>
+	<field name="NAMAPASIEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAMAPASIEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAMAPASIEN"/>
+	</field>
+	<field name="NAMAPEMBAYAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAMA"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAMAPEMBAYAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="piutang_pasien"/>
+	</field>
+	<field name="NOPEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMOR"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOPEN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pendaftaran"/>
+	</field>
+	<field name="TAGIHAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAGIHAN"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAGIHAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pembayaran_tagihan"/>
+	</field>
+	<field name="TGLBAYAR" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="TGLBAYAR"/>
+		<property name="com.jaspersoft.studio.field.label" value="TGLBAYAR"/>
+	</field>
+	<field name="JENIS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="JENIS"/>
+		<property name="com.jaspersoft.studio.field.label" value="JENIS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pembayaran_tagihan"/>
+		<fieldDescription><![CDATA[Jenis Transaksi Pembayaran Tagihan (REF50)]]></fieldDescription>
+	</field>
+	<field name="CARABAYAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="CARABAYAR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+	</field>
+	<field name="TANGGAL" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="TANGGAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TANGGAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pembayaran_tagihan"/>
+	</field>
+	<field name="TOTALTAGIHAN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTALTAGIHAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tagihan"/>
+	</field>
+	<field name="TAGIHAN_PIUTANG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TAGIHAN_PIUTANG"/>
+		<property name="com.jaspersoft.studio.field.label" value="TAGIHAN_PIUTANG"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelunasan_piutang_pasien"/>
+	</field>
+	<field name="TOTAL_PIUTANG" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL_PIUTANG"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_PIUTANG"/>
+	</field>
+	<field name="JMLPEMBAYARAN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="JMLPEMBAYARAN"/>
+		<property name="com.jaspersoft.studio.field.label" value="JMLPEMBAYARAN"/>
+	</field>
+	<variable name="VTAGIHAN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTALTAGIHAN}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="121">
+			<staticText>
+				<reportElement x="80" y="0" width="398" height="20" uuid="fd8ccf4b-40bb-4cb8-9bd5-8ff20cfdf59d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RINCIAN PEMBAYARAN PIUTANG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="45" width="100" height="15" uuid="de683db0-23e8-4cd7-a0b1-f57e96db15dd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[No. RM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="60" width="100" height="15" uuid="514a04e2-2012-4fbb-ba70-e1c16bc8422e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="45" width="8" height="15" uuid="629be38c-477c-4cf6-8608-a472f1dfeca0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="60" width="8" height="15" uuid="70349e43-ebc2-4d77-ba81-6efc04836cb2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="119" y="45" width="201" height="15" uuid="6b0c021a-b57d-4428-b9c6-e7083d54bb2f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="119" y="60" width="201" height="15" uuid="c56ef33e-48c4-4d4d-b338-21a26c047a1b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMAPASIEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="77" width="100" height="15" uuid="f028af96-1d8b-4bc1-9a48-9d42aba76831"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Cara Bayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="77" width="8" height="15" uuid="cd942381-d223-44cd-ac1d-fc1b0c95f8d0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="119" y="77" width="201" height="15" uuid="5e58f7ea-3c3b-4e29-af07-5eb8b7bf68d5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARABAYAR}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="7" y="0" width="63" height="40" uuid="f6a42b99-cd21-4fc1-bb20-53eac1d7b88f">
+					<printWhenExpression><![CDATA[($P{CETAK_HEADER}.equalsIgnoreCase( "1" ) ? true : false)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{IMAGES_PATH} + $F{PPK}+ ".png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="11" y="94" width="100" height="15" uuid="1f73fe17-a053-4f1e-a56d-27ab646d0dfa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Jumlah Piutang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="94" width="8" height="15" uuid="40be786e-8e72-4664-969b-616e99789528"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0.##" isBlankWhenNull="true">
+				<reportElement x="119" y="94" width="201" height="15" uuid="69f07a1d-caa6-465d-afe3-36c3cbf78ca5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_PIUTANG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25">
+			<staticText>
+				<reportElement x="7" y="5" width="73" height="15" uuid="5f0699f5-b0a0-45c0-9606-370e217d223f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="5" width="138" height="15" uuid="45d42716-fc5e-4728-81dd-2ea33e14c31e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Pembayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="5" width="110" height="15" uuid="760f105b-e376-4034-bab4-e7301c256b64"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Penerima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="5" width="99" height="15" uuid="9d75fc1f-a3f1-4846-957b-cf3f689881d6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Bayar]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="2" width="570" height="1" uuid="6f22aa04-8dfc-42b9-91fd-5279b9fd6fae">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="22" width="570" height="1" uuid="f946898d-a38c-4ced-b8fb-1b5106348f91">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="454" y="5" width="108" height="15" uuid="2552c265-b9a5-4330-8311-d9e6994a30c1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sisa Harus Bayar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="84" y="0" width="138" height="15" uuid="3f3f90bb-3010-47ba-ab5d-06794502b219">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMAPEMBAYAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="240" y="0" width="110" height="15" uuid="7370c101-b615-4cb2-b6b3-0f622d6e5fa5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KASIR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="352" y="0" width="99" height="15" uuid="bf409d46-20d7-47c9-a46b-15f39984b876">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTALTAGIHAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="4" y="-1" width="76" height="15" uuid="05ef4fc3-95be-42f7-b2eb-f1e120a35edc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TGLBAYAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="454" y="0" width="108" height="15" uuid="2e9f70d9-32d6-4f74-aa36-655152f745fa">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_PIUTANG}.subtract( $F{JMLPEMBAYARAN})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="5"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14">
+			<line>
+				<reportElement x="0" y="-2" width="570" height="1" uuid="7d457f29-95c2-4826-84f7-1692d1285361">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="454" y="0" width="80" height="13" uuid="ea511010-c1a1-4700-9a9f-de325c80ab25"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Halaman "+$V{PAGE_NUMBER}+" dari"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="535" y="0" width="24" height="13" uuid="ef2eb3ea-80da-4717-b078-aa982e1a166d"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="25">
+			<line>
+				<reportElement x="-2" y="1" width="570" height="1" uuid="206ef392-6aff-4b9a-9abb-df846b932efb">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="5" width="349" height="15" uuid="0c2a459b-b165-44ae-b60c-72d090e2313a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pembayaran]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="352" y="5" width="99" height="15" uuid="8b2b4e68-4f02-4bf6-8771-e8d66b984894">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{VTAGIHAN}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="24" width="570" height="1" uuid="02676006-0359-48cc-ad63-445323a3e707">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

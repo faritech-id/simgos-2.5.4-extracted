@@ -1,0 +1,49 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk event pembayaran.onStoreRincianTagihan
+DROP EVENT IF EXISTS `onStoreRincianTagihan`;
+DELIMITER //
+CREATE DEFINER=`root`@`127.0.0.1` EVENT `onStoreRincianTagihan` ON SCHEDULE EVERY 1 MINUTE STARTS '2015-11-19 14:11:23' ON COMPLETION PRESERVE ENABLE DO BEGIN
+	
+	BEGIN
+		DECLARE VNOMOR CHAR(19);
+		DECLARE AKOMODASI_NOT_FOUND TINYINT DEFAULT FALSE;
+		DECLARE CR_AKOMODASI CURSOR FOR
+			SELECT NOMOR
+			  FROM pendaftaran.kunjungan
+			 WHERE STATUS = 1
+			   AND KELUAR IS NULL
+			   AND RUANG_KAMAR_TIDUR > 0
+			   AND master.isRawatInap(RUANGAN) = 1;
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET AKOMODASI_NOT_FOUND = TRUE;
+		
+		OPEN CR_AKOMODASI;
+		EOF: LOOP
+			FETCH CR_AKOMODASI INTO VNOMOR;
+			
+			IF AKOMODASI_NOT_FOUND THEN
+				UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+				LEAVE EOF;
+			END IF;
+			
+			CALL pembayaran.storeAkomodasi(VNOMOR);
+		END LOOP;
+		CLOSE CR_AKOMODASI;
+	END;
+END//
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

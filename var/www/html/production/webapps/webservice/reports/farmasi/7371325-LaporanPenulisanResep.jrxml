@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanPenulisanResep" language="groovy" pageWidth="609" pageHeight="935" columnWidth="590" leftMargin="10" rightMargin="9" topMargin="8" bottomMargin="20" isIgnorePagination="true" uuid="d27b40c5-1fc4-4119-8e4a-0dfa330e760a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LOKAL SIMGOS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="528"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="458"/>
+	<parameter name="TGLAWAL" class="java.lang.String"/>
+	<parameter name="TGLAKHIR" class="java.lang.String"/>
+	<parameter name="LAPORAN" class="java.lang.String"/>
+	<parameter name="RUANGAN" class="java.lang.String"/>
+	<parameter name="CARABAYAR" class="java.lang.String"/>
+	<parameter name="KATEGORI" class="java.lang.String"/>
+	<parameter name="BARANG" class="java.lang.String"/>
+	<parameter name="JENISINVENTORY" class="java.lang.String"/>
+	<parameter name="JENISKATEGORI" class="java.lang.String"/>
+	<parameter name="KATEGORIBARANG" class="java.lang.String"/>
+	<parameter name="JENISGENERIK" class="java.lang.String"/>
+	<parameter name="JENISFORMULARIUM" class="java.lang.String"/>
+	<parameter name="PENGGOLONGAN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[call laporan.LaporanPenulisanResep($P{TGLAWAL},$P{TGLAKHIR},$P{RUANGAN},$P{LAPORAN},0,$P{KATEGORI},$P{BARANG},$P{JENISINVENTORY},$P{JENISKATEGORI},$P{KATEGORIBARANG},$P{JENISGENERIK},$P{JENISFORMULARIUM},$P{PENGGOLONGAN})]]>
+	</queryString>
+	<field name="PPK" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="PPK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="instansi"/>
+		<fieldDescription><![CDATA[Pemberi Pelayanan Kesehatan]]></fieldDescription>
+	</field>
+	<field name="NAMAINST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NAMAINST"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ppk"/>
+	</field>
+	<field name="ALAMATINST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ALAMATINST"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ppk"/>
+	</field>
+	<field name="TANGGAL" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="TANGGAL"/>
+		<fieldDescription><![CDATA[Tanggal Stok Opname utk mengambil stok akhir]]></fieldDescription>
+	</field>
+	<field name="GF" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="GF"/>
+	</field>
+	<field name="GNF" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="GNF"/>
+	</field>
+	<field name="TOTAL_RESEP_GENERIK" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_RESEP_GENERIK"/>
+	</field>
+	<field name="NGF" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NGF"/>
+	</field>
+	<field name="NGNF" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NGNF"/>
+	</field>
+	<field name="TOTAL_RESEP_NON_GENERIK" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_RESEP_NON_GENERIK"/>
+	</field>
+	<field name="RUANGAN_FARMASI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="RUANGAN_FARMASI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ruangan"/>
+	</field>
+	<field name="INSTALASI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INSTALASI"/>
+	</field>
+	<field name="KATEGORI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="KATEGORI"/>
+	</field>
+	<field name="CARABAYARHEADER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CARABAYARHEADER"/>
+	</field>
+	<field name="BARANGHEADER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BARANGHEADER"/>
+	</field>
+	<variable name="NOURUT" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="GF1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{GF}]]></variableExpression>
+	</variable>
+	<variable name="GNF1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{GNF}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_RESEP_GENERIK1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_RESEP_GENERIK}]]></variableExpression>
+	</variable>
+	<variable name="NGF1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{NGF}]]></variableExpression>
+	</variable>
+	<variable name="NGNF1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{NGNF}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_RESEP_NON_GENERIK1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_RESEP_NON_GENERIK}]]></variableExpression>
+	</variable>
+	<variable name="GF2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{GF}]]></variableExpression>
+	</variable>
+	<variable name="GNF2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{GNF}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_RESEP_GENERIK2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{TOTAL_RESEP_GENERIK}]]></variableExpression>
+	</variable>
+	<variable name="NGF2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{NGF}]]></variableExpression>
+	</variable>
+	<variable name="NGNF2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{NGNF}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_RESEP_NON_GENERIK2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{TOTAL_RESEP_NON_GENERIK}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="117" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="77" width="77" height="40" uuid="15ba25b8-0c67-4402-87aa-8aad43a61005"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="97" y="77" width="180" height="20" uuid="46801710-fd40-49ff-ad5c-68cf570e060f"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Generik]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="0" width="548" height="15" uuid="f9c92317-73e2-4413-8f94-337a426d9968"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RUANGAN_FARMASI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="50" width="548" height="18" uuid="81b96be0-7d4e-4b90-81fb-6e5b813147b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PERIODE " + DateFormat.getDateInstance(DateFormat.LONG, $P{REPORT_LOCALE}).format(java.sql.Timestamp.valueOf($P{TGLAWAL})).toUpperCase() + ($P{TGLAWAL}.substring(0, 10).equalsIgnoreCase($P{TGLAKHIR}.substring(0, 10)) ? "" : " S/D " + DateFormat.getDateInstance(DateFormat.LONG, $P{REPORT_LOCALE}).format(java.sql.Timestamp.valueOf($P{TGLAKHIR})).toUpperCase())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="15" width="548" height="15" uuid="4188fbd1-12ad-4faa-baff-04147b4cdbc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMAINST}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="97" y="97" width="90" height="20" uuid="ebb7065c-11a5-468d-a2de-d1668c16ca11"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formularium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="97" width="90" height="20" uuid="d1112c15-45ed-4071-bd6f-dec2883395f3"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Non Formularium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="77" width="56" height="40" uuid="317ee070-0e93-4315-a495-8dbf9f2d81a1"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Obat Generik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="77" width="180" height="20" uuid="22e0479f-e436-4bce-b3e5-81ae01e22605"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Non Generik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="97" width="90" height="20" uuid="cecc9893-bbab-4e04-974a-c36192c9c557"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formularium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="97" width="90" height="20" uuid="18854292-0729-4540-8b17-8d330f03a99d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Non Formularium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="77" width="56" height="40" uuid="2e687952-fc9f-4567-bf9d-39ae63f3e91f"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Obat Non Generik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="30" width="548" height="20" uuid="dd165ee8-55d1-4cd5-8b60-d5bcb025b894"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PENULISAN RESEP]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="513" y="0" width="56" height="23" uuid="ee5c3308-025a-4231-8eac-f606fdd5588c"/>
+				<box leftPadding="0" rightPadding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_RESEP_NON_GENERIK}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="20" y="0" width="77" height="23" uuid="8e9cbfa1-ae39-4bd6-9ac7-a5482b793d03"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TANGGAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="277" y="0" width="56" height="23" uuid="d001b2c1-927e-4bd3-a55a-79f31ae1c676"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_RESEP_GENERIK}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="97" y="0" width="90" height="23" uuid="a7004356-c4e5-4f1c-ab71-9701de0216b9"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="333" y="0" width="90" height="23" uuid="e35d6e99-0d82-431e-adc8-38e1fd5bc2b2"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NGF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="423" y="0" width="90" height="23" uuid="dfaf4dcc-a591-487d-a64d-b5fee2cc7e51"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NGNF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="187" y="0" width="90" height="23" uuid="a1020502-5049-4440-8054-60ea5f6d7597"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GNF}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="40">
+			<textField>
+				<reportElement x="97" y="0" width="90" height="20" uuid="efb36bf0-1697-43be-b781-56ba81d51f9b"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GF1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="0" width="90" height="20" uuid="0cfa2aec-5b93-490d-b884-0024453c23f1"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GNF1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="0" width="56" height="20" uuid="bd32bc64-9f78-4ff5-a765-06673e34b9de"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_RESEP_GENERIK1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="333" y="0" width="90" height="20" uuid="bf8b6336-b9ba-4858-b0cb-cca689d6fd55"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NGF1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="0" width="90" height="20" uuid="b84548a7-8a24-4fb4-b1ff-1db8d2ce65b5"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NGNF1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="0" width="56" height="20" uuid="11e4cbf7-4cdf-4524-a465-57a8cf4cdd81"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_RESEP_NON_GENERIK1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="0" width="77" height="20" uuid="940369aa-e324-45fb-9c07-e9fc746afcce"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="#,##0.###">
+				<reportElement x="97" y="20" width="90" height="20" uuid="8a1ee810-1a0f-40e8-af99-bb55b9d087a8"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GF2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="187" y="20" width="90" height="20" uuid="ee95576c-7649-4327-b196-8ba34e945462"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GNF2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="277" y="20" width="56" height="20" uuid="827a4513-8b97-4593-9742-30090b47b942"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_RESEP_GENERIK2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="333" y="20" width="90" height="20" uuid="a650c464-f118-40ea-b2a4-c430ace15978"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NGF2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="423" y="20" width="90" height="20" uuid="38bd6f0b-c317-4d8f-9406-86ddb11e4257"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NGNF2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="513" y="20" width="56" height="20" uuid="bed26b74-61d7-4c86-85cc-a1d02a564ab1"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_RESEP_NON_GENERIK2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="20" width="77" height="20" uuid="45c7fd4c-8103-4480-950d-dfc2ac8dd5c0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rata-Rata]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

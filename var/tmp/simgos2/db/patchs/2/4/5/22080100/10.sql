@@ -1,0 +1,4 @@
+USE pendaftaran;
+
+ALTER TABLE `kunjungan`
+	ADD COLUMN `OTOMATIS` TINYINT NOT NULL DEFAULT '0';

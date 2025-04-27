@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HasilLabMikroskopik" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94081f9c-9700-4ca8-b62f-75272798c4ce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="simrsgosv2-local"/>
+	<parameter name="P_KUNJUNGAN" class="java.lang.String"/>
+	<parameter name="REQUEST_REPORT_ID" class="java.lang.String"/>
+	<parameter name="PNIP" class="java.lang.String"/>
+	<parameter name="IMAGES_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[CALL layanan.CetakHasilExam($P{P_KUNJUNGAN});]]>
+	</queryString>
+	<field name="KOTA" class="java.lang.String"/>
+	<field name="TGLSKRG" class="java.lang.String"/>
+	<field name="ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KUNJUNGAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE_SP1" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE_SP2" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE_SP3" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACID_DATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACID_SP1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACID_SP2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ACID_SP3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LJ_DATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LJ_SP1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LJ_SP2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LJ_SP3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MGIT_DATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MGIT_SP1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MGIT_SP2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MGIT_SP3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ANTITUBE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CONCLUSION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOKTER" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OLEH" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIMESTAMP" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA_DOKTER" class="java.lang.String"/>
+	<field name="NORM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Nomor Rekam Medis]]></fieldDescription>
+	</field>
+	<field name="PASIEN" class="java.lang.String"/>
+	<field name="DOKTER_ASAL" class="java.lang.String"/>
+	<field name="TGL_TERIMA" class="java.lang.String"/>
+	<field name="TGL_SELESAI" class="java.lang.String"/>
+	<field name="NOMOR_LAB" class="java.lang.String"/>
+	<field name="NOMOR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.label" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dokter"/>
+	</field>
+	<field name="IDPPK" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="200" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="61" width="248" height="20" uuid="3297e828-a902-442d-9746-017a97eb6b36"/>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="41" width="248" height="20" uuid="b68981e1-12aa-4035-908f-efaecabe3a84"/>
+				<textFieldExpression><![CDATA[$F{PASIEN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="81" width="248" height="20" uuid="bc4b2e09-9b64-4592-98f6-782bec436afe"/>
+				<textFieldExpression><![CDATA[$F{DOKTER_ASAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="41" width="136" height="20" uuid="eac60f9a-9004-4b4b-b80a-374e21b3cb3d"/>
+				<text><![CDATA[Name of Patient]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="61" width="136" height="20" uuid="6d1c345a-bca1-4992-9784-a28689c53e1b"/>
+				<text><![CDATA[Patient Identity Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="82" width="136" height="20" uuid="6ed445ae-32f8-484b-a95e-bb2329278f2d"/>
+				<text><![CDATA[Sender of Speciment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="102" width="136" height="20" uuid="bf2938c4-b12d-437c-abb8-44a9c5518f08"/>
+				<text><![CDATA[Date of receipt specimen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="61" width="10" height="20" uuid="d0e99310-ac56-4f79-b355-bf03bae2044b"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="41" width="10" height="20" uuid="5a38daee-fec2-4268-aa5b-fc2047d28af3"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="82" width="10" height="20" uuid="3d04cd72-002a-44d4-acd7-10d8cd2606d0"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="102" width="10" height="20" uuid="ecaa3533-71a6-4ea7-a2ba-ecbba809e575"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="173" width="555" height="20" uuid="16ad2bee-7327-46ef-849f-d0ecdfbae3a9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ LABORATORY REPORT OF MICROBIOLOGY EXAMINATION]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="312" y="102" width="157" height="20" uuid="909640c4-d34d-41ff-ad59-0d37a7f06816"/>
+				<textFieldExpression><![CDATA[$F{DATE_SP1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="221" y="102" width="58" height="20" uuid="80915072-eede-4b9e-89e3-07380c49af97"/>
+				<text><![CDATA[Sputum 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="102" width="10" height="20" uuid="3f8add55-0761-414f-86e4-2551132c10a8"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="122" width="10" height="20" uuid="4c3167f9-a379-4f4d-9a40-ded6f4c92bad"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="122" width="58" height="20" uuid="028d66b0-fa1c-4179-aa0c-4536089c2c0e"/>
+				<text><![CDATA[Sputum 2]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="312" y="122" width="157" height="20" uuid="1300aa46-45a9-4981-bccb-8a272b53126a"/>
+				<textFieldExpression><![CDATA[$F{DATE_SP2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="302" y="142" width="10" height="20" uuid="7f492876-324e-4fb0-a9d0-82d6a9592540"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="142" width="58" height="20" uuid="3c9d0512-1436-441e-bd94-ae18075bd446"/>
+				<text><![CDATA[Sputum 3]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="312" y="142" width="157" height="20" uuid="7b34c344-5bee-455c-953b-d4e00935b867"/>
+				<textFieldExpression><![CDATA[$F{DATE_SP3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="21" width="136" height="20" uuid="f72e3a99-fa59-414c-a155-6666142fe273"/>
+				<text><![CDATA[LAB Identity Number]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="21" width="248" height="20" uuid="86b25369-9b72-469a-8da8-cf5e5dc2e601"/>
+				<textFieldExpression><![CDATA[$F{KUNJUNGAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="199" y="21" width="10" height="20" uuid="6e502601-a9f5-40e1-a7b7-4d9ac004bf81"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="3" width="128" height="20" uuid="fbaae396-68ba-4769-902b-7a945712f401"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A. Acid fast staining]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="153" y="3" width="100" height="20" uuid="8e0d503b-f02f-49cc-8e76-7042b46905d3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACID_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="23" width="88" height="20" uuid="11a0a062-a959-4129-8acd-e863c9febd4b"/>
+				<text><![CDATA[- Sputum I]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="23" width="402" height="20" uuid="74163b17-1205-48d5-ad6d-00565a308c44"/>
+				<textFieldExpression><![CDATA[$F{ACID_SP1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="139" y="23" width="10" height="20" uuid="076e77de-2587-489d-93bf-2896a1cd70af"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement x="139" y="0" width="10" height="20" uuid="57dd4919-4dfa-4b97-bf91-0c06c0fc68ca"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="88" height="20" uuid="17e79194-219f-432b-a9b4-6f1288f9bd94"/>
+				<text><![CDATA[- Sputum II]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="0" width="402" height="20" uuid="3c48c48c-5ae8-4e68-a5ac-c954ee6e6700"/>
+				<textFieldExpression><![CDATA[$F{ACID_SP2}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement x="40" y="0" width="88" height="20" uuid="ec3257cc-8747-4bc4-92bc-b9cb21fbdb62"/>
+				<text><![CDATA[- Sputum I]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="0" width="402" height="20" uuid="86184cce-00b9-4487-8ab0-fa2d20e0f538"/>
+				<textFieldExpression><![CDATA[$F{ACID_SP1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="139" y="0" width="10" height="20" uuid="c0c02224-6c70-4d42-bdfe-78b7aaa9f6af"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="41">
+			<staticText>
+				<reportElement x="140" y="21" width="10" height="20" uuid="2476fcf2-f226-425b-82ef-14677f26c4e3"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="21" width="88" height="20" uuid="e1e9bc34-dd88-4e29-8f1c-f56ed77c065c"/>
+				<text><![CDATA[- Sputum I]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="153" y="21" width="402" height="20" uuid="452a3283-bd88-478c-b90f-070aae85ca0d"/>
+				<textFieldExpression><![CDATA[$F{LJ_SP1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="26" y="2" width="266" height="20" uuid="d819360c-6f31-486f-b536-dd77230f810d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[B. Mycrobacterium tuberculosis culture on LJ medium]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="292" y="2" width="100" height="20" uuid="36a41f1b-cbaf-485c-a095-1fc6ffe724a7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LJ_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement x="139" y="0" width="10" height="20" uuid="6c1feadc-2ada-449b-967f-5dd1808fc088"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="88" height="20" uuid="45f181f9-e7e6-4b1c-9e18-79a5c279dcae"/>
+				<text><![CDATA[- Sputum II]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="0" width="402" height="20" uuid="824fc36f-8ab2-4bfb-8792-803816214d34"/>
+				<textFieldExpression><![CDATA[$F{LJ_SP2}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement x="139" y="0" width="10" height="20" uuid="b29c6a33-c435-43a6-b900-12ba830a7481"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="88" height="20" uuid="23b4616c-866b-415e-b0cc-67bb5bc066af"/>
+				<text><![CDATA[- Sputum III]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="0" width="402" height="20" uuid="e2623435-2484-4670-8896-963229b998d4"/>
+				<textFieldExpression><![CDATA[$F{LJ_SP3}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="42">
+			<staticText>
+				<reportElement x="26" y="2" width="276" height="20" uuid="91f4f12b-4fad-40c9-bd7c-bf5c12ee61e8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. Mycrobacterium tuberculosis culture on MGIT medium]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy" isBlankWhenNull="true">
+				<reportElement x="302" y="2" width="100" height="20" uuid="04d5af92-c601-4c32-9ab9-61148d4736e4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MGIT_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="39" y="22" width="88" height="20" uuid="e9ca0ed4-374e-40a5-b362-8f282a0c9159"/>
+				<text><![CDATA[- Sputum I]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="22" width="400" height="20" uuid="e33bcd8b-d458-4517-980b-c135eb756b43"/>
+				<textFieldExpression><![CDATA[$F{MGIT_SP1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="138" y="22" width="10" height="20" uuid="916c6e09-15ec-4de6-a24d-bb7a0c9192ef"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement x="38" y="0" width="88" height="20" uuid="c340365d-b7e7-442c-9f4f-cf65052ab9e4"/>
+				<text><![CDATA[- Sputum II]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="0" width="402" height="20" uuid="74e112da-5dec-406c-af38-ce39e5fb7771"/>
+				<textFieldExpression><![CDATA[$F{MGIT_SP2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="137" y="0" width="10" height="20" uuid="f18c7aa7-8353-4e14-9d4d-f84650738fb1"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<textField isBlankWhenNull="true">
+				<reportElement x="149" y="0" width="402" height="20" uuid="e2a1795b-3474-47fd-a051-2d0c0a992f70"/>
+				<textFieldExpression><![CDATA[$F{MGIT_SP3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="137" y="0" width="10" height="20" uuid="04795e34-7ad0-46e1-b6ed-dbd533f715ff"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="0" width="88" height="20" uuid="9212136d-88a5-4576-8e43-2ef99b67e588"/>
+				<text><![CDATA[- Sputum III]]></text>
+			</staticText>
+		</band>
+		<band height="42">
+			<staticText>
+				<reportElement x="25" y="2" width="276" height="20" uuid="15b95c1e-eddd-453c-a679-fc6551155453"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[D. Antituberculosis suspectibility test :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="22" width="511" height="20" uuid="62afa594-5938-468d-bcff-bdf7e79ed10d"/>
+				<textFieldExpression><![CDATA[$F{ANTITUBE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="42">
+			<staticText>
+				<reportElement x="25" y="2" width="276" height="20" uuid="e482a871-2f80-4182-b733-baad1d4cbee3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[E. CONCLUSION]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="22" width="511" height="20" uuid="d1b55b02-8ec2-40c4-a9ac-cccef4055d11"/>
+				<textFieldExpression><![CDATA[$F{CONCLUSION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="113" splitType="Stretch">
+			<componentElement>
+				<reportElement stretchType="ElementGroupHeight" x="325" y="40" width="52" height="48" isPrintWhenDetailOverflows="true" uuid="76229986-0be7-41e5-98fd-c6b45a44ed48">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" margin="0">
+					<jr:codeExpression><![CDATA[$P{REQUEST_REPORT_ID}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="326" y="10" width="196" height="15" uuid="34dd8e68-ddfd-49d3-9bda-fe2fef276c49"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KOTA}+", "+$F{TGLSKRG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="86" width="196" height="20" uuid="0db29437-05f2-499f-af91-e2fe0cb59490"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NAMA_DOKTER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="326" y="25" width="196" height="20" uuid="a2dadc6a-b3d9-4b99-a75b-b6e3b14ae923"/>
+				<text><![CDATA[Doctor incharge]]></text>
+			</staticText>
+			<image>
+				<reportElement x="341" y="53" width="20" height="23" uuid="e48b9003-b565-4101-9c7e-3e5041ec899d">
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{IMAGES_PATH} +  $F{IDPPK}+".png"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

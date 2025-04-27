@@ -1,0 +1,4 @@
+USE layanan;
+
+ALTER TABLE `hasil_lab`
+	CHANGE COLUMN `ID` `ID` CHAR(12) NOT NULL;

@@ -1,0 +1,5 @@
+use `aplikasi`;
+
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('13030330', 'SALURAN CERNAH', 4, 'Saluran Cernah', 1, 'rekammedis.pemeriksaan.anatomi.salurancernah.Workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('1303033001', 'BAWAH', 5, 'Bawah', 1, 'rekammedis-pemeriksaan-anatomi-salurancernah-bawah-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('1303033002', 'ATAS', 5, 'Atas', 1, 'rekammedis-pemeriksaan-anatomi-salurancernah-atas-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);

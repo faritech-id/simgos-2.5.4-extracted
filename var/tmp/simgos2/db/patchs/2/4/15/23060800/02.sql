@@ -1,0 +1,62 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.23.129
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               12.0.0.6468
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Membuang struktur basisdata untuk inventory
+USE `inventory`;
+
+-- membuang struktur untuk event inventory.onRecalculation
+DROP EVENT IF EXISTS `onRecalculation`;
+DELIMITER //
+CREATE EVENT `onRecalculation` ON SCHEDULE EVERY 2 SECOND STARTS '2015-12-15 15:07:18' ON COMPLETION PRESERVE ENABLE DO BEGIN
+	DECLARE VBARANG_RUANGAN INT;
+	DECLARE VID CHAR(23);
+	DECLARE RECALC_NOT_FOUND TINYINT DEFAULT FALSE;
+	DECLARE CR_RECALC CURSOR FOR
+		
+		 SELECT r.BARANG_RUANGAN, r.ID
+		  FROM inventory.recalculation r
+		 WHERE r.`STATUS` = 0
+		 ORDER BY ID ASC LIMIT 1;
+		 
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET RECALC_NOT_FOUND = TRUE;
+	
+	OPEN CR_RECALC;
+	EOF: LOOP
+		FETCH CR_RECALC INTO VBARANG_RUANGAN, VID;				
+				
+		IF RECALC_NOT_FOUND THEN
+			UPDATE temp.temp SET ID = 0 WHERE ID = 0;
+			LEAVE EOF;
+		END IF;
+		
+		UPDATE inventory.recalculation r
+		   SET r.`STATUS` = 1
+		 WHERE r.BARANG_RUANGAN = VBARANG_RUANGAN 
+		   AND r.ID >= VID 
+			AND r.STATUS = 0;
+			
+		UPDATE inventory.transaksi_stok_ruangan SET FLAG = IF(FLAG = 1, 0, 1) WHERE BARANG_RUANGAN = VBARANG_RUANGAN AND ID >= VID ORDER BY VID;
+		DELETE FROM inventory.recalculation WHERE BARANG_RUANGAN = VBARANG_RUANGAN AND ID >= VID;
+	END LOOP;
+	CLOSE CR_RECALC;	
+END//
+DELIMITER ;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <globalProperties>
+    <globalProperty>
+      <property>addresshierarchy.starter.validation</property>
+      <value>true</value>
+    </globalProperty>
+    <globalProperty>
+      <property>addresshierarchy.mandatory</property>
+      <value>true</value>
+    </globalProperty>
+    <globalProperty>
+      <property>addresshierarchy.allowFreeText</property>
+      <value>true</value>
+    </globalProperty>
+    <globalProperty>
+      <property>addresshierarchy.enableOverride</property>
+      <value>true</value>
+    </globalProperty>
+  </globalProperties>
+</config> 

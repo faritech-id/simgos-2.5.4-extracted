@@ -1,0 +1,1 @@
+UPDATE `document-storage`.`document_directory` SET `DOCUMENT_NAME`='-' WHERE `ID`=12;

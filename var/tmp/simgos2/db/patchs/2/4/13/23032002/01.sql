@@ -1,0 +1,2 @@
+USE `aplikasi`;
+INSERT INTO `properti_config` (`ID`, `NAMA`, `VALUE`, `DESKRIPSI`) VALUES (61, 'OTOMATIS_BATAL_ORDER_RESEP_TIDAK_DITERIMA', 'FALSE', 'FALSE = Tidak Tereksekusi, Disisi (1 = 1 x 24 Jam, 2 = 2 x 24 Jam, dst) Jika Terbatalkan Otomatis');

@@ -1,0 +1,101 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.7
+-- Versi server:                 8.0.34 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               12.5.0.6677
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Membuang struktur basisdata untuk lis
+USE `lis`;
+
+-- membuang struktur untuk function lis.createTindakanMedis
+DROP FUNCTION IF EXISTS `createTindakanMedis`;
+DELIMITER //
+CREATE FUNCTION `createTindakanMedis`(
+	`PKUNJUNGAN` CHAR(25),
+	`PTINDAKAN` SMALLINT,
+	`PTANGGAL` DATETIME,
+	`PUSER` SMALLINT
+) RETURNS char(25) CHARSET latin1
+    DETERMINISTIC
+BEGIN
+	DECLARE VTINDAKAN_MEDIS CHAR(11);
+	DECLARE VDOKTER SMALLINT;
+	
+	SET VDOKTER = lis.getDokterJaga(DATE(PTANGGAL));
+	
+	IF VDOKTER = 0 THEN
+		SELECT a.DOKTER_LAB
+		  INTO VDOKTER
+		  FROM lis.lis_tanpa_order_config a
+		 LIMIT 1;
+	END IF;
+	
+	SELECT tm.ID
+	  INTO VTINDAKAN_MEDIS
+	  FROM layanan.tindakan_medis tm
+	 WHERE tm.KUNJUNGAN = PKUNJUNGAN
+	   AND tm.OTOMATIS = 1
+	   AND tm.TINDAKAN = PTINDAKAN
+	   AND tm.TANGGAL = PTANGGAL
+	 LIMIT 1;
+	
+	IF NOT VTINDAKAN_MEDIS IS NULL THEN
+		RETURN VTINDAKAN_MEDIS;
+	END IF;
+	
+	SET VTINDAKAN_MEDIS = generator.generateIdTindakanMedis(DATE(PTANGGAL));
+	INSERT INTO layanan.tindakan_medis(ID, KUNJUNGAN, TINDAKAN, TANGGAL, OLEH, OTOMATIS)
+	VALUES(VTINDAKAN_MEDIS, PKUNJUNGAN, PTINDAKAN, PTANGGAL, PUSER, 1);
+	
+	IF NOT VDOKTER IS NULL THEN
+		IF NOT EXISTS(
+			SELECT 1 
+			  FROM layanan.petugas_tindakan_medis ptm 
+			 WHERE ptm.TINDAKAN_MEDIS = VTINDAKAN_MEDIS
+			   AND ptm.JENIS = 1
+			   AND ptm.MEDIS = VDOKTER) THEN
+			INSERT INTO layanan.petugas_tindakan_medis(TINDAKAN_MEDIS, JENIS, MEDIS)
+			VALUES (VTINDAKAN_MEDIS, 1, VDOKTER);
+		END IF;
+	END IF;
+	
+	RETURN VTINDAKAN_MEDIS;
+END//
+DELIMITER ;
+
+-- membuang struktur untuk function lis.getDokterJaga
+DROP FUNCTION IF EXISTS `getDokterJaga`;
+DELIMITER //
+CREATE FUNCTION `getDokterJaga`(
+	`PTANGGAL` DATE
+) RETURNS smallint
+    DETERMINISTIC
+BEGIN
+	DECLARE VDOKTER_ID SMALLINT;
+	
+	SELECT dj.DOKTER_ID
+	  INTO VDOKTER_ID
+	  FROM lis.dokter_jaga dj
+	 WHERE dj.HARI = DAYOFWEEK(PTANGGAL)
+	   AND dj.`STATUS` = 1
+	 LIMIT 1;
+	 
+	RETURN IFNULL(VDOKTER_ID, 0);
+END//
+DELIMITER ;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

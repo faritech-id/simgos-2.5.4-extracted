@@ -1,0 +1,7 @@
+UPDATE `master`.`jenis_laporan_detil` SET `REPORT_PARAMS`='{\r\n  NAME: \'rl.LaporanRL4aSebabLuar\',\r\n  TYPE: \'Excel\', \r\n  EXT: \'xls\',\r\n  PARAMETER: {\r\n   TGLAWAL: \'\',\r\n   TGLAKHIR: \'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakRL\'\r\n}' WHERE  `JENIS`='100104' AND `ID`=2;
+
+UPDATE `master`.`jenis_laporan_detil` SET `REPORT_PARAMS`='{\r\n  NAME: \'rl.LaporanRL4bSebabLuar\',\r\n  TYPE: \'Excel\', \r\n  EXT: \'xls\',\r\n  PARAMETER: {\r\n   TGLAWAL: \'\',\r\n   TGLAKHIR: \'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakRL\'\r\n}' WHERE  `JENIS`='100104' AND `ID`=4;
+
+UPDATE `master`.`jenis_laporan_detil` SET `REPORT_PARAMS`='{\r\n  NAME: \'rl.dinkes.LaporanRL4aSebabLuar\',\r\n  TYPE: \'Pdf\', \r\n  EXT: \'pdf\',\r\n  PARAMETER: {\r\n   TGLAWAL:\'\',\r\n   TGLAKHIR:\'\',\r\n   CARAKELUAR:\'\',\r\n   RUANGAN:\'\',\r\n   LAPORAN:\'\',\r\n   CARABAYAR:\'\',\r\n   KODEICD:\'\',\r\n   UTAMA:\'\',\r\n  LMT:\'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakRekamMedis\'\r\n}' WHERE  `JENIS`='100204' AND `ID`=2;
+
+UPDATE `master`.`jenis_laporan_detil` SET `REPORT_PARAMS`='{\r\n  NAME: \'rl.dinkes.LaporanRL4bSebabLuar\',\r\n  TYPE: \'Pdf\', \r\n  EXT: \'pdf\',\r\n  PARAMETER: {\r\n   TGLAWAL:\'\',\r\n   TGLAKHIR:\'\',\r\n   CARAKELUAR:\'\',\r\n   RUANGAN:\'\',\r\n   LAPORAN:\'\',\r\n   CARABAYAR:\'\',\r\n   KODEICD:\'\',\r\n   UTAMA:\'\',\r\n  LMT:\'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakRekamMedis\'\r\n}' WHERE  `JENIS`='100204' AND `ID`=4;

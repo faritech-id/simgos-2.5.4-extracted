@@ -1,0 +1,2 @@
+UPDATE `kemkes-ihs`.`code_reference` SET `system`='http://fhir.kemkes.go.id/r4/StructureDefinition/MedicationType' WHERE  `id`=16;
+UPDATE `kemkes-ihs`.`code_reference` SET `system`='http://terminology.kemkes.go.id/CodeSystem/medication-type' WHERE  `id`=17;

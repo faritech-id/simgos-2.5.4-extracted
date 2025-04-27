@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanFarmasiPerobatPerBulan" language="groovy" pageWidth="1600" pageHeight="621" columnWidth="1584" leftMargin="8" rightMargin="8" topMargin="8" bottomMargin="20" isIgnorePagination="true" uuid="d27b40c5-1fc4-4119-8e4a-0dfa330e760a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="152"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="843"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="104"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="TGLAWAL" class="java.lang.String"/>
+	<parameter name="TGLAKHIR" class="java.lang.String"/>
+	<parameter name="LAPORAN" class="java.lang.String"/>
+	<parameter name="RUANGAN" class="java.lang.String"/>
+	<parameter name="CARABAYAR" class="java.lang.String"/>
+	<parameter name="KATEGORI" class="java.lang.String"/>
+	<parameter name="BARANG" class="java.lang.String"/>
+	<parameter name="JENISINVENTORY" class="java.lang.String"/>
+	<parameter name="JENISKATEGORI" class="java.lang.String"/>
+	<parameter name="KATEGORIBARANG" class="java.lang.String"/>
+	<parameter name="JENISGENERIK" class="java.lang.String"/>
+	<parameter name="JENISFORMULARIUM" class="java.lang.String"/>
+	<parameter name="PENGGOLONGAN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[call laporan.LaporanFarmasiPerobatPerBulan($P{TGLAWAL},$P{TGLAKHIR},$P{RUANGAN},$P{LAPORAN},$P{CARABAYAR},$P{KATEGORI},$P{BARANG},$P{JENISINVENTORY},$P{JENISKATEGORI},$P{KATEGORIBARANG},$P{JENISGENERIK},$P{JENISFORMULARIUM},$P{PENGGOLONGAN})]]>
+	</queryString>
+	<field name="FARMASI" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="FARMASI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="farmasi"/>
+	</field>
+	<field name="NAMAOBAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NAMAOBAT"/>
+	</field>
+	<field name="GENERIK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GENERIK"/>
+	</field>
+	<field name="MERK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MERK"/>
+	</field>
+	<field name="FORMULARIUM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FORMULARIUM"/>
+	</field>
+	<field name="GOLONGAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GOLONGAN"/>
+	</field>
+	<field name="KATEGORIBARANG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="KATEGORIBARANG"/>
+	</field>
+	<field name="JUMLAH_JAN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_JAN"/>
+	</field>
+	<field name="JUMLAHPASIEN_JAN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_JAN"/>
+	</field>
+	<field name="TOTAL_JAN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_JAN"/>
+	</field>
+	<field name="JUMLAH_FEB" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_FEB"/>
+	</field>
+	<field name="JUMLAHPASIEN_FEB" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_FEB"/>
+	</field>
+	<field name="TOTAL_FEB" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_FEB"/>
+	</field>
+	<field name="JUMLAH_MAR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_MAR"/>
+	</field>
+	<field name="JUMLAHPASIEN_MAR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_MAR"/>
+	</field>
+	<field name="TOTAL_MAR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_MAR"/>
+	</field>
+	<field name="JUMLAH_APR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_APR"/>
+	</field>
+	<field name="JUMLAHPASIEN_APR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_APR"/>
+	</field>
+	<field name="TOTAL_APR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_APR"/>
+	</field>
+	<field name="JUMLAH_MEI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_MEI"/>
+	</field>
+	<field name="JUMLAHPASIEN_MEI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_MEI"/>
+	</field>
+	<field name="TOTAL_MEI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_MEI"/>
+	</field>
+	<field name="JUMLAH_JUN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_JUN"/>
+	</field>
+	<field name="JUMLAHPASIEN_JUN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_JUN"/>
+	</field>
+	<field name="TOTAL_JUN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_JUN"/>
+	</field>
+	<field name="JUMLAH_JUL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_JUL"/>
+	</field>
+	<field name="JUMLAHPASIEN_JUL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_JUL"/>
+	</field>
+	<field name="TOTAL_JUL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_JUL"/>
+	</field>
+	<field name="JUMLAH_AGUS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_AGUS"/>
+	</field>
+	<field name="JUMLAHPASIEN_AGUS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_AGUS"/>
+	</field>
+	<field name="TOTAL_AGUS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_AGUS"/>
+	</field>
+	<field name="JUMLAH_SEP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_SEP"/>
+	</field>
+	<field name="JUMLAHPASIEN_SEP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_SEP"/>
+	</field>
+	<field name="TOTAL_SEP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_SEP"/>
+	</field>
+	<field name="JUMLAH_OKT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_OKT"/>
+	</field>
+	<field name="JUMLAHPASIEN_OKT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_OKT"/>
+	</field>
+	<field name="TOTAL_OKT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_OKT"/>
+	</field>
+	<field name="JUMLAH_NOP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_NOP"/>
+	</field>
+	<field name="JUMLAHPASIEN_NOP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_NOP"/>
+	</field>
+	<field name="TOTAL_NOP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_NOP"/>
+	</field>
+	<field name="JUMLAH_DES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAH_DES"/>
+	</field>
+	<field name="JUMLAHPASIEN_DES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN_DES"/>
+	</field>
+	<field name="TOTAL_DES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_DES"/>
+	</field>
+	<field name="JMLOBAT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JMLOBAT"/>
+		<property name="com.jaspersoft.studio.field.name" value="JMLOBAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rincian_tagihan"/>
+	</field>
+	<field name="TARIF" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TARIF"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+	</field>
+	<field name="JMLR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JMLR"/>
+	</field>
+	<field name="JUMLAHPASIEN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="JUMLAHPASIEN"/>
+	</field>
+	<field name="PPK" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="PPK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="instansi"/>
+		<property name="com.jaspersoft.studio.field.name" value="PPK"/>
+		<fieldDescription><![CDATA[Pemberi Pelayanan Kesehatan]]></fieldDescription>
+	</field>
+	<field name="NAMAINST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NAMAINST"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ppk"/>
+		<property name="com.jaspersoft.studio.field.name" value="NAMAINST"/>
+	</field>
+	<field name="ALAMATINST" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ALAMATINST"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ppk"/>
+		<property name="com.jaspersoft.studio.field.name" value="ALAMATINST"/>
+	</field>
+	<field name="KATEGORI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="KATEGORI"/>
+		<property name="com.jaspersoft.studio.field.name" value="KATEGORI"/>
+	</field>
+	<field name="RACIKAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="RACIKAN"/>
+	</field>
+	<field name="STATUSLAYANAN" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="STATUSLAYANAN"/>
+	</field>
+	<field name="CARABAYARHEADER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CARABAYARHEADER"/>
+		<property name="com.jaspersoft.studio.field.name" value="CARABAYARHEADER"/>
+	</field>
+	<field name="INSTALASI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INSTALASI"/>
+		<property name="com.jaspersoft.studio.field.name" value="INSTALASI"/>
+	</field>
+	<field name="BARANGHEADER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BARANGHEADER"/>
+		<property name="com.jaspersoft.studio.field.name" value="BARANGHEADER"/>
+	</field>
+	<field name="JENISLAPORAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="JENISLAPORAN"/>
+	</field>
+	<variable name="NOURUT" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[1]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_JMLOBAT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{JMLOBAT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="226" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="370" height="11" uuid="85c9ab1e-b910-4005-bbe2-be210dbc2ca0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMAINST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="11" width="370" height="11" uuid="d78c74d5-5da2-40bf-a9d2-7c5d6073739d"/>
+				<textElement>
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ALAMATINST}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="73" width="690" height="17" uuid="6b839893-bb79-4ede-bc06-c380fc39dd66"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KATEGORI}==null ? "KATEGORI : Semua" : "KATEGORI : "+$F{KATEGORI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="39" width="690" height="17" uuid="b59dc761-f12b-4686-b267-0225adb934d2"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENISLAPORAN}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="90" width="690" height="17" uuid="3f272a39-7300-414c-83dc-e3603117f3ca"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["BARANG : "+ $F{BARANGHEADER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="56" width="690" height="17" uuid="9de4e046-3773-43e8-9851-4047c1c591f1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CARA BAYAR : "+ $F{CARABAYARHEADER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="161" width="690" height="18" uuid="99543db7-d3d4-467d-bec1-27f6280b2c1a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PERIODE " + DateFormat.getDateInstance(DateFormat.LONG, $P{REPORT_LOCALE}).format(java.sql.Timestamp.valueOf($P{TGLAWAL})).toUpperCase() + ($P{TGLAWAL}.substring(0, 10).equalsIgnoreCase($P{TGLAKHIR}.substring(0, 10)) ? "" : " S/D " + DateFormat.getDateInstance(DateFormat.LONG, $P{REPORT_LOCALE}).format(java.sql.Timestamp.valueOf($P{TGLAKHIR})).toUpperCase())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="107" width="690" height="53" uuid="490b3bbc-1984-4bf4-935b-46447e9c0882"/>
+				<textElement verticalAlignment="Top">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INSTALASI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="536" y="206" width="42" height="20" uuid="1d814e15-d227-4996-8fac-43d5c14fc955"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="620" y="206" width="42" height="20" uuid="cee09db2-cac8-4908-ae8a-b5ee90035787"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mei]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="186" width="504" height="20" uuid="e4105737-bc2d-41f3-ae1e-fdc8b893db75"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Pasien]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1208" y="206" width="42" height="20" uuid="0d7c08f8-7e0a-4baf-a29e-c7654ecbddba"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1166" y="206" width="42" height="20" uuid="28b02fad-5baf-442b-90f6-a172bc4668fe"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mei]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="830" y="206" width="42" height="20" uuid="dba2ac3f-e249-4e2f-9233-9ab914756ff1"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Okt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="914" y="206" width="42" height="20" uuid="30b19803-b6e3-4a5b-b868-9484493e3285"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Des]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="494" y="206" width="42" height="20" uuid="c7555f34-9826-422f-8ff2-d02fe5789c49"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Feb]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="578" y="206" width="42" height="20" uuid="fd25b8d3-f824-48b0-bca6-bda7743538a5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="186" width="98" height="40" uuid="461630e0-82de-4cc6-83ee-65b157e45c4f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Obat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1040" y="206" width="42" height="20" uuid="2256be17-e109-4b24-830a-dd83625f7931"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Feb]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="746" y="206" width="42" height="20" uuid="6115d39e-71de-4cc3-95ee-832a321c5951"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aug]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="186" width="70" height="40" uuid="e0eb1a7e-432a-4bc7-a7e9-81e8c3a861c3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kategori]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="788" y="206" width="42" height="20" uuid="f05d1d76-6908-48f5-ad03-2fe1a5d663e9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sep]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="186" width="84" height="40" uuid="4bcfde90-5f95-474a-8cba-186251694d0d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1292" y="206" width="42" height="20" uuid="55f5e0c6-8a9d-4c00-a3d2-a769eb5c9dc2"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aug]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1418" y="206" width="42" height="20" uuid="1cb9ccc1-f56e-4d7a-ab24-26f4867af911"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nov]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="998" y="186" width="504" height="20" uuid="17209a6d-ba92-4830-bc28-87218e4dac29"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Obat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1376" y="206" width="42" height="20" uuid="69f8c6bc-9025-4e4d-92fe-76d7e9805bab"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Okt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1082" y="206" width="42" height="20" uuid="93efe86d-aef1-4aa6-9943-148df3aaf908"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1460" y="206" width="42" height="20" uuid="7b08b1d9-f62a-42ad-a3c8-36bee19e3b15"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Des]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="206" width="42" height="20" uuid="c98b41ba-8b86-43b6-beb6-22afc9e1d84e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="186" width="84" height="40" uuid="27dcc0f1-3df7-4061-8195-6f008bbe20e3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formularium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="704" y="206" width="42" height="20" uuid="557e5603-2357-45cd-a36e-37293ef29725"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jul]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1250" y="206" width="42" height="20" uuid="95f3553e-884d-4e41-bb49-3127e84bfb12"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jul]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="186" width="84" height="40" uuid="40bcbcc2-c469-4b95-8e3a-177560d268f9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jenis Generik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="662" y="206" width="42" height="20" uuid="9f57236a-bb17-41cf-aed7-e82dc63d068a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jun]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1124" y="206" width="42" height="20" uuid="b8ef43b8-a998-40c4-9edf-ed3f8ad4ca4e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1502" y="186" width="42" height="40" uuid="fbb83d76-7ff8-44ed-a07f-bd1702132d46"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Obat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1334" y="206" width="42" height="20" uuid="bc3ac590-499c-49a5-b8b2-e13163f29cbe"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sep]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="998" y="206" width="42" height="20" uuid="9f584779-34e3-4403-aeda-8df4d82e9d1e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="186" width="22" height="40" uuid="93ab4d63-c08b-448c-8c94-a91610f220e1"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="956" y="186" width="42" height="40" uuid="3436e790-9fd4-4451-bb2a-98d07d23e4a5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pasien]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="872" y="206" width="42" height="20" uuid="4402dc59-bba8-4f9c-b806-822d621c5347"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nov]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToBandHeight" x="10" y="0" width="22" height="23" uuid="8e9cbfa1-ae39-4bd6-9ac7-a5482b793d03"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{NOURUT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="0" width="98" height="23" uuid="6120a6b0-82a0-460e-9e10-7ad686f3cb13"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NAMAOBAT}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="130" y="0" width="70" height="23" uuid="0167f9c5-a4c8-4b13-9632-a865325f7cb2"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{KATEGORIBARANG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="84" height="23" uuid="69394850-b75c-4dde-829e-5bb5d17ac2f0"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GENERIK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="0" width="84" height="23" uuid="0c95bdc4-5dd2-4e18-bd8a-1da9a4ed8966"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MERK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="84" height="23" uuid="4a3a396e-0530-4b01-88ab-e0225fcbe8fc"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FORMULARIUM}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="452" y="0" width="42" height="23" uuid="5ddc8c70-0cd8-46d1-b779-8376ec26f601"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_JAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="494" y="0" width="42" height="23" uuid="f9c2c10e-4ae0-42f7-8630-8b21b5876208"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_FEB}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="536" y="0" width="42" height="23" uuid="60e2b5ac-56e5-4198-b5c8-8ad4399ef4f5"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_MAR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="578" y="0" width="42" height="23" uuid="5ed41268-bb9d-4142-892f-80ea3cae2e34"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_APR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="620" y="0" width="42" height="23" uuid="bbeaf7ec-ab3e-4f21-a676-b2d20b159070"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_MEI}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="662" y="0" width="42" height="23" uuid="a99d6d6b-5db0-4d41-b51e-a3585c5eed66"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_JUN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="704" y="0" width="42" height="23" uuid="cf854297-a8f4-4c4d-98c1-02e4600fe360"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_JUL}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="746" y="0" width="42" height="23" uuid="a17cc6ec-09b1-447c-86e0-dc9b2a0473da"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_AGUS}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="914" y="0" width="42" height="23" uuid="147cc8e7-bc44-4017-94e5-89eb9d70e1ea"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_DES}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="872" y="0" width="42" height="23" uuid="c9fc0271-0698-4eba-b4d8-be1d7090f029"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_NOP}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="788" y="0" width="42" height="23" uuid="e8934e7e-06a4-43a0-aafb-0b59c1205fa5"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_SEP}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="830" y="0" width="42" height="23" uuid="efd75219-8507-46c1-81b8-df38b7d0f140"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN_OKT}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.###;(#,##0.###-)">
+				<reportElement x="956" y="0" width="42" height="23" uuid="891eb19e-c2c6-400f-88bd-177415b941b2"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAHPASIEN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1082" y="0" width="42" height="23" uuid="c2584d30-d4fd-4edb-99f1-13c26546c803"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_MAR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1502" y="0" width="42" height="23" uuid="2583dd73-a4fe-4c8f-ad37-0efc7c816037"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JMLOBAT}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1166" y="0" width="42" height="23" uuid="b3d95161-b84c-495f-8a66-4dc72797ee02"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_MEI}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1292" y="0" width="42" height="23" uuid="aca4ef3f-f135-4934-bd56-82e07bb415b9"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_AGUS}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1418" y="0" width="42" height="23" uuid="4a7747d3-b4f7-4b01-86d7-f96b4fa796d3"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_NOP}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="998" y="0" width="42" height="23" uuid="67ac1910-be68-4690-b977-805bb71e4753"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_JAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1124" y="0" width="42" height="23" uuid="066b5699-9c97-4e68-a674-108bcfc4b689"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_APR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1376" y="0" width="42" height="23" uuid="bb0e9f47-1fe7-4936-a72e-4044c225ac76"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_OKT}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1208" y="0" width="42" height="23" uuid="45145c3f-f09e-4d2d-8dbd-d9ff4e200563"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_JUN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1250" y="0" width="42" height="23" uuid="1308b256-d435-4dcd-802b-8438172a5675"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_JUL}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1040" y="0" width="42" height="23" uuid="2d1e9055-7337-4454-be72-cc9a6da8c5e7"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_FEB}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1460" y="0" width="42" height="23" uuid="da86bd5a-269a-49fd-9c6b-c5c473a5e649"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_DES}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="1334" y="0" width="42" height="23" uuid="6b7112c9-ba54-480e-81a0-8dc93e49087f"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUMLAH_SEP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="46"/>
+	</summary>
+</jasperReport>

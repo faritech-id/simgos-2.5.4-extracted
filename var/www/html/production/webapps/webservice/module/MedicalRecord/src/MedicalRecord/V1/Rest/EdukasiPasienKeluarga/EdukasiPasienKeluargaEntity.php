@@ -1,0 +1,46 @@
+<?php
+namespace MedicalRecord\V1\Rest\EdukasiPasienKeluarga;
+
+use DBService\SystemArrayObject;
+
+class EdukasiPasienKeluargaEntity extends SystemArrayObject
+{
+	protected $fields = [
+		"ID"=>1
+		, "KUNJUNGAN"=>1
+		, "KESEDIAAN"=>1
+		, "HAMBATAN"=>1
+		, "HAMBATAN_PENDENGARAN"=>1
+		, "HAMBATAN_PENGLIHATAN"=>1
+		, "HAMBATAN_KOGNITIF"=>1
+		, "HAMBATAN_FISIK"=>1
+		, "HAMBATAN_BUDAYA"=>1
+		, "HAMBATAN_EMOSI"=>1
+		, "HAMBATAN_BAHASA"=>1
+		, "HAMBATAN_LAINNYA"=>1		
+		, "PENERJEMAH"=>1
+		, "BAHASA"=>1
+		, "EDUKASI_DIAGNOSA"=>1
+		, "EDUKASI_PENYAKIT"=>1
+		, "EDUKASI_REHAB_MEDIK"=>1
+		, "EDUKASI_HKP"=>1
+		, "EDUKASI_OBAT"=>1
+		, "EDUKASI_NYERI"=>1
+		, "EDUKASI_NUTRISI"=>1
+		, "EDUKASI_PENGGUNAAN_ALAT"=>1
+		, "EDUKASI_HAK_BERPARTISIPASI" => 1
+		, "EDUKASI_PROSEDURE_PENUNJANG" => 1
+		, "EDUKASI_PEMBERIAN_INFORMED_CONSENT" => 1
+		, "EDUKASI_PENUNDAAN_PELAYANAN" => 1
+		, "EDUKASI_KELAMBATAN_PELAYANAN" => 1
+		, "EDUKASI_CUCI_TANGAN" => 1
+		, "EDUKASI_BAHAYA_MEROKO" => 1
+		, "EDUKASI_RUJUKAN_PASIEN" => 1
+		, "EDUKASI_PERENCANAAN_PULANG" => 1
+		, "STATUS_LAIN" => 1
+		, "DESKRIPSI_LAINYA" => 1
+		, "TANGGAL"=>1
+		, "OLEH"=>1
+		, "STATUS"=>1
+    ];
+}

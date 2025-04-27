@@ -1,0 +1,1 @@
+UPDATE `master`.`referensi` SET `DESKRIPSI`='Kamar Operasi / Tindakan Invasif ' WHERE  `JENIS`=15 AND `ID`=6;

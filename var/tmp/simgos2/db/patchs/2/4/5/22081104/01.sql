@@ -1,0 +1,1 @@
+UPDATE `master`.`referensi` SET `DESKRIPSI`='Ada' WHERE `JENIS`=178 AND `ID`=2;

@@ -1,0 +1,5 @@
+USE `aplikasi`;
+
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('130209', 'DIPEROLEH', 3, 'Anamnesis Diperoleh', 1, 'rekammedis-anamnesis-diperoleh-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('13020205', 'FAKTOR RISIKO', 4, 'Faktor Risiko', 1, 'rekammedis-anamnesis-riwayat-faktorrisiko-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`, `IDX`) VALUES ('13020206', 'PENYAKIT KELUARGA', 4, 'Penyakit Keluarga', 1, 'rekammedis-anamnesis-riwayat-penyakitkeluarga-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0, 0);

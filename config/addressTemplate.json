@@ -1,0 +1,100 @@
+{
+  "name": "Indonesia Address Template",
+  "displayName": "Indonesia",
+  "codeName": "indonesia",
+  "displayOrder": 1,
+  "required": false,
+  "configuration": {
+    "lineByLineFormat": [
+      "address1",
+      "address2",
+      ["cityVillage", "rt", "rw"],
+      ["district", "postalCode"],
+      "stateProvince",
+      "country"
+    ]
+  },
+  "addressHierarchy": {
+    "country": {
+      "name": "country",
+      "displayName": "Country",
+      "displayOrder": 6,
+      "required": false
+    },
+    "stateProvince": {
+      "name": "stateProvince",
+      "displayName": "Province",
+      "displayOrder": 5,
+      "required": false,
+      "parent": "country"
+    },
+    "district": {
+      "name": "district",
+      "displayName": "District/City",
+      "displayOrder": 4,
+      "required": false,
+      "parent": "stateProvince"
+    },
+    "cityVillage": {
+      "name": "cityVillage", 
+      "displayName": "Sub-district/Village",
+      "displayOrder": 3,
+      "required": false,
+      "parent": "district"
+    },
+    "address1": {
+      "name": "address1",
+      "displayName": "Street Address",
+      "displayOrder": 1,
+      "required": true
+    },
+    "address2": {
+      "name": "address2",
+      "displayName": "Additional Address",
+      "displayOrder": 2,
+      "required": false
+    },
+    "rt": {
+      "name": "rt",
+      "displayName": "RT",
+      "displayOrder": 7,
+      "required": false,
+      "regex": "^\\d+$",
+      "description": "RT (Rukun Tetangga) number"
+    },
+    "rw": {
+      "name": "rw", 
+      "displayName": "RW",
+      "displayOrder": 8,
+      "required": false,
+      "regex": "^\\d+$",
+      "description": "RW (Rukun Warga) number"
+    },
+    "postalCode": {
+      "name": "postalCode",
+      "displayName": "Postal Code",
+      "displayOrder": 9,
+      "required": false,
+      "regex": "^\\d{5}$",
+      "description": "5-digit postal code"
+    }
+  },
+  "validationRegex": {
+    "postalCode": "^\\d{5}$",
+    "rt": "^\\d+$",
+    "rw": "^\\d+$"
+  },
+  "i18n": {
+    "id": {
+      "country": "Negara",
+      "stateProvince": "Provinsi",
+      "district": "Kabupaten/Kota",
+      "cityVillage": "Kecamatan/Kelurahan",
+      "address1": "Alamat",
+      "address2": "Alamat Tambahan",
+      "rt": "RT",
+      "rw": "RW",
+      "postalCode": "Kode Pos"
+    }
+  }
+} 

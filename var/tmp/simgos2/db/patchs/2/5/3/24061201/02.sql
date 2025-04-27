@@ -1,0 +1,127 @@
+-- Dumping database structure for master
+USE `master`;
+
+-- Dumping structure for function master.getReplaceFont
+DROP FUNCTION IF EXISTS `getReplaceFont`;
+DELIMITER //
+CREATE FUNCTION `getReplaceFont`(
+	`PTEXT` TEXT
+) RETURNS text CHARSET latin1
+    DETERMINISTIC
+BEGIN
+   DECLARE HASIL TEXT;
+   SET HASIL = PTEXT;
+   
+   SET HASIL = REPLACE(HASIL,'Abadi','Arial');
+	SET HASIL = REPLACE(HASIL,'Calibri Light','Arial');
+	SET HASIL = REPLACE(HASIL,'UICTFontTextStyleBody','Arial');
+	SET HASIL = REPLACE(HASIL,'12px / 21px Arial','Arial');	
+	SET HASIL = REPLACE(HASIL,'Roboto','Arial');
+	SET HASIL = REPLACE(HASIL,'Wingdings','Arial');
+	SET HASIL = REPLACE(HASIL,'-apple-system-font','Arial');
+	SET HASIL = REPLACE(HASIL,'.Arial','Arial');
+	SET HASIL = REPLACE(HASIL,'Lato','Arial');
+	SET HASIL = REPLACE(HASIL,'Symbol','Arial');
+	SET HASIL = REPLACE(HASIL,'?? Light','Arial');
+	SET HASIL = REPLACE(HASIL,'LatoWeb','Arial');
+	SET HASIL = REPLACE(HASIL,'SimSun','Arial');
+	SET HASIL = REPLACE(HASIL,'Corbel','Arial');
+	SET HASIL = REPLACE(HASIL,'Algerian','Arial'); 
+	SET HASIL = REPLACE(HASIL,'Cambria','Arial');
+	SET HASIL = REPLACE(HASIL,'Times','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial New Roman','Arial');
+	SET HASIL = REPLACE(HASIL,'Open sans','Arial');
+	SET HASIL = REPLACE(HASIL,'.SFUI-Regular','Arial');
+	SET HASIL = REPLACE(HASIL,'proxima_nova_rgbold','Arial');
+	SET HASIL = REPLACE(HASIL,'proxima_nova_rgregular','Arial');
+	SET HASIL = REPLACE(HASIL,'AppleSystemUIFont','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial Arial','Arial');   
+	SET HASIL = REPLACE(HASIL,'Apple Color Emoji','Arial');
+	SET HASIL = REPLACE(HASIL,'Hiragino Sans','Arial');
+	SET HASIL = REPLACE(HASIL,'MS Gothic','Arial');
+	SET HASIL = REPLACE(HASIL,'UICTFontTextStyleEmphasizedBody','Arial');
+	SET HASIL = REPLACE(HASIL,'ArialBold','Arial');
+	SET HASIL = REPLACE(HASIL,'Aparajita','Arial');
+	SET HASIL = REPLACE(HASIL,'-webkit-standard','Arial');
+	SET HASIL = REPLACE(HASIL,'Courier New','Arial');
+	SET HASIL = REPLACE(HASIL,'.Arial UI','Arial');
+	SET HASIL = REPLACE(HASIL,'Segoe UI','Arial');
+	SET HASIL = REPLACE(HASIL,'monospace','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial Emoji','Arial');
+	SET HASIL = REPLACE(HASIL,'.SFUI-Heavy','Arial');
+	SET HASIL = REPLACE(HASIL,'??','Arial');
+	SET HASIL = REPLACE(HASIL,'docs-Calibri','Arial');
+	SET HASIL = REPLACE(HASIL,'arial','Arial');
+	SET HASIL = REPLACE(HASIL,'inherit','Arial');	
+	SET HASIL = REPLACE(HASIL,'MS Mincho','Arial');
+	SET HASIL = REPLACE(HASIL,'Droid Sans','Arial');
+	SET HASIL = REPLACE(HASIL,'Google Sans','Arial');
+	SET HASIL = REPLACE(HASIL,'Tw Cen MT','Arial');
+	SET HASIL = REPLACE(HASIL,'sans-serif','Arial');
+	SET HASIL = REPLACE(HASIL,'ArialMT','Arial');
+	SET HASIL = REPLACE(HASIL,'FontAwesome','Arial');
+	SET HASIL = REPLACE(HASIL,'Barlow','Arial');
+	SET HASIL = REPLACE(HASIL,'Copperplate Gothic Bold','Arial');
+	SET HASIL = REPLACE(HASIL,'ArialNewRomanPS-BoldMT','Arial');
+	SET HASIL = REPLACE(HASIL,'SF Pro Text','Arial');
+	SET HASIL = REPLACE(HASIL,'ArialNewRomanPSMT','Arial');
+	SET HASIL = REPLACE(HASIL,'Helvetica-Oblique','Arial');
+	SET HASIL = REPLACE(HASIL,'Open Sans','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial Light','Arial');
+	SET HASIL = REPLACE(HASIL,'.Arial','Arial');
+	SET HASIL = REPLACE(HASIL,'times new roman','Arial');
+	SET HASIL = REPLACE(HASIL,'Microsoft Sans Serif','Arial');
+	SET HASIL = REPLACE(HASIL,'Opensans','Arial');
+	SET HASIL = REPLACE(HASIL,'open sans','Arial');
+	SET HASIL = REPLACE(HASIL,'helveti','Arial');
+	SET HASIL = REPLACE(HASIL,'docs-Arial','Arial');	
+	SET HASIL = REPLACE(HASIL, '.LastResort','Arial');
+	SET HASIL = REPLACE(HASIL,'OpenSansRegular','Arial');
+	SET HASIL = REPLACE(HASIL,'UICTFontTextStyleItalicBody','Arial');	
+	SET HASIL = REPLACE(HASIL, 'Arial Condensed Light','Arial');
+	SET HASIL = REPLACE(HASIL,'.AppleColorEmojiUI', 'Arial');
+	SET HASIL = REPLACE(HASIL,'.SFUI-Semibold', 'Arial');
+	SET HASIL = REPLACE(HASIL,'Candara Light', 'Arial');
+	SET HASIL = REPLACE(HASIL,'HoloLens MDL2 Assets', 'Arial');
+	SET HASIL = REPLACE(HASIL,'-apple-system', 'Arial');
+	SET HASIL = REPLACE(HASIL,'ArialNewRomanPS', 'Arial');
+	SET HASIL = REPLACE(HASIL,'PT Serif', 'Arial');
+	SET HASIL = REPLACE(HASIL,'Maiandra GD', 'Arial');
+	SET HASIL = REPLACE(HASIL,'Bahnschrift SemiBold', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'PingFang SC', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'ArialMonospaced', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Calibri-Bold', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Arial Historic', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Arial Arial', 'Arial');
+	SET HASIL = REPLACE(HASIL,'DengXian', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Bahnschrift Light', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Arial Condensed', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'SF Pro Text', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Noto Sans Arials', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Comic Sans MS', 'Arial'); 
+	SET HASIL = REPLACE(HASIL, 'Arialca neue', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'ArialNarrow', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Arial Math', 'Arial');
+	SET HASIL = REPLACE(HASIL, 'Arial-BoldMT','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial Light','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial-ItalicMT','Arial');
+	SET HASIL = REPLACE(HASIL, 'Arial Regular','Arial');
+	SET HASIL = REPLACE(HASIL, 'Lucida Grande','Arial');
+	SET HASIL = REPLACE(HASIL,'lato','Arial');
+	SET HASIL = REPLACE(HASIL,'#DEFAULT','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial-Italic','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial-Bold','Arial');
+	SET HASIL = REPLACE(HASIL,'Aptos','Arial');
+	SET HASIL = REPLACE(HASIL, 'Gill Sans MT','Arial');
+	SET HASIL = REPLACE(HASIL,'roboto','Arial');
+	SET HASIL = REPLACE(HASIL,'system-ui','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial narrow','Arial');
+	SET HASIL = REPLACE(HASIL,'Apple Braille','Arial');
+	SET HASIL = REPLACE(HASIL,'Arial MT','Arial');
+	SET HASIL = REPLACE(HASIL,'Menlo','Arial');
+	SET HASIL = REPLACE(HASIL,'consolas','Arial');
+	SET HASIL = REPLACE(HASIL,'Poppins','Arial');
+	
+   RETURN HASIL;
+END//
+DELIMITER ;

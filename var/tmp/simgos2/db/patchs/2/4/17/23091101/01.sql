@@ -1,0 +1,4 @@
+USE `master`;
+ALTER TABLE `depo_layanan_farmasi`
+	ADD COLUMN `INDEKS` TINYINT(4) NULL DEFAULT '0' AFTER `STATUS`,
+	ADD INDEX `INDEKS` (`INDEKS`);

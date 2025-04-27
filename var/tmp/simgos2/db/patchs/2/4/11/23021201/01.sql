@@ -1,0 +1,1 @@
+REPLACE INTO aplikasi.`properti_config` (`ID`, `NAMA`, `VALUE`, `DESKRIPSI`) VALUES (58, 'NILAI_NORMAL_MENGIKUTI_NILAI_NORMAL_LIS', 'FALSE', 'Jika TRUE maka nilai normal atau rujukan mengikuti nilai dari LIS atau Alat LAB');

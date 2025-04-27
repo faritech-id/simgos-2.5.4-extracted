@@ -1,0 +1,4 @@
+USE `master`;
+
+ALTER TABLE `referensi`
+	ADD COLUMN `CONFIG` JSON NULL AFTER `TEKS`;

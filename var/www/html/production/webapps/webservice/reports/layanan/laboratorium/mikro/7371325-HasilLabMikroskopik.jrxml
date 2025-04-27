@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HasilLabMikroskopik" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94081f9c-9700-4ca8-b62f-75272798c4ce">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="306"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="simrsgosv2-local"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Dataset1" uuid="1468d033-5d91-4e60-a647-654459bae0d3">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SIMPEL Advance"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[CALL layanan.CetakHasilMikroskopik('1010301011601310002');]]>
+		</queryString>
+		<field name="KOTA" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="KOTA"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="w"/>
+		</field>
+		<field name="TGLSKRG" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="TGLSKRG"/>
+		</field>
+		<field name="ID" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="ID"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		</field>
+		<field name="KUNJUNGAN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="KUNJUNGAN"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		</field>
+		<field name="BAHAN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="BAHAN"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		</field>
+		<field name="DIAGNOSA" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DIAGNOSA"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		</field>
+		<field name="TERAPI_ANTIBIOTIK" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="TERAPI_ANTIBIOTIK"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		</field>
+		<field name="HASIL" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="HASIL"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik_detail"/>
+		</field>
+		<field name="DESKRIPSI" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DESKRIPSI"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+		</field>
+		<field name="DOKTER" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DOKTER"/>
+		</field>
+		<field name="NORM" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="NORM"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="pasien"/>
+		</field>
+		<field name="PASIEN" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="PASIEN"/>
+		</field>
+		<field name="DOKTER_ASAL" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="DOKTER_ASAL"/>
+		</field>
+		<field name="TGL_TERIMA" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="TGL_TERIMA"/>
+		</field>
+		<field name="TGL_SELESAI" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="TGL_SELESAI"/>
+		</field>
+		<field name="NOMOR_LAB" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOMOR_LAB"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="order_lab"/>
+		</field>
+		<field name="NOMOR" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOMOR"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="kunjungan"/>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Wawi Piero\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_KUNJUNGAN" class="java.lang.String"/>
+	<parameter name="REQUEST_REPORT_ID" class="java.lang.String"/>
+	<parameter name="PNIP" class="java.lang.String"/>
+	<parameter name="IMAGES_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[CALL layanan.CetakHasilMikroskopik($P{P_KUNJUNGAN});]]>
+	</queryString>
+	<field name="KOTA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="KOTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="w"/>
+	</field>
+	<field name="TGLSKRG" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TGLSKRG"/>
+	</field>
+	<field name="ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KUNJUNGAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="KUNJUNGAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BAHAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BAHAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIAGNOSA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DIAGNOSA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TERAPI_ANTIBIOTIK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TERAPI_ANTIBIOTIK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HASIL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="HASIL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hasil_lab_mikroskopik_detail"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESKRIPSI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOKTER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DOKTER"/>
+	</field>
+	<field name="NORM" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NORM"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pasien"/>
+		<fieldDescription><![CDATA[Nomor Rekam Medis]]></fieldDescription>
+	</field>
+	<field name="PASIEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PASIEN"/>
+	</field>
+	<field name="DOKTER_ASAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DOKTER_ASAL"/>
+	</field>
+	<field name="PEMERIKSA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PEMERIKSA"/>
+	</field>
+	<field name="TGL_TERIMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TGL_TERIMA"/>
+	</field>
+	<field name="TGL_SELESAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TGL_SELESAI"/>
+	</field>
+	<field name="NOMOR_LAB" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMOR_LAB"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="order_lab"/>
+	</field>
+	<field name="NOMOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMOR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="kunjungan"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.label" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dokter"/>
+	</field>
+	<field name="IDPPK" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="253" splitType="Stretch">
+			<textField>
+				<reportElement x="221" y="61" width="248" height="20" uuid="3297e828-a902-442d-9746-017a97eb6b36"/>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="41" width="248" height="20" uuid="b68981e1-12aa-4035-908f-efaecabe3a84"/>
+				<textFieldExpression><![CDATA[$F{PASIEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="101" width="248" height="20" uuid="b777c5ac-b11e-458a-8f00-47cdc7b9cd3c"/>
+				<textFieldExpression><![CDATA[$F{DIAGNOSA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="81" width="248" height="20" uuid="bc4b2e09-9b64-4592-98f6-782bec436afe"/>
+				<textFieldExpression><![CDATA[$F{DOKTER_ASAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="121" width="248" height="20" uuid="61e76b2c-cabd-4e3c-8ea7-dc43677e2d98"/>
+				<textFieldExpression><![CDATA[$F{TERAPI_ANTIBIOTIK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="141" width="248" height="20" uuid="e3de47cd-1ea2-4999-8d21-f344087c1baa"/>
+				<textFieldExpression><![CDATA[$F{TGL_TERIMA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="221" y="161" width="248" height="20" uuid="e7d4f95f-a16e-41e1-add1-ee54b648c69e"/>
+				<textFieldExpression><![CDATA[$F{TGL_SELESAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="181" width="248" height="20" uuid="de23f418-a4b3-485f-8d91-109fed275e5f"/>
+				<textFieldExpression><![CDATA[$F{BAHAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="41" width="100" height="20" uuid="eac60f9a-9004-4b4b-b80a-374e21b3cb3d"/>
+				<text><![CDATA[Nama Penderita]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="61" width="100" height="20" uuid="6d1c345a-bca1-4992-9784-a28689c53e1b"/>
+				<text><![CDATA[No. RM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="82" width="100" height="20" uuid="6ed445ae-32f8-484b-a95e-bb2329278f2d"/>
+				<text><![CDATA[Dokter Pengirim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="102" width="100" height="20" uuid="bf2938c4-b12d-437c-abb8-44a9c5518f08"/>
+				<text><![CDATA[Diagnosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="122" width="100" height="20" uuid="1c75f724-8f34-4176-ae64-5c9d645da9dc"/>
+				<text><![CDATA[Terapi Antibiotik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="142" width="100" height="20" uuid="e0c6bccc-f79e-4458-8ea2-daf357efe91f"/>
+				<text><![CDATA[Tanggal Terima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="162" width="100" height="20" uuid="84ead4a9-4b54-43de-a0af-973cbc94272e"/>
+				<text><![CDATA[Tanggal Selesai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="182" width="100" height="20" uuid="1ce0f6db-21ef-4608-9a1a-f9bbb9037e83"/>
+				<text><![CDATA[Bahan Pemeriksaan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="162" width="10" height="20" uuid="d42d7d0a-1da3-49d0-86f1-799c4268c01c"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="142" width="10" height="20" uuid="1721eaaf-1957-4ea1-be9c-a9256c41da09"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="61" width="10" height="20" uuid="d0e99310-ac56-4f79-b355-bf03bae2044b"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="41" width="10" height="20" uuid="5a38daee-fec2-4268-aa5b-fc2047d28af3"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="82" width="10" height="20" uuid="3d04cd72-002a-44d4-acd7-10d8cd2606d0"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="122" width="10" height="20" uuid="d69ed2aa-a268-4559-b208-acb71be7a1ba"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="182" width="10" height="20" uuid="b0109eff-3e5d-41be-84f5-2c4ba5420eb7"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="102" width="10" height="20" uuid="ecaa3533-71a6-4ea7-a2ba-ecbba809e575"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="223" width="555" height="20" uuid="16ad2bee-7327-46ef-849f-d0ecdfbae3a9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HASIL PEMERIKSAAN MIKROSKOPIK]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="49" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="50" y="0" width="390" height="20" uuid="bebb8f75-2231-433b-ad27-6b45fc3f9182"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESKRIPSI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="25" width="495" height="20" uuid="6f844140-7194-46a4-812f-e69885ffffd7"/>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HASIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="0" width="38" height="20" uuid="522f2198-e474-46d6-a4aa-e3b6e4c3c06c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT} == 1 ? 'A' 
+	: $V{REPORT_COUNT} == 2 ? 'B'
+	: $V{REPORT_COUNT} == 3 ? 'C'
+	: $V{REPORT_COUNT} == 4 ? 'D'
+	: $V{REPORT_COUNT} == 5 ? 'E' : 'F']]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="219" splitType="Stretch">
+			<componentElement>
+				<reportElement stretchType="ElementGroupHeight" x="328" y="121" width="52" height="48" isPrintWhenDetailOverflows="true" uuid="83efe34a-eb96-4da0-8dfe-36c2da58ebbf">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" margin="0">
+					<jr:codeExpression><![CDATA[$P{REQUEST_REPORT_ID}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="330" y="87" width="196" height="15" uuid="34dd8e68-ddfd-49d3-9bda-fe2fef276c49"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KOTA}+", "+$F{TGLSKRG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="169" width="196" height="20" uuid="0db29437-05f2-499f-af91-e2fe0cb59490"/>
+				<textFieldExpression><![CDATA[$F{DOKTER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="11" width="196" height="20" uuid="511c975f-8cce-410c-af9d-819c2a54f330"/>
+				<text><![CDATA[Terima Kasih atas Kerja samanya]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="102" width="196" height="20" uuid="a2dadc6a-b3d9-4b99-a75b-b6e3b14ae923"/>
+				<text><![CDATA[Dokter Penanggung Jawab]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="99" width="196" height="20" uuid="0496bfc3-3273-49e4-987d-979977d68055"/>
+				<text><![CDATA[Bagian Pemeriksaan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="169" width="191" height="20" uuid="4280088a-31b3-4015-b4b8-76a831b78235"/>
+				<textFieldExpression><![CDATA[$F{PEMERIKSA}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="344" y="134" width="20" height="23" uuid="cf0e817d-2c1d-47b4-90a1-cfd568d7d7b5">
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{IMAGES_PATH} +  $F{IDPPK}+".png"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

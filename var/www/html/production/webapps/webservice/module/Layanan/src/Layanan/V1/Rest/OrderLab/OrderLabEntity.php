@@ -1,0 +1,38 @@
+<?php
+namespace Layanan\V1\Rest\OrderLab;
+use DBService\SystemArrayObject;
+
+class OrderLabEntity extends SystemArrayObject
+{
+	protected $fields = [
+		'NOMOR' => 1, 
+		'KUNJUNGAN' => 1, 
+		'TANGGAL' => 1, 
+		'DOKTER_ASAL' => 1, 
+		'TUJUAN' => 1, 
+		'CITO' => 1, 
+		'ALASAN' => 1, 
+		'KETERANGAN' => 1,
+		'ADA_PENGANTAR_PA' => 1,
+		'PERMINTAAN_DARAH' => 1,
+		'NOMOR_SPESIMEN' => 1,
+		'SPESIMEN_KLINIS_ASAL_SUMBER' => 1,
+		'SPESIMEN_KLINIS_CARA_PENGAMBILAN' => 1,
+		'SPESIMEN_KLINIS_WAKTU_PENGAMBILAN' => 1,
+		'SPESIMEN_KLINIS_KONDISI_PENGAMBILAN' => 1,
+		'SPESIMEN_KLINIS_JUMLAH' => 1,
+		'SPESIMEN_KLINIS_VOLUME' => 1,
+		'FIKSASI_WAKTU' => 1,
+		'FIKSASI_CAIRAN' => 1,
+		'FIKSASI_VOLUME_CAIRAN' => 1,
+		'SPESIMEN_KLINIS_PETUGAS_PENGAMBIL' => 1,
+		'SPESIMEN_KLINIS_PETUGAS_PENGANTAR' => 1,
+		'STATUS_PUASA_PASIEN' => 1,
+		'PERNAH_TRANSFUSI_DARAH' => 1,
+		'SIFAT_PERMINTAAN' => 1,
+		'GOLONGAN_DARAH' => 1,
+		'RESUS' => 1,
+		'OLEH' => 1, 
+		'STATUS' => 1
+	];
+}

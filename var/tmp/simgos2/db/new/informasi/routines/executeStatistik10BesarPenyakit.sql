@@ -1,0 +1,155 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk procedure informasi.executeStatistik10BesarPenyakit
+DROP PROCEDURE IF EXISTS `executeStatistik10BesarPenyakit`;
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `executeStatistik10BesarPenyakit`(
+	IN `PTGL_AWAL` DATE,
+	IN `PTGL_AKHIR` DATE
+)
+BEGIN
+	DECLARE VTAHUN SMALLINT;
+	DECLARE VBULAN TINYINT;
+	DECLARE VJENIS_PELAYANAN TINYINT;
+	DECLARE VKONTEN TEXT;
+	
+	DECLARE VAWAL, VAKHIR DATE;
+	DECLARE EXEC_NOT_FOUND TINYINT DEFAULT FALSE;		
+	DECLARE CR_EXEC CURSOR FOR 
+		SELECT DATE_FORMAT(TANGGAL,'%Y-%m-01'), LAST_DAY(TANGGAL)
+		  FROM master.tanggal
+		 WHERE TANGGAL BETWEEN PTGL_AWAL AND PTGL_AKHIR
+		 GROUP BY DATE_FORMAT(TANGGAL,'%Y-%m');
+		
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET EXEC_NOT_FOUND = TRUE;
+					
+	OPEN CR_EXEC;
+					
+	EXIT_EXEC: LOOP
+		FETCH CR_EXEC INTO VAWAL, VAKHIR;
+		
+		IF EXEC_NOT_FOUND THEN
+			UPDATE temp.temp t SET t.ID = 0 WHERE t.ID = 0;
+			LEAVE EXIT_EXEC;
+		END IF;
+		
+		BEGIN
+			DECLARE EXEC_NOT_FOUND_RI TINYINT DEFAULT FALSE;		
+			DECLARE CR_EXEC_RI CURSOR FOR 
+				SELECT TAHUN, BULAN, GROUP_CONCAT(konten) KONTEN
+				  FROM (
+					SELECT YEAR(TANGGAL) TAHUN, MONTH(TANGGAL) BULAN, r.ID ID_DIAG
+							 , CONCAT('{"kode_icd_10":"',ID,'","jumlah":"',SUM(VALUE),'"}') konten
+							 , SUM(VALUE) JUMLAH_KASUS
+					  FROM informasi.diagnosa_ri r
+					 WHERE TANGGAL BETWEEN VAWAL AND VAKHIR
+						    AND NOT LEFT(r.ID, 1) IN ('R','V','W','X','Y','Z') AND NOT LEFT(r.ID, 3) IN ('O80')
+					 GROUP BY TAHUN, BULAN, r.ID
+					ORDER BY JUMLAH_KASUS DESC LIMIT 10) bp
+				 GROUP BY TAHUN, BULAN;
+				
+			DECLARE CONTINUE HANDLER FOR NOT FOUND SET EXEC_NOT_FOUND_RI = TRUE;
+							
+			OPEN CR_EXEC_RI;
+							
+			EXIT_EXEC_RI: LOOP
+				FETCH CR_EXEC_RI INTO VTAHUN, VBULAN, VKONTEN;
+				
+				IF EXEC_NOT_FOUND_RI THEN
+					UPDATE temp.temp t SET t.ID = 0 WHERE t.ID = 0;
+					LEAVE EXIT_EXEC_RI;
+				END IF;
+				
+				IF EXISTS(SELECT 1 
+						FROM informasi.statistik_10_besar_penyakit bp 
+					  WHERE bp.TAHUN = VTAHUN
+					    AND bp.BULAN = VBULAN
+						 AND bp.JENIS_PELAYANAN = 1) THEN
+					UPDATE informasi.statistik_10_besar_penyakit bp
+					   SET bp.KONTEN = VKONTEN
+					 WHERE bp.TAHUN = VTAHUN
+					   AND bp.BULAN = VBULAN
+						AND bp.JENIS_PELAYANAN = 1;
+				ELSE
+					REPLACE INTO informasi.statistik_10_besar_penyakit(TAHUN, BULAN, JENIS_PELAYANAN, KONTEN)
+					VALUES (VTAHUN, VBULAN, 1, VKONTEN);
+				END IF;
+			END LOOP;
+			CLOSE CR_EXEC_RI;
+		END;
+	
+		BEGIN
+			DECLARE EXEC_NOT_FOUND_RJ TINYINT DEFAULT FALSE;		
+			DECLARE CR_EXEC_RJ CURSOR FOR 
+				SELECT TAHUN, BULAN, GROUP_CONCAT(konten) KONTEN
+				  FROM (
+					SELECT TAHUN, BULAN, ID_DIAG
+						  , CONCAT('{"kode_icd_10":"',ID_DIAG,'","jumlah":"',SUM(JUMLAH_KASUS),'"}') konten
+						  , SUM(JUMLAH_KASUS) JUMLAH_KASUS
+					FROM (
+							SELECT RAND() idx, YEAR(TANGGAL) TAHUN, MONTH(TANGGAL) BULAN, r.ID ID_DIAG
+								  , SUM(VALUE) JUMLAH_KASUS
+							  FROM informasi.diagnosa_rj r
+							 WHERE TANGGAL BETWEEN VAWAL AND VAKHIR
+								    AND NOT LEFT(r.ID, 1) IN ('R','V','W','X','Y','Z') AND NOT LEFT(r.ID, 3) IN ('O80')
+							 GROUP BY TAHUN, BULAN, r.ID
+							 UNION
+							 SELECT RAND() idx, YEAR(TANGGAL) TAHUN, MONTH(TANGGAL) BULAN, r.ID ID_DIAG
+									, SUM(VALUE) JUMLAH_KASUS
+							  FROM informasi.diagnosa_rd r
+							 WHERE TANGGAL BETWEEN VAWAL AND VAKHIR
+								    AND NOT LEFT(r.ID, 1) IN ('R','V','W','X','Y','Z') AND NOT LEFT(r.ID, 3) IN ('O80')
+							 GROUP BY TAHUN, BULAN, r.ID
+					 		) ab
+					 GROUP BY TAHUN, BULAN, ID_DIAG
+					 ORDER BY JUMLAH_KASUS DESC LIMIT 10) bp
+				 GROUP BY TAHUN, BULAN;
+				
+			DECLARE CONTINUE HANDLER FOR NOT FOUND SET EXEC_NOT_FOUND_RJ = TRUE;
+							
+			OPEN CR_EXEC_RJ;
+							
+			EXIT_EXEC_RJ: LOOP
+				FETCH CR_EXEC_RJ INTO VTAHUN, VBULAN, VKONTEN;
+				
+				IF EXEC_NOT_FOUND_RJ THEN
+					UPDATE temp.temp t SET t.ID = 0 WHERE t.ID = 0;
+					LEAVE EXIT_EXEC_RJ;
+				END IF;
+				
+				IF EXISTS(SELECT 1 
+						FROM informasi.statistik_10_besar_penyakit bp 
+					  WHERE bp.TAHUN = VTAHUN
+					    AND bp.BULAN = VBULAN
+						 AND bp.JENIS_PELAYANAN = 2) THEN
+					UPDATE informasi.statistik_10_besar_penyakit bp
+					   SET bp.KONTEN = VKONTEN
+					 WHERE bp.TAHUN = VTAHUN
+					   AND bp.BULAN = VBULAN
+						AND bp.JENIS_PELAYANAN = 2;
+				ELSE
+					REPLACE INTO informasi.statistik_10_besar_penyakit(TAHUN, BULAN, JENIS_PELAYANAN, KONTEN)
+					VALUES (VTAHUN, VBULAN, 2, VKONTEN);
+				END IF;
+			END LOOP;
+			CLOSE CR_EXEC_RJ;
+		END;
+	END LOOP;
+	CLOSE CR_EXEC;
+END//
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

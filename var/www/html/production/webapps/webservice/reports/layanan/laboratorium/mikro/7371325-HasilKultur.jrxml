@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HasilKultur" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94081f9c-9700-4ca8-b62f-75272798c4ce">
+	<property name="ireport.zoom" value="1.0000000000000009"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="263"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="simrsgosv2-local"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="c45af033-60b0-4b5e-915b-e7c36ef4dccd">
+		<parameter name="P_KUNJUNGAN" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[call layanan.CetakHasilKepekaan($P{P_KUNJUNGAN})]]>
+		</queryString>
+		<field name="KUNJUNGAN" class="java.lang.String"/>
+		<field name="BRS" class="java.lang.Long"/>
+		<field name="IDBAKTERI" class="java.lang.Integer"/>
+		<field name="BAKTERI_KR" class="java.lang.String"/>
+		<field name="ANTIBIOTIK_KR" class="java.lang.String"/>
+		<field name="HASIL_KR" class="java.lang.String"/>
+		<field name="BRS_KN" class="java.lang.Long"/>
+		<field name="BAKTERI1" class="java.lang.String"/>
+		<field name="ANTIBIOTIK_KN" class="java.lang.String"/>
+		<field name="HASIL_KN" class="java.lang.String"/>
+		<field name="STS_KR" class="java.lang.Integer"/>
+		<field name="STS_KN" class="java.lang.Integer"/>
+		<group name="group1">
+			<groupExpression><![CDATA[$F{IDBAKTERI}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="P_KUNJUNGAN" class="java.lang.String"/>
+	<parameter name="REQUEST_REPORT_ID" class="java.lang.String"/>
+	<parameter name="PNIP" class="java.lang.String"/>
+	<parameter name="IMAGES_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[call layanan.CetakHasilKultur($P{P_KUNJUNGAN})]]>
+	</queryString>
+	<field name="NO_LAB" class="java.lang.String"/>
+	<field name="NORM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA_PASIEN" class="java.lang.String"/>
+	<field name="UMUR" class="java.lang.String"/>
+	<field name="RUANG_ASAL" class="java.lang.String"/>
+	<field name="NAMALENGKAP" class="java.lang.String"/>
+	<field name="DOKTER_PENGIRIM" class="java.lang.String"/>
+	<field name="DIAGNOSA" class="java.lang.String"/>
+	<field name="TGLTERIMA" class="java.sql.Timestamp"/>
+	<field name="TGL_HASIL" class="java.sql.Timestamp"/>
+	<field name="BAHAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GRAM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AEROB" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KESIMPULAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ANJURAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATATAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOKTER_LAB" class="java.lang.String"/>
+	<field name="KOTA" class="java.lang.String"/>
+	<field name="TGLSKRG" class="java.lang.String"/>
+	<field name="TERAPI_ANTIBIOTIK" class="java.lang.String"/>
+	<field name="KEPALA_INSTALASI" class="java.lang.String"/>
+	<field name="NIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.label" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dokter"/>
+	</field>
+	<field name="IDPPK" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="253" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="31" width="157" height="20" uuid="eac60f9a-9004-4b4b-b80a-374e21b3cb3d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nama Penderita/Umur/Unit Asal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="51" width="157" height="20" uuid="6d1c345a-bca1-4992-9784-a28689c53e1b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[No. RM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="72" width="157" height="20" uuid="6ed445ae-32f8-484b-a95e-bb2329278f2d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dokter Pengirim / No. HP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="92" width="157" height="20" uuid="bf2938c4-b12d-437c-abb8-44a9c5518f08"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Diagnosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="112" width="157" height="20" uuid="1c75f724-8f34-4176-ae64-5c9d645da9dc"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Terapi Antibiotik]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="132" width="157" height="20" uuid="e0c6bccc-f79e-4458-8ea2-daf357efe91f"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Tanggal Terima]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="152" width="157" height="20" uuid="84ead4a9-4b54-43de-a0af-973cbc94272e"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Tanggal Selesai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="172" width="157" height="20" uuid="1ce0f6db-21ef-4608-9a1a-f9bbb9037e83"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Bahan Pemeriksaan / Lokasi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="152" width="10" height="20" uuid="d42d7d0a-1da3-49d0-86f1-799c4268c01c"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="132" width="10" height="20" uuid="1721eaaf-1957-4ea1-be9c-a9256c41da09"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="51" width="10" height="20" uuid="d0e99310-ac56-4f79-b355-bf03bae2044b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="31" width="10" height="20" uuid="5a38daee-fec2-4268-aa5b-fc2047d28af3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="72" width="10" height="20" uuid="3d04cd72-002a-44d4-acd7-10d8cd2606d0"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="112" width="10" height="20" uuid="d69ed2aa-a268-4559-b208-acb71be7a1ba"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="172" width="10" height="20" uuid="b0109eff-3e5d-41be-84f5-2c4ba5420eb7"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="92" width="10" height="20" uuid="ecaa3533-71a6-4ea7-a2ba-ecbba809e575"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="223" width="555" height="20" uuid="16ad2bee-7327-46ef-849f-d0ecdfbae3a9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HASIL PEMERIKSAAN MIKROBIOLOGI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="11" width="157" height="20" uuid="70480e02-046b-4746-aad4-25dfd2dd5df4"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[No. Lab]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="11" width="10" height="20" uuid="b826e710-2f31-452e-8db2-205e854807e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="192" width="10" height="20" uuid="93b52d7f-7b5b-421e-928c-cac13ebc860f"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="192" width="157" height="20" uuid="a5b69a5c-42c6-46ba-aeda-edb61042271a"/>
+				<text><![CDATA[Kepala Instalasi]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="11" width="363" height="20" uuid="02eb374e-0670-4d08-8dd3-8343c7714057"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NO_LAB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="31" width="363" height="20" uuid="36c1a48e-8239-4f0a-b19e-be6ad0d732fd"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NAMALENGKAP}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="51" width="363" height="20" uuid="66cf5116-3af9-4b71-822c-04071510ab1a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NORM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="72" width="363" height="20" uuid="8b693de4-bb28-4ce3-8be0-9cf9c4f98943"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DOKTER_PENGIRIM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="92" width="363" height="20" uuid="28e31a9e-187e-479b-bbbb-064980217c84"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DIAGNOSA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy HH:mm:ss" isBlankWhenNull="true">
+				<reportElement x="192" y="132" width="363" height="20" uuid="e9216443-1ead-4c70-8317-988dd72a2b39"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TGLTERIMA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy HH:mm:ss" isBlankWhenNull="true">
+				<reportElement x="192" y="152" width="363" height="20" uuid="931b652e-76bb-4ca2-beeb-b9e023ac65a8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TGL_HASIL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="172" width="363" height="20" uuid="fd8838a1-4d03-4e72-afc3-9f26cfaa7502"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{BAHAN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="112" width="363" height="20" uuid="b0d89e7d-98c2-4cfd-ad8f-2e16cd5a12fc"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TERAPI_ANTIBIOTIK}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="192" y="192" width="363" height="20" uuid="d91fecc8-c77b-404c-b37b-921fd1215bd2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{KEPALA_INSTALASI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="50">
+			<staticText>
+				<reportElement x="25" y="0" width="157" height="20" uuid="6e89d702-6cb2-4ea1-bcd6-7e6a97e3221a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A. Pewarnaan Gram]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="0" width="10" height="20" uuid="6101f0d5-d6f5-45ce-beed-841fc53a5ba4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="42" y="20" width="513" height="30" uuid="75ef1e43-345f-4e0d-8180-fdf26b4c1e8b"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{GRAM}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<staticText>
+				<reportElement x="182" y="0" width="10" height="20" uuid="67a29202-2bac-4140-b69e-786150f4cb67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="0" width="157" height="20" uuid="43993eb5-fa9e-40b7-9bcb-70b1c2c34ce2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[B. Kultur Aerob]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="42" y="20" width="513" height="30" uuid="2a4b0312-29b8-4185-a998-bb6276fad970"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{AEROB}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="0" width="157" height="20" uuid="12b8033a-e5fa-42ea-bcc0-533af3494ad7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. Tes Kepekaan / AST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="0" width="10" height="20" uuid="5333e1a3-26db-4cb9-b204-b307d08db0a4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<elementGroup/>
+			<componentElement>
+				<reportElement key="table 8" stretchType="RelativeToTallestObject" x="42" y="20" width="513" height="59" isPrintWhenDetailOverflows="true" uuid="2c5900b5-6c5b-4bbd-8847-7fbed06e6166"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="3cb2e29b-5410-4c7e-bacf-5ac57b20e782">
+						<datasetParameter name="P_KUNJUNGAN">
+							<datasetParameterExpression><![CDATA[$P{P_KUNJUNGAN}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="34" uuid="3d5021fa-1d13-4841-8338-f230ac0ceefd">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="25" width="34" height="45" uuid="66187b04-86b1-4df2-bf83-2cd731874f40"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[No.]]></text>
+								</staticText>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="34" height="15" uuid="bc26d1ec-a08a-4621-a94a-097930131fa7"/>
+								<box>
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{BRS}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="142" uuid="acfa5bed-317b-4398-9a68-c3765cefddc6">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="25" width="142" height="45" uuid="2fc45a72-06b3-4c1d-bc5e-4ec6ecc86bcb"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Jenis Antibiotik]]></text>
+								</staticText>
+								<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="142" height="25" uuid="c0db948f-5c56-4a40-b7e1-9dd74274d66e"/>
+									<box leftPadding="3" bottomPadding="3"/>
+									<textElement verticalAlignment="Bottom">
+										<font isBold="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{BAKTERI_KR}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="142" height="15" uuid="b10af64f-365f-4613-a1b5-a38f3d28152d">
+									<printWhenExpression><![CDATA[$F{STS_KR}==0]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="3">
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ANTIBIOTIK_KR}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="142" height="15" uuid="619203b3-b0e9-4d88-8d1a-d8fa17e5b152">
+									<printWhenExpression><![CDATA[$F{STS_KR}==1]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="3">
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ANTIBIOTIK_KR}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="ee2c2cfb-1647-4492-a5e7-2eacd3c13c37">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="25" width="68" height="30" uuid="c9c775c1-4bb7-46fc-b584-eed7aa321820"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<rightPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Hasil Pemeriksaan]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="0" y="55" width="68" height="15" uuid="bc59feff-8ff8-405a-a7f9-c91ba111d36e"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+										<rightPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Interpretasi]]></text>
+								</staticText>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="68" height="15" uuid="81bd6489-e69e-43e7-b83b-b6a69f493c43">
+									<printWhenExpression><![CDATA[$F{STS_KR}==1]]></printWhenExpression>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+									<rightPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{HASIL_KR}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="68" height="15" uuid="a7404dbd-98a2-4626-9d27-8f9a3ad40518">
+									<printWhenExpression><![CDATA[$F{STS_KR}==0]]></printWhenExpression>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+									<rightPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{HASIL_KR}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="26" uuid="ac979a00-4f19-4d19-a9b7-da53dc2b2975">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1"/>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="34" uuid="ab8db33f-b31e-49d7-8bb6-15039121c38d">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="25" width="34" height="45" uuid="0ce4f2df-f076-4e07-bdb8-5f7dbd35bc55"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[No.]]></text>
+								</staticText>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="34" height="15" uuid="cf368baf-8bd8-4a14-88d3-40b19a570d72"/>
+								<box>
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{BRS_KN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="142" uuid="7e421e9c-3fa8-42e8-a033-7b7a118cb7d7">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="25" width="142" height="45" uuid="79a3a268-afb3-4111-8e26-ba2ad07f7755"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Jenis Antibiotik]]></text>
+								</staticText>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="142" height="15" uuid="0d126322-9c89-4a1b-86c1-edd4798d9351">
+									<printWhenExpression><![CDATA[$F{STS_KN}==1]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="3">
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ANTIBIOTIK_KN}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="142" height="15" uuid="fb25e474-17bf-45f0-ac5a-0c7c9cc355a8">
+									<printWhenExpression><![CDATA[$F{STS_KN}==0]]></printWhenExpression>
+								</reportElement>
+								<box leftPadding="3">
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ANTIBIOTIK_KN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="44dcc663-1e0a-4d42-9bb4-12745259755e">
+						<jr:groupHeader groupName="group1">
+							<jr:cell height="70" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="25" width="68" height="30" uuid="d58664e8-21a5-4620-9f6c-e12babaf6e21"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<rightPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Hasil Pemeriksaan]]></text>
+								</staticText>
+								<staticText>
+									<reportElement x="0" y="55" width="68" height="15" uuid="90677f69-0b3f-49be-82dd-8f70e7ec7265"/>
+									<box>
+										<topPen lineWidth="0.75"/>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+										<rightPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<text><![CDATA[Interpretasi]]></text>
+								</staticText>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:detailCell height="15" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="68" height="15" uuid="03a4abfb-a26b-407c-b894-168be67d3866">
+									<printWhenExpression><![CDATA[$F{STS_KN}==1]]></printWhenExpression>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+									<rightPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{HASIL_KN}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="68" height="15" uuid="b9eaff44-6904-4459-96d9-56af8848577c">
+									<printWhenExpression><![CDATA[$F{STS_KN}==0]]></printWhenExpression>
+								</reportElement>
+								<box>
+									<topPen lineWidth="0.75"/>
+									<leftPen lineWidth="0.75"/>
+									<bottomPen lineWidth="0.75"/>
+									<rightPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{HASIL_KN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="50">
+			<staticText>
+				<reportElement x="182" y="0" width="10" height="20" uuid="f4bd56d2-1b04-4773-b463-c214ca160d12"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="0" width="157" height="20" uuid="56125238-9944-43ae-b617-209e0a00e59d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[D. Kesimpulan]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="42" y="20" width="513" height="30" uuid="4c838edf-8b8f-4860-b069-eb2370f043d1"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{KESIMPULAN}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<staticText>
+				<reportElement x="25" y="0" width="157" height="20" uuid="e4be2204-de03-4af9-bbdf-5e5697522b5f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[E. Anjuran]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="0" width="10" height="20" uuid="b06dd0b0-bfd5-4ef6-98ae-64154a8df571"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="42" y="20" width="513" height="30" uuid="d03c3e3b-1464-4c07-8bd2-51735c9c6f80"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{ANJURAN}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<staticText>
+				<reportElement x="25" y="0" width="157" height="20" uuid="5dba5857-0eb5-4d75-af46-6c78694a454d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. Catatan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="0" width="10" height="20" uuid="4464b733-b82b-4881-a2f9-88dac4fd27cd"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="42" y="20" width="513" height="30" uuid="53f46763-f26e-41c4-8587-487c51aa6838"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{CATATAN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="116" splitType="Stretch">
+			<componentElement>
+				<reportElement stretchType="ElementGroupHeight" x="328" y="49" width="52" height="48" isPrintWhenDetailOverflows="true" uuid="92469cf8-e83f-4bfc-84b9-e41a95b2a11c">
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" margin="0">
+					<jr:codeExpression><![CDATA[$P{REQUEST_REPORT_ID}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<staticText>
+				<reportElement x="25" y="4" width="196" height="20" uuid="511c975f-8cce-410c-af9d-819c2a54f330"/>
+				<text><![CDATA[Terima Kasih atas Kerja samanya]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="30" width="196" height="20" uuid="a2dadc6a-b3d9-4b99-a75b-b6e3b14ae923"/>
+				<text><![CDATA[Dokter Penanggung Jawab]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="30" width="196" height="20" uuid="0af76364-1394-4857-ae94-169827deab4c"/>
+				<text><![CDATA[Bagian Pemeriksaan]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="94" width="196" height="20" uuid="770f0c69-ea6c-4c42-8754-8538031c6ffd"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DOKTER_LAB}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="344" y="62" width="20" height="23" uuid="e631e0a2-19cf-4ba7-92b6-776df7a9152a">
+					<printWhenExpression><![CDATA[$P{REQUEST_REPORT_ID}.trim().equalsIgnoreCase( "" )  || !$F{NIP}.equalsIgnoreCase( $P{PNIP} ) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{IMAGES_PATH} +  $F{IDPPK}+".png"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,5 @@
+USE `layanan`;
+
+ALTER TABLE `order_resep`
+	ADD COLUMN `REF` CHAR(21) NULL DEFAULT '0' AFTER `STATUS`,
+	ADD INDEX `REF` (`REF`);

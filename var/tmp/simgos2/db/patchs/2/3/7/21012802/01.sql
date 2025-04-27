@@ -1,0 +1,64 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.23.245
+-- Versi server:                 5.7.32 - MySQL Community Server (GPL)
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               11.0.0.5919
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Membuang struktur basisdata untuk informasi
+USE `informasi`;
+
+-- membuang struktur untuk procedure informasi.executeBedMonitorKemkes
+DROP PROCEDURE IF EXISTS `executeBedMonitorKemkes`;
+DELIMITER //
+CREATE PROCEDURE `executeBedMonitorKemkes`(
+	IN `PTGL_AWAL` DATE,
+	IN `PTGL_AKHIR` DATE
+)
+BEGIN
+	 REPLACE INTO informasi.tempat_tidur_kemkes(IDINSTALASI, INSTALASI, IDUNIT, UNIT, IDSUBUNIT, SUBUNIT, IDKAMAR, KAMAR, IDKELAS, KELAS, JENISKAMAR, TTLAKI, TTPEREMPUAN, JMLLAKI, JMLPEREMPUAN ,LASTUPDATED)
+			 SELECT IDINSTALASI, NAMAINSTALASI, IDUNIT, NAMAUNIT
+		   , IDSUBUNIT, NAMASUBUNIT,IDKAMAR, NAMAKAMAR, IDKELAS, NAMAKELAS, JENISKAMAR
+		   , IF(JENISKAMAR=1 OR JENISKAMAR=0,TT,0) LAKILAKI
+			, IF(JENISKAMAR=2,TT,0) PEREMPUAN
+			, SUM(TTTERPAKAILAKILAKI) TTTERPAKAILAKILAKI, SUM(TTTERPAKAIPEREMPUAN) TTTERPAKAIPEREMPUAN
+			, SYSDATE() TGLUPDATE
+		FROM (
+				 SELECT (SELECT i.ID FROM master.ruangan i WHERE e.ID LIKE CONCAT(i.ID,'%')  AND i.JENIS=3 LIMIT 1) IDINSTALASI
+						, (SELECT i.DESKRIPSI FROM master.ruangan i WHERE e.ID LIKE CONCAT(i.ID,'%')  AND i.JENIS=3 LIMIT 1) NAMAINSTALASI
+						, (SELECT u.ID FROM master.ruangan u WHERE e.ID LIKE CONCAT(u.ID,'%')  AND u.JENIS=4 LIMIT 1) IDUNIT
+						, (SELECT u.DESKRIPSI FROM master.ruangan u WHERE e.ID LIKE CONCAT(u.ID,'%')  AND u.JENIS=4 LIMIT 1) NAMAUNIT
+						, e.ID IDSUBUNIT, e.DESKRIPSI NAMASUBUNIT, b.ID IDKAMAR, b.KAMAR NAMAKAMAR, c.ID IDKELAS, c.DESKRIPSI NAMAKELAS
+						, SUM(IF(h.JENIS_KELAMIN=1,1,0)) TTTERPAKAILAKILAKI, SUM(IF(h.JENIS_KELAMIN=2,1,0)) TTTERPAKAIPEREMPUAN
+						, IF((SUM(IF(h.JENIS_KELAMIN=1,1,0))=0 AND SUM(IF(h.JENIS_KELAMIN=2,1,0))=0),0,IF(SUM(IF(h.JENIS_KELAMIN=1,1,0))<SUM(IF(h.JENIS_KELAMIN=2,1,0)),2,1)) JENISKAMAR 
+						, (SELECT COUNT(*) FROM master.ruang_kamar_tidur tt WHERE tt.RUANG_KAMAR=a.RUANG_KAMAR AND NOT tt.STATUS IN (0) GROUP BY tt.RUANG_KAMAR) TT	 
+					  FROM master.ruang_kamar_tidur a
+					  		 LEFT JOIN master.ruang_kamar b ON a.RUANG_KAMAR = b.ID
+					  		 LEFT JOIN master.referensi c ON b.KELAS = c.ID AND c.JENIS = 19
+					  		 LEFT JOIN pendaftaran.reservasi d ON a.ID = d.RUANG_KAMAR_TIDUR AND d.`STATUS` = 1
+					  		 LEFT JOIN pendaftaran.tujuan_pasien tp ON tp.RESERVASI = d.NOMOR AND tp.STATUS = 1
+					  		 LEFT JOIN pendaftaran.mutasi mt ON mt.RESERVASI = d.NOMOR AND mt.STATUS = 1
+					  		 LEFT JOIN pendaftaran.kunjungan mtk ON mtk.NOMOR = mt.KUNJUNGAN
+							 LEFT JOIN master.ruangan e ON b.RUANGAN = e.ID AND e.JENIS = 5 AND e.`STATUS` = 1
+					  		 LEFT JOIN pendaftaran.kunjungan f 
+									  ON f.RUANGAN = b.RUANGAN AND f.RUANG_KAMAR_TIDUR = a.ID AND f.`STATUS` = 1 AND f.KELUAR IS NULL
+					  		 LEFT JOIN pendaftaran.pendaftaran g ON g.NOMOR = f.NOPEN
+					  		 LEFT JOIN master.pasien h ON h.NORM = g.NORM AND NOT h.STATUS IN (0)
+					  		 LEFT JOIN master.referensi i ON i.JENIS = 20 AND i.ID = a.`STATUS`
+					 WHERE NOT a.STATUS IN (0)
+					 GROUP BY b.ID) ab
+		WHERE NOT ab.NAMAINSTALASI IS NULL
+		GROUP BY IDKAMAR
+		ORDER BY IDINSTALASI, IDUNIT,IDSUBUNIT,IDKAMAR,IDKELAS;
+END//
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

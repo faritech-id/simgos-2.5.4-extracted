@@ -1,0 +1,2 @@
+USE `master`;
+REPLACE INTO `jenis_laporan_detil` (`JENIS`, `ID`, `DESKRIPSI`, `KODE`, `REPORT_PARAMS`, `KETERANGAN`, `STATUS`) VALUES ('16', 32, 'Laporan Obat Stagnan', '', '{\r\n  NAME: \'inventory.LaporanObatStagnan\',\r\n  TYPE: \'Pdf\', \r\n  EXT: \'pdf\',\r\n  PARAMETER: {\r\n   TGLAWAL: \'\',\r\n   TGLAKHIR: \'\',\r\n   RUANGAN:\'\',\r\n   LAPORAN:\'\',\r\n   CARABAYAR:\'\',\r\n   KATEGORI:\'\',\r\n   BARANG:\'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakFarmasi\'\r\n}', '', 1);

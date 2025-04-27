@@ -1,0 +1,4 @@
+USE `medicalrecord`;
+
+ALTER TABLE `pemeriksaan_emg`
+	ADD COLUMN `SARAN` TEXT NOT NULL AFTER `IMPRESSION`;

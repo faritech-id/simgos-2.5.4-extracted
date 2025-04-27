@@ -1,0 +1,1 @@
+UPDATE `aplikasi`.`pengguna` SET `LOCK_APP` = '0' WHERE  `ID` =  0;

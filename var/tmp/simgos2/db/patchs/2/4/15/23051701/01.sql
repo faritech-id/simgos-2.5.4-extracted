@@ -1,0 +1,1 @@
+REPLACE INTO aplikasi.properti_config (`ID`, `NAMA`, `VALUE`, `DESKRIPSI`) VALUES (66, 'VALIDASI_QTY_LAYANAN_TIDAK_BOLEH_LEBIH_DARI_STOK_RUANGAN', 'TRUE', 'Validasi layanan resep, tidak dapat melakukan final apabila ada jumlah layanan yang melebihi stok');

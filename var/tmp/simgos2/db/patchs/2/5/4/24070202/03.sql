@@ -1,0 +1,1 @@
+INSERT INTO aplikasi.properti_config (ID, NAMA, VALUE, DESKRIPSI) VALUES(90, 'VALIDASI_INPUT_TINDAKAN_JIKA_ADA_CENTANG_PAKET_TINDAKAN_RESEP', 'TRUE', 'Berlaku Apabila Ingin Memberikan Validasi Harus Pilih Nama Tindakan Jika Ada Salah Satu Item Resep Yang Masuk Paket Tindakan');

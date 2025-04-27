@@ -1,0 +1,170 @@
+{
+  "name": "SEP Generation Form",
+  "version": "1.0",
+  "published": true,
+  "description": "Form for generating BPJS SEP",
+  "encounterType": "bd9bbbff-6f44-4718-a5fb-c0b8cb9b57c8",
+  "processor": "EncounterFormProcessor",
+  "pages": [
+    {
+      "label": "SEP Generation",
+      "sections": [
+        {
+          "label": "Visit Information",
+          "questions": [
+            {
+              "label": "Visit Type",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "4da9f53a-7d3f-48d1-bbe1-da825d0178d5",
+                "answers": [
+                  {
+                    "concept": "b2132f3b-f504-4891-ba82-f934bbf46cfd",
+                    "label": "Rawat Jalan"
+                  },
+                  {
+                    "concept": "b6ad31b3-f8cd-4723-ac05-8a2cd9c4303a",
+                    "label": "Rawat Inap"
+                  }
+                ]
+              },
+              "id": "visitType",
+              "required": true
+            }
+          ]
+        },
+        {
+          "label": "Referral Information",
+          "questions": [
+            {
+              "label": "Referral Number",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "d562aea7-9d30-45da-8007-53cf9d6781db"
+              },
+              "id": "referralNumber",
+              "required": true
+            }
+          ]
+        },
+        {
+          "label": "Diagnosis Information",
+          "questions": [
+            {
+              "label": "Primary Diagnosis",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "fa35cd23-6c6f-461f-8848-61672f1203e5"
+              },
+              "id": "primaryDiagnosis",
+              "required": true
+            },
+            {
+              "label": "Secondary Diagnosis",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "426344d5-4b8b-455d-8a47-427cf66b4f0e"
+              },
+              "id": "secondaryDiagnosis"
+            }
+          ]
+        },
+        {
+          "label": "Generated SEP Information",
+          "questions": [
+            {
+              "label": "Generated SEP Number",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "text",
+                "concept": "3de3e0a5-1e4f-4285-8a10-73075a096352",
+                "readonly": true
+              },
+              "id": "generatedSepNumber",
+              "required": true
+            },
+            {
+              "label": "SEP Generation Status",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "8f1a31b4-8858-45e8-b7c4-3eaad1480c74",
+                "answers": [
+                  {
+                    "concept": "8f1a31b4-8858-45e8-b7c4-3eaad1480c74",
+                    "label": "Generated"
+                  },
+                  {
+                    "concept": "9ffd70d7-5928-4cdb-9b6d-0a272e11140c",
+                    "label": "Failed"
+                  },
+                  {
+                    "concept": "7aeea17a-4179-41ee-aff5-e2ec3e10634b",
+                    "label": "Pending"
+                  }
+                ],
+                "readonly": true
+              },
+              "id": "sepGenerationStatus"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "formFields": [
+    {
+      "name": "Visit Type",
+      "description": "Type of visit (outpatient/inpatient)",
+      "fieldNumber": "1",
+      "fieldPart": "concept",
+      "concept": "4da9f53a-7d3f-48d1-bbe1-da825d0178d5",
+      "required": true
+    },
+    {
+      "name": "Referral Number",
+      "description": "BPJS Referral Number",
+      "fieldNumber": "2",
+      "fieldPart": "concept",
+      "concept": "d562aea7-9d30-45da-8007-53cf9d6781db",
+      "required": true
+    },
+    {
+      "name": "Primary Diagnosis",
+      "description": "Primary diagnosis for visit",
+      "fieldNumber": "3",
+      "fieldPart": "concept",
+      "concept": "fa35cd23-6c6f-461f-8848-61672f1203e5",
+      "required": true
+    },
+    {
+      "name": "Secondary Diagnosis",
+      "description": "Secondary diagnosis for visit",
+      "fieldNumber": "4",
+      "fieldPart": "concept",
+      "concept": "426344d5-4b8b-455d-8a47-427cf66b4f0e",
+      "required": false
+    },
+    {
+      "name": "SEP Number",
+      "description": "Generated SEP Number",
+      "fieldNumber": "5",
+      "fieldPart": "concept",
+      "concept": "3de3e0a5-1e4f-4285-8a10-73075a096352",
+      "required": true
+    },
+    {
+      "name": "SEP Status",
+      "description": "SEP Generation Status",
+      "fieldNumber": "6",
+      "fieldPart": "concept",
+      "concept": "8f1a31b4-8858-45e8-b7c4-3eaad1480c74",
+      "required": true
+    }
+  ],
+  "retired": false
+} 

@@ -1,0 +1,3 @@
+USE `aplikasi`;
+
+INSERT INTO `properti_config` (`ID`, `NAMA`, `VALUE`) VALUES (42, 'AKTIFKAN_ORDER_RESEP_BY_DEPO_LAYANAN', 'FALSE');

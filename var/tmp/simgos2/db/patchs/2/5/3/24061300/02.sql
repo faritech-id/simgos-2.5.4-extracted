@@ -1,0 +1,6 @@
+USE medicalrecord;
+
+ALTER TABLE `riwayat_alergi`
+	DROP INDEX `KUNJUNGAN`,
+	ADD INDEX `KUNJUNGAN` (`KUNJUNGAN`),
+	ADD INDEX `STATUS` (`STATUS`);

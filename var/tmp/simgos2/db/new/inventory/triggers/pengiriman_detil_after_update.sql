@@ -1,0 +1,76 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk trigger inventory.pengiriman_detil_after_update
+DROP TRIGGER IF EXISTS `pengiriman_detil_after_update`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `pengiriman_detil_after_update` AFTER UPDATE ON `pengiriman_detil` FOR EACH ROW BEGIN
+	DECLARE VASAL, VTUJUAN CHAR(10);
+	DECLARE VTANGGAL_TERIMA DATETIME;
+	DECLARE VBARANG_RUANGAN_ASAL, VBARANG_RUANGAN_TUJUAN BIGINT;
+	DECLARE VJENIS_KUNJUNGAN_TUJUAN TINYINT;
+	DECLARE VBARANG SMALLINT;
+	DECLARE VKATEGORI CHAR(10);
+	
+	IF OLD.STATUS != NEW.STATUS AND NEW.STATUS = 2 THEN
+	BEGIN
+		
+		SELECT k.ASAL, k.TUJUAN, r.TANGGAL, rg.JENIS_KUNJUNGAN INTO VASAL, VTUJUAN, VTANGGAL_TERIMA, VJENIS_KUNJUNGAN_TUJUAN
+		  FROM inventory.pengiriman k
+		  		 LEFT JOIN master.ruangan rg ON rg.ID = k.TUJUAN,
+		  		 inventory.penerimaan r
+		 WHERE k.NOMOR = OLD.PENGIRIMAN
+		   AND r.JENIS = 2
+			AND r.REF = OLD.PENGIRIMAN;
+		 
+		IF FOUND_ROWS() > 0 THEN	
+			
+			SELECT asal.ID, tujuan.ID, pd.BARANG, b.KATEGORI INTO VBARANG_RUANGAN_ASAL, VBARANG_RUANGAN_TUJUAN, VBARANG, VKATEGORI
+			  FROM inventory.permintaan_detil pd
+			  		 LEFT JOIN inventory.barang_ruangan asal ON asal.BARANG = pd.BARANG AND asal.RUANGAN = VASAL
+			  		 LEFT JOIN inventory.barang_ruangan tujuan ON tujuan.BARANG = pd.BARANG AND tujuan.RUANGAN = VTUJUAN
+			  		 LEFT JOIN inventory.barang b ON b.ID = pd.BARANG
+			 WHERE pd.ID = OLD.PERMINTAAN_BARANG_DETIL;
+			
+			IF FOUND_ROWS() > 0 THEN
+			BEGIN
+				
+				INSERT INTO inventory.transaksi_stok_ruangan(BARANG_RUANGAN, JENIS, REF, TANGGAL, JUMLAH)
+			 		  VALUES(VBARANG_RUANGAN_ASAL, 23, OLD.ID, VTANGGAL_TERIMA, NEW.JUMLAH);
+			 	
+			 	IF NOT EXISTS(SELECT 1 FROM inventory.barang_ruangan WHERE RUANGAN = VTUJUAN AND BARANG = VBARANG) THEN
+			 		INSERT INTO inventory.barang_ruangan(RUANGAN, BARANG, STOK, TANGGAL, TRANSAKSI_STOK_RUANGAN)
+			 		     VALUES (VTUJUAN, VBARANG, 0, NOW(), NULL);
+			 		
+			 		SET VBARANG_RUANGAN_TUJUAN = LAST_INSERT_ID();
+			 	END IF;
+				 	  
+				
+				
+				
+					INSERT INTO inventory.transaksi_stok_ruangan(BARANG_RUANGAN, JENIS, REF, TANGGAL, JUMLAH)
+				 		  VALUES(VBARANG_RUANGAN_TUJUAN, 20, OLD.ID, VTANGGAL_TERIMA, NEW.JUMLAH);
+			 	
+			END;
+			END IF;
+		END IF;
+	END;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

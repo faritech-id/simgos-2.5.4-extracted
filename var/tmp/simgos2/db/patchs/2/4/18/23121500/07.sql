@@ -1,0 +1,1 @@
+REPLACE INTO `document-storage`.`document_directory` (`ID`, `DOCUMENT_NAME`) VALUES (25, 'SURAT KEMATIAN');

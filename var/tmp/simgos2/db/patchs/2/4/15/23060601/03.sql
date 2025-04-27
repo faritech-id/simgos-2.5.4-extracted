@@ -1,0 +1,1 @@
+UPDATE `master`.`referensi` SET `CONFIG`='{"cls": "primary-row", "sub_devisi": false}' WHERE  `ID` = 1 AND `JENIS` = 32;

@@ -1,0 +1,110 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.7
+-- Server version:               8.0.34 - MySQL Community Server - GPL
+-- Server OS:                    Linux
+-- HeidiSQL Version:             12.5.0.6677
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for laporan
+USE `laporan`;
+
+-- Dumping structure for procedure laporan.LaporanPenulisanResep
+DROP PROCEDURE IF EXISTS `LaporanPenulisanResep`;
+DELIMITER //
+CREATE PROCEDURE `LaporanPenulisanResep`(
+	IN `TGLAWAL` DATETIME,
+	IN `TGLAKHIR` DATETIME,
+	IN `RUANGAN` CHAR(10),
+	IN `LAPORAN` INT,
+	IN `CARABAYAR` INT,
+	IN `KATEGORI` INT,
+	IN `BARANG` INT,
+	IN `JENISINVENTORY` INT,
+	IN `JENISKATEGORI` INT,
+	IN `KATEGORIBARANG` INT,
+	IN `JENISGENERIK` TINYINT,
+	IN `JENISFORMULARIUM` INT,
+	IN `PENGGOLONGAN` INT
+)
+BEGIN
+	DECLARE vRUANGAN VARCHAR(11);
+	DECLARE vKATEGORI VARCHAR(11);
+   DECLARE vJENISINVENTORY VARCHAR(11);   
+   DECLARE vKATEGORIBARANG VARCHAR(11);
+      
+   SET vRUANGAN = CONCAT(RUANGAN,'%');
+   SET vKATEGORI = CONCAT(KATEGORI,'%');
+   SET vJENISINVENTORY = CONCAT(JENISINVENTORY,'%');
+   SET vKATEGORIBARANG = CONCAT(KATEGORIBARANG,'%');
+   
+	SET @sqlText = CONCAT('
+		SELECT inst.PPK, inst.NAMA NAMAINST, inst.ALAMAT ALAMATINST , TANGGAL, SUM(GF) GF, SUM(GNF) GNF, SUM(GF+GNF) TOTAL_RESEP_GENERIK
+ 				, SUM(NGF) NGF, SUM(NGNF) NGNF, SUM(NGF+NGNF) TOTAL_RESEP_NON_GENERIK, RUANGAN_FARMASI,
+		       master.getHeaderLaporan(''',RUANGAN,''') INSTALASI,
+				 master.getHeaderKategoriBarang(''',KATEGORI,''') KATEGORI,
+				 IF(',CARABAYAR,'=0,''Semua'',(SELECT ref.DESKRIPSI FROM master.referensi ref WHERE ref.ID=',CARABAYAR,' AND ref.JENIS=10)) CARABAYARHEADER,
+				 IF(',BARANG,'=0,''Semua'',(SELECT br.NAMA FROM inventory.barang br WHERE br.ID=',BARANG,')) BARANGHEADER
+  FROM
+  		(SELECT mp.NAMA, ai.PPK, mp.ALAMAT
+							FROM aplikasi.instansi ai
+								, master.ppk mp
+							WHERE ai.PPK=mp.ID) inst
+  		, (SELECT o.NOMOR
+      , DATE(o.TANGGAL) TANGGAL
+      , UPPER(r.DESKRIPSI) RUANGAN_ORDER, UPPER(ro.DESKRIPSI) RUANGAN_FARMASI
+      , IF(SUM(IF(ib.JENIS_GENERIK !=2 AND ib.FORMULARIUM != 2,1 ,0)) >= 1,1,0) GF
+      , IF(SUM(IF(ib.JENIS_GENERIK !=2 AND ib.FORMULARIUM  = 2,1,0)) >= 1,1,0) GNF
+      , IF(SUM(IF(ib.JENIS_GENERIK =2 AND ib.FORMULARIUM != 2,1,0)) >= 1,1,0) NGF
+      , IF(SUM(IF(ib.JENIS_GENERIK =2 AND ib.FORMULARIUM = 2,1,0)) >= 1,1,0) NGNF
+      , IF(SUM(IF(ib.JENIS_GENERIK=2,1,0)) >= 1,1,0) TOTAL_RESEP_NON_GENERIK
+    FROM layanan.order_resep o
+       LEFT JOIN pendaftaran.kunjungan pk1 ON o.NOMOR=pk1.REF AND pk1.STATUS!=0
+       LEFT JOIN master.ruangan ro ON pk1.RUANGAN=ro.ID
+     , layanan.order_detil_resep od
+     , pendaftaran.kunjungan pk
+       LEFT JOIN pendaftaran.penjamin pj ON pk.NOPEN=pj.NOPEN
+     , master.ruangan r
+       LEFT JOIN master.referensi jk ON r.JENIS_KUNJUNGAN=jk.ID AND jk.JENIS=15
+     , inventory.barang ib
+       LEFT JOIN inventory.kategori ik ON ib.KATEGORI=ik.ID
+       LEFT JOIN inventory.penggolongan_barang gb ON ib.ID=gb.BARANG
+     WHERE o.STATUS!=0 AND o.TANGGAL BETWEEN ''',TGLAWAL,''' AND ''',TGLAKHIR,'''
+     AND o.KUNJUNGAN=pk.NOMOR AND pk.STATUS!=0 AND pk.RUANGAN=r.ID AND pk1.RUANGAN LIKE ''',vRUANGAN,'''
+    ',IF(KATEGORI=0,'',CONCAT(' AND ik.ID LIKE ''',VKATEGORI,'''')),'
+	 ',IF(BARANG=0,'',CONCAT(' AND ib.ID=',BARANG)),'
+	 ',IF(CARABAYAR=0,'',CONCAT(' AND pj.JENIS=',CARABAYAR)),'
+	 ',IF(JENISKATEGORI=0,'',CONCAT(' AND ik.ID LIKE ''',vKATEGORI,'''')),'
+	 ',IF(JENISINVENTORY=0,'',CONCAT(' AND ik.ID LIKE ''',vJENISINVENTORY,'''')),'
+	 ',IF(KATEGORIBARANG=0,'',CONCAT(' AND ik.ID LIKE ''',vKATEGORIBARANG,'''')),'
+	 ',IF(JENISGENERIK=0,'',CONCAT(' AND ib.JENIS_GENERIK=',JENISGENERIK)),'
+	 ',IF(JENISFORMULARIUM=0,'',CONCAT(' AND ib.FORMULARIUM=',JENISFORMULARIUM)),'
+	 ',IF(PENGGOLONGAN=0,'',CONCAT(' AND gb.PENGGOLONGAN=',PENGGOLONGAN)),'
+	  AND ro.JENIS_KUNJUNGAN=',LAPORAN,'
+     AND o.NOMOR=od.ORDER_ID AND od.FARMASI=ib.ID
+     GROUP BY o.NOMOR
+ ) ab
+GROUP BY ab.TANGGAL
+			');
+
+	PREPARE stmt FROM @sqlText;
+	EXECUTE stmt;
+	DEALLOCATE PREPARE stmt;
+
+END//
+DELIMITER ;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

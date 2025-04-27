@@ -1,0 +1,10 @@
+Level Name,Parent Level,Address Field,Required
+Country,,country,1
+Province,Country,stateProvince,1
+District/City,Province,district,1
+Sub-district,District/City,cityVillage,1
+RT,Sub-district,rt,0
+RW,Sub-district,rw,0
+Street Address,,address1,1
+Additional Address,,address2,0
+Postal Code,,postalCode,0 

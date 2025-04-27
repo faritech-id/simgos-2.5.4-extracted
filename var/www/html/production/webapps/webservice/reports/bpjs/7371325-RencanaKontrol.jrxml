@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rencana_kontrol" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="11" bottomMargin="11" uuid="457b79a5-72f3-4108-b094-03bbe6d4ced2">
+	<property name="ireport.zoom" value="0.9090909090909127"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="40"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="LOCAL PLUGIN"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<parameter name="IMAGES_PATH" class="java.lang.String"/>
+	<parameter name="CETAK_HEADER" class="java.lang.String"/>
+	<parameter name="PKUNJUNGAN" class="java.lang.String"/>
+	<parameter name="REQUEST_REPORT_ID" class="java.lang.String"/>
+	<parameter name="PNIP" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[call bpjs.RencanaKontrol($P{PKUNJUNGAN})]]>
+	</queryString>
+	<field name="ID_PPK" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="PPK"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PPK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ai"/>
+	</field>
+	<field name="NAMA_INSTANSI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAMA_INSTANSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAMA_INSTANSI"/>
+	</field>
+	<field name="KOTA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="KOTA"/>
+		<property name="com.jaspersoft.studio.field.label" value="KOTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="w"/>
+	</field>
+	<field name="ALAMAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ALAMAT"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALAMAT"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mp"/>
+	</field>
+	<field name="KODEBPJS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BPJS"/>
+		<property name="com.jaspersoft.studio.field.label" value="KODEBPJS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mp"/>
+	</field>
+	<field name="NOMOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMOR"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMOR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jadwal_kontrol"/>
+		<fieldDescription><![CDATA[Nomor Surat Kontrol]]></fieldDescription>
+	</field>
+	<field name="IDPENJAMIN" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="JENIS"/>
+		<property name="com.jaspersoft.studio.field.label" value="IDPENJAMIN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="penjamin"/>
+	</field>
+	<field name="NOMORKARTU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMORKARTU"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMORKARTU"/>
+	</field>
+	<field name="NORMBPJS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="norm"/>
+		<property name="com.jaspersoft.studio.field.label" value="NORMBPJS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="peserta"/>
+	</field>
+	<field name="NOBPJS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="noKartu"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOBPJS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="peserta"/>
+	</field>
+	<field name="PESERTA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nmJenisPeserta"/>
+		<property name="com.jaspersoft.studio.field.label" value="PESERTA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="peserta"/>
+	</field>
+	<field name="NAMALENGKAP1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAMALENGKAP1"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAMALENGKAP1"/>
+	</field>
+	<field name="NAMA_LENGKAP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAMA_LENGKAP"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAMA_LENGKAP"/>
+	</field>
+	<field name="TANGGAL_LAHIR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TANGGAL_LAHIR"/>
+		<property name="com.jaspersoft.studio.field.label" value="TANGGAL_LAHIR"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pasien"/>
+	</field>
+	<field name="NORM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NORM"/>
+		<property name="com.jaspersoft.studio.field.label" value="NORM"/>
+	</field>
+	<field name="DIBUAT_TANGGAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DIBUAT_TANGGAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="DIBUAT_TANGGAL"/>
+	</field>
+	<field name="RUANGAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="RUANGAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ruangan"/>
+	</field>
+	<field name="DOKTER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DOKTER"/>
+		<property name="com.jaspersoft.studio.field.label" value="DOKTER"/>
+	</field>
+	<field name="NIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.label" value="NIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dokter"/>
+	</field>
+	<field name="DRSEP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DRSEP"/>
+		<property name="com.jaspersoft.studio.field.label" value="DRSEP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dpjp"/>
+	</field>
+	<field name="DRKONTROL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DRKONTROL"/>
+		<property name="com.jaspersoft.studio.field.label" value="DRKONTROL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dpjp"/>
+	</field>
+	<field name="SPESIALISTIK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="SPESIALISTIK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="poli"/>
+	</field>
+	<field name="SMF" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SMF"/>
+		<property name="com.jaspersoft.studio.field.label" value="SMF"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+	</field>
+	<field name="DIAGNOSIS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DIAGNOSIS"/>
+		<property name="com.jaspersoft.studio.field.label" value="DIAGNOSIS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="diagnosis"/>
+	</field>
+	<field name="NOMOR_ANTRIAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMOR_ANTRIAN"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMOR_ANTRIAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jadwal_kontrol"/>
+	</field>
+	<field name="NOMOR_BOOKING" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMOR_BOOKING"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMOR_BOOKING"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jadwal_kontrol"/>
+	</field>
+	<field name="DIAGMASUK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DIAGMASUK"/>
+		<property name="com.jaspersoft.studio.field.label" value="DIAGMASUK"/>
+	</field>
+	<field name="JADWAL_KONTROL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="JADWAL_KONTROL"/>
+		<property name="com.jaspersoft.studio.field.label" value="JADWAL_KONTROL"/>
+	</field>
+	<field name="TGLSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TGLSO"/>
+		<property name="com.jaspersoft.studio.field.label" value="TGLSO"/>
+	</field>
+	<field name="KETSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="KETSO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="perencanaan_rawat_inap"/>
+	</field>
+	<field name="KET" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="KET"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="jadwal_kontrol"/>
+	</field>
+	<field name="JADWALBPJS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="JADWALBPJS"/>
+		<property name="com.jaspersoft.studio.field.label" value="JADWALBPJS"/>
+	</field>
+	<field name="BLN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BLN"/>
+		<property name="com.jaspersoft.studio.field.label" value="BLN"/>
+	</field>
+	<field name="THN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="THN"/>
+		<property name="com.jaspersoft.studio.field.label" value="THN"/>
+	</field>
+	<field name="RENCANA_TERAPI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="RENCANA_TERAPI"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rencana_terapi"/>
+	</field>
+	<field name="JENIS_KUNJUNGAN" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="JENIS_KUNJUNGAN"/>
+		<property name="com.jaspersoft.studio.field.label" value="JENIS_KUNJUNGAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ruangan"/>
+		<fieldDescription><![CDATA[Jenis Kunjungan]]></fieldDescription>
+	</field>
+	<field name="NOSBPJS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOSBPJS"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOSBPJS"/>
+	</field>
+	<field name="NOSURAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOSURAT"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOSURAT"/>
+	</field>
+	<field name="HEADERBPJS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HEADERBPJS"/>
+		<property name="com.jaspersoft.studio.field.label" value="HEADERBPJS"/>
+	</field>
+	<field name="JENISKONTROL" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="JENISKONTROL"/>
+		<property name="com.jaspersoft.studio.field.label" value="JENISKONTROL"/>
+	</field>
+	<field name="NORJK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NORJK"/>
+		<property name="com.jaspersoft.studio.field.label" value="NORJK"/>
+	</field>
+	<field name="TGLRJK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TGLRJK"/>
+		<property name="com.jaspersoft.studio.field.label" value="TGLRJK"/>
+	</field>
+	<field name="MASABERLAKU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MASABERLAKU"/>
+		<property name="com.jaspersoft.studio.field.label" value="MASABERLAKU"/>
+	</field>
+	<field name="TUJUANRUJUK" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TUJUANRUJUK"/>
+		<property name="com.jaspersoft.studio.field.label" value="TUJUANRUJUK"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+	</field>
+	<field name="nama" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="poli"/>
+	</field>
+	<field name="kode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kode"/>
+		<property name="com.jaspersoft.studio.field.label" value="kode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="poli"/>
+	</field>
+	<field name="JENIS_RUANG_PERAWATAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="JENIS_RUANG_PERAWATAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+	</field>
+	<field name="JENIS_PERAWATAN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESKRIPSI"/>
+		<property name="com.jaspersoft.studio.field.label" value="JENIS_PERAWATAN"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="referensi"/>
+	</field>
+	<group name="Group1" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{JENISKONTROL}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<image>
+					<reportElement x="0" y="2" width="40" height="38" uuid="5396ae16-d062-4e48-b183-58c06f620fb9">
+						<printWhenExpression><![CDATA[($P{CETAK_HEADER}.equalsIgnoreCase( "1" ) ? true : false)]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$P{IMAGES_PATH} + $F{ID_PPK} + ".png"]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="true">
+					<reportElement x="40" y="2" width="310" height="19" uuid="6aedb3c6-2c8a-4606-a874-5620fdd3ea96"/>
+					<box leftPadding="6"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial Narrow" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NAMA_INSTANSI}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="350" y="2" width="204" height="19" uuid="dd9ee805-026e-4339-9994-4e1a560664d2"/>
+					<box leftPadding="6"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial Narrow" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["No. Surat RS : " + $F{NOSURAT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="40" y="21" width="310" height="19" uuid="223d7953-0363-4811-b8ce-1956434007b2"/>
+					<box leftPadding="6"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial Narrow" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{HEADERBPJS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement x="350" y="21" width="204" height="19" uuid="b58275d5-559f-4824-864c-8abfc569853b">
+						<printWhenExpression><![CDATA[$F{IDPENJAMIN}==2]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOSBPJS}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="35">
+			<printWhenExpression><![CDATA[$F{IDPENJAMIN}==2]]></printWhenExpression>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="5" width="430" height="15" uuid="d0d5ed43-86cc-41b5-818b-12f247d19c05"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENISKONTROL}==1 ? "Surat Keterangan Rencana Inap ini digunakan 1 (Satu) kali kunjungan pada : "  : "Surat Keterangan Rencana Kontrol ini digunakan 1 (Satu) kali kunjungan pada : "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="20" width="10" height="15" uuid="e39822ff-ff5c-412d-89fa-2114bf2b0685">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="120" height="15" uuid="29b95263-11e5-4c76-82f1-1907e8f5d131">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="130" y="20" width="300" height="15" uuid="cfa61453-c1ad-4b35-8ddd-9aaa956d1230">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENISKONTROL}==1 ? $F{TGLSO} : $F{JADWAL_KONTROL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="6" width="124" height="26" uuid="3fd12a9a-3e41-47fc-a385-957d7b5be22c">
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Scan di Mesin APM untuk melakukan pendaftaran]]></text>
+			</staticText>
+		</band>
+		<band height="80">
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="130" y="41" width="300" height="13" uuid="e01cb21b-7838-4f09-9767-203fe191f973">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TANGGAL_LAHIR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="41" width="10" height="13" uuid="779da528-04b1-407f-af63-855d0eb52793">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="130" y="15" width="300" height="13" uuid="2791882c-a9f1-48da-a79f-038ab2ccb2cb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOBPJS}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="130" y="67" width="300" height="13" uuid="129ca32b-f329-42e7-8a73-3efcbc48c9de">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIAGMASUK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="28" width="120" height="13" uuid="f8f40105-9608-4735-8185-232ce85b46c1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Nama / NO. RM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="54" width="10" height="13" uuid="6ae56de8-cc2e-40f3-b90b-89cc67af9e8f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="15" width="10" height="13" uuid="ffbe62df-6495-4800-93a0-92e22ed84003">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="120" height="13" uuid="133d3f8a-1b89-49a3-af9d-1a7223eed66f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Lahir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="120" height="13" uuid="5756f194-9888-453a-9c90-8b28aa4422d4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[No. Kartu]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="130" y="28" width="300" height="13" uuid="e6b20253-fe7c-4753-8336-d64eef0faf59">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMALENGKAP1} + " / " + $F{NORM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="28" width="10" height="13" uuid="7e2a1dfc-8534-45f5-83ed-d0729bf38b96">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="120" height="13" uuid="b4559720-2cb9-48c5-8ce0-7ea92ccad42a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Diagnosa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="67" width="10" height="13" uuid="354e86a5-cd03-4bce-b53b-795ba4466577">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="54" width="120" height="13" uuid="41e412c8-10ab-4eac-b94d-59f496a8dff8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Tujuan]]></text>
+			</staticText>
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="130" y="54" width="300" height="13" uuid="69223337-8a46-4da8-86f2-ff8c0a3bbdb5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENISKONTROL}==1 ? "Ruang Rawat Inap " + $F{SMF} : $F{RUANGAN} + " ("+$F{SMF}+")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="120" height="15" uuid="8d79cc04-3441-46a6-a1db-43db6bfde523"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Untuk Pasien dengan :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="65" width="115" height="15" uuid="d765f982-5489-483a-80ba-37f792685bd1">
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Antrian :]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement mode="Transparent" x="450" y="0" width="92" height="65" uuid="87ee9c1f-f88e-40fd-816c-cf4560f18c3a">
+					<property name="com.jaspersoft.studio.unit.margin" value="px"/>
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" margin="1">
+					<jr:codeExpression><![CDATA[$F{NOSURAT}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+		</band>
+		<band height="16">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="120" y="0" width="10" height="16" uuid="aa1dc627-ec5e-459d-a8e1-23261fe4a3ab"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="130" y="0" width="300" height="16" uuid="145263a4-0591-4d92-9963-275ac78a66a3"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{JENISKONTROL}==1 ? $F{KETSO}:$F{KET}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="120" height="16" uuid="80268680-86cb-4f62-9b32-cd71cb78f5fa"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENISKONTROL}==1 ? "Rencana Pelayanan / Indikasi Rawat Inap" : "Keterangan"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="439" y="0" width="115" height="16" uuid="5c741f2a-4326-451a-a293-59d7c29e579e">
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMOR_ANTRIAN}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<printWhenExpression><![CDATA[$F{JENISKONTROL}==1]]></printWhenExpression>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="120" height="15" uuid="64fa9e7e-4746-4147-ae58-a6de276b6d52"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Jenis Ruang Perawatan"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="0" width="10" height="15" uuid="27fcb18a-76a6-4028-a5b4-d1d2be250fa7"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="0" width="300" height="15" uuid="3f8b61fa-4580-405a-9725-3abba1f6388c"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENIS_RUANG_PERAWATAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="15" width="300" height="15" uuid="49241f66-d973-44ab-976c-e9672db8b0c5"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JENIS_PERAWATAN}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="15" width="120" height="15" uuid="9387c63f-5e0b-49fa-b0d1-8785138ae93c"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Jenis Perawatan"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="15" width="10" height="15" uuid="346feb82-947e-4504-8095-26b551b26362"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="120" height="15" uuid="da1e4aac-8392-481b-818b-b20403e66d5f">
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Terapi"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="0" width="10" height="15" uuid="bd05e985-6290-44bc-ac9c-e1fda96a8c62">
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="0" width="300" height="15" uuid="49ab3aa1-66eb-47af-9c71-7f680927a622">
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RENCANA_TERAPI}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="86">
+			<textField textAdjust="ScaleFont" isBlankWhenNull="true">
+				<reportElement x="345" y="66" width="209" height="20" uuid="5530e853-b83c-4447-8d9c-67dcb7505d42"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOKTER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="2" width="209" height="20" uuid="679b7968-b739-449a-a3e6-caaede46fa34"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="8" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KOTA}+", "+ $F{DIBUAT_TANGGAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="310" height="26" uuid="25f6a95a-b59a-4f10-90a7-0e6b8368f0e2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{JENISKONTROL}==2]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Untuk Pasien berusia diatas 17 Tahun wajib melakukan Verifikasi Sidik Jari sebelum melakukan pendaftaran]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement mode="Transparent" x="360" y="14" width="80" height="55" uuid="9254b27e-a5aa-4b76-b56f-9e264d34a53d">
+					<property name="com.jaspersoft.studio.unit.margin" value="px"/>
+				</reportElement>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" margin="1">
+					<jr:codeExpression><![CDATA[$F{NIP}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

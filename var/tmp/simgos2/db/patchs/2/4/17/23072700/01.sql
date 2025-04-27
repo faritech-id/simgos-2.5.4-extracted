@@ -1,0 +1,4 @@
+use `medicalrecord`;
+
+ALTER TABLE `pemeriksaan_ekg`
+	ADD COLUMN `DOKUMENT` CHAR(36) NULL DEFAULT NULL AFTER `KESIMPULAN`;

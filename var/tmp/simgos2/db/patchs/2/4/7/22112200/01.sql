@@ -1,0 +1,5 @@
+USE aplikasi;
+
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('130704', 'SURAT SAKIT (DI ALIHKAN KE PENERBITAN SURAT)', 3, 'Surat Sakit (Dialihkan ke penerbitan surat)', 0, 'rekammedis-perencanaan-suratsakit-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('1309', 'PENERBITAN SURAT', 2, 'Penerbitan Surat', 1, 'rekammedis.penerbitan.surat.Workspace', NULL, 'x-fa fa-file', 1, 0, 0, NULL, 1, 0, 0, 0, 0, 0);
+REPLACE INTO `modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `STATUS`, `CLASS`, `CONFIG`, `ICON_CLS`, `HAVE_CHILD`, `MENU_HOME`, `MENU_MASTER`, `PACKAGE_NAME`, `INTERNAL_PACKAGE`, `CRUD`, `C`, `R`, `U`, `D`) VALUES ('130901', 'SURAT SAKIT', 3, 'Surat Sakit', 1, 'rekammedis-penerbitan-surat-sakit-workspace', NULL, NULL, 0, 0, 0, NULL, 1, 0, 0, 0, 0, 0);

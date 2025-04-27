@@ -1,0 +1,190 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.8
+-- Versi server:                 8.0.26 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               12.0.0.6468
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Membuang struktur basisdata untuk layanan
+USE `layanan`;
+
+-- membuang struktur untuk trigger layanan.hasil_lab_after_insert
+DROP TRIGGER IF EXISTS `hasil_lab_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_after_insert` AFTER INSERT ON `hasil_lab` FOR EACH ROW BEGIN
+	CALL layanan.storeNilaiKritisLab(NEW.ID);
+	
+	UPDATE layanan.status_hasil_pemeriksaan shp
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.TINDAKAN_MEDIS_ID = NEW.TINDAKAN_MEDIS
+	   AND shp.JENIS = 8;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_lab_exam_after_insert
+DROP TRIGGER IF EXISTS `hasil_lab_exam_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_exam_after_insert` AFTER INSERT ON `hasil_lab_exam` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp, layanan.tindakan_medis tm
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.JENIS = 8
+	   AND tm.ID = shp.TINDAKAN_MEDIS_ID
+		AND tm.KUNJUNGAN = NEW.KUNJUNGAN;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_lab_kepekaan_after_insert
+DROP TRIGGER IF EXISTS `hasil_lab_kepekaan_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_kepekaan_after_insert` AFTER INSERT ON `hasil_lab_kepekaan` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp, layanan.tindakan_medis tm
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.JENIS = 8
+	   AND tm.ID = shp.TINDAKAN_MEDIS_ID
+		AND tm.KUNJUNGAN = NEW.KUNJUNGAN;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_lab_kultur_after_insert
+DROP TRIGGER IF EXISTS `hasil_lab_kultur_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_kultur_after_insert` AFTER INSERT ON `hasil_lab_kultur` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp, layanan.tindakan_medis tm
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.JENIS = 8
+	   AND tm.ID = shp.TINDAKAN_MEDIS_ID
+		AND tm.KUNJUNGAN = NEW.KUNJUNGAN;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_lab_mikroskopik_after_insert
+DROP TRIGGER IF EXISTS `hasil_lab_mikroskopik_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_mikroskopik_after_insert` AFTER INSERT ON `hasil_lab_mikroskopik` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp, layanan.tindakan_medis tm
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.JENIS = 8
+	   AND tm.ID = shp.TINDAKAN_MEDIS_ID
+		AND tm.KUNJUNGAN = NEW.KUNJUNGAN;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_lab_pcr_after_insert
+DROP TRIGGER IF EXISTS `hasil_lab_pcr_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_lab_pcr_after_insert` AFTER INSERT ON `hasil_lab_pcr` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp, layanan.tindakan_medis tm
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.JENIS = 8
+	   AND tm.ID = shp.TINDAKAN_MEDIS_ID
+		AND tm.KUNJUNGAN = NEW.KUNJUNGAN;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_pa_after_insert
+DROP TRIGGER IF EXISTS `hasil_pa_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_pa_after_insert` AFTER INSERT ON `hasil_pa` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp, layanan.tindakan_medis tm
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.JENIS = 8
+	   AND tm.ID = shp.TINDAKAN_MEDIS_ID
+		AND tm.KUNJUNGAN = NEW.KUNJUNGAN;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.hasil_rad_after_insert
+DROP TRIGGER IF EXISTS `hasil_rad_after_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `hasil_rad_after_insert` AFTER INSERT ON `hasil_rad` FOR EACH ROW BEGIN
+	UPDATE layanan.status_hasil_pemeriksaan shp
+	   SET shp.STATUS_HASIL = 2
+	 WHERE shp.TINDAKAN_MEDIS_ID = NEW.TINDAKAN_MEDIS
+	   AND shp.JENIS = 7;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger layanan.onAfterInsertTindakanMedis
+DROP TRIGGER IF EXISTS `onAfterInsertTindakanMedis`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `onAfterInsertTindakanMedis` AFTER INSERT ON `tindakan_medis` FOR EACH ROW BEGIN
+   CALL pembayaran.storeTindakanMedis(NEW.KUNJUNGAN, NEW.ID, NEW.TINDAKAN);	
+	
+	INSERT INTO layanan.petugas_tindakan_medis(TINDAKAN_MEDIS, JENIS, MEDIS, KE, STATUS)
+	SELECT NEW.ID, ptm.JENIS, ptm.MEDIS, ptm.KE, ptm.`STATUS`
+	  FROM pendaftaran.kunjungan k,
+	  		 master.ruangan r ,
+	  		 layanan.tindakan_medis tm,
+	  		 layanan.petugas_tindakan_medis ptm
+	 WHERE k.NOMOR = NEW.KUNJUNGAN
+	   AND r.ID = k.RUANGAN
+	   AND r.JENIS_KUNJUNGAN = 4
+		AND tm.KUNJUNGAN = k.NOMOR
+		AND tm.`STATUS` = 1
+		AND ptm.TINDAKAN_MEDIS = tm.ID
+		AND ptm.JENIS = 1
+		AND ptm.KE = 1	
+		AND ptm.`STATUS` = 1
+	 ORDER BY tm.TANGGAL DESC LIMIT 1;
+	 
+	 IF EXISTS(SELECT 1 FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = 'lis') THEN
+	 	IF NEW.OTOMATIS = 0 THEN
+			INSERT INTO lis.order_item_log(HIS_ID, TANGGAL)
+			SELECT NEW.ID, NEW.TANGGAL
+			  FROM pendaftaran.kunjungan k
+					 , master.tindakan_ruangan tr
+				    , master.ruangan_laboratorium rl
+			 WHERE k.NOMOR = NEW.KUNJUNGAN
+		      AND tr.RUANGAN = k.RUANGAN
+				AND tr.TINDAKAN = NEW.TINDAKAN
+			   AND tr.STATUS = 1
+			   AND rl.LABORATORIUM = tr.RUANGAN
+			   AND rl.RUANGAN = 0
+			   AND rl.ORDER_LIS = 1
+			   AND rl.STATUS = 1;
+		END IF;
+	END IF;
+	
+	# Status Hasil Pemeriksaan
+	BEGIN
+		INSERT INTO layanan.status_hasil_pemeriksaan(TINDAKAN_MEDIS_ID, JENIS)
+		SELECT NEW.ID, t.JENIS
+		  FROM `master`.tindakan t
+		 WHERE t.ID = NEW.TINDAKAN
+		   AND t.JENIS IN (7, 8); # Radiologi dan Laboratorium		 
+	END;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

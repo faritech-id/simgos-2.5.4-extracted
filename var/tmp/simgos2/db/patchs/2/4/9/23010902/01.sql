@@ -1,0 +1,2 @@
+UPDATE `aplikasi`.`modules` SET `NAMA`='RIWAYAT PENYAKIT SEKARANG (UMUM)', `DESKRIPSI`='Riwayat Penyakit Sekarang (Umum)' WHERE  `ID`='130201';
+UPDATE `aplikasi`.`modules` SET `NAMA`='PENYAKIT DAHULU', `DESKRIPSI`='Penyakit Dahulu' WHERE  `ID`='13020201';

@@ -1,0 +1,4 @@
+USE `master`;
+
+ALTER TABLE `ikatan_kerja_sama`
+	CHANGE COLUMN `ID` `ID` SMALLINT NOT NULL FIRST;

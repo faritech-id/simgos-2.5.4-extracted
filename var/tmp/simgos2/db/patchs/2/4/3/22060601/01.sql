@@ -1,0 +1,2 @@
+use aplikasi;
+INSERT INTO `aplikasi`.`modules` (`ID`, `NAMA`, `LEVEL`, `DESKRIPSI`, `CLASS`, `ICON_CLS`, `MENU_MASTER`) VALUES ('1924', 'REKENING RS', '2', 'Rekening RS', 'master.rekening.Workspace', 'x-fa fa-money', '1');

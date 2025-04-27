@@ -1,0 +1,2 @@
+USE aplikasi;
+INSERT INTO properti_config (ID, NAMA, VALUE, DESKRIPSI) VALUES (84, 'VALIDASI RETRIKSI BERDASARKAN JENIS KUNJUNGAN RUANGAN', 'FALSE', 'Berlaku Apabila Validasi Retriksi Di Aktifkan');

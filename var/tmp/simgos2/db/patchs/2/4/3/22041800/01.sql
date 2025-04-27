@@ -1,0 +1,1 @@
+REPLACE INTO `aplikasi`.`properti_config` (`ID`, `NAMA`, `VALUE`) VALUES ('36', 'AKTIFKAN_EKLAIM_V6', 'TRUE');

@@ -1,0 +1,4 @@
+USE aplikasi;
+
+ALTER TABLE `properti_config`
+	CHANGE COLUMN `ID` `ID` MEDIUMINT NOT NULL DEFAULT 0 FIRST;

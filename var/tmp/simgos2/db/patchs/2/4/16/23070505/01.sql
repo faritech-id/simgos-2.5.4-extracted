@@ -1,0 +1,2 @@
+USE `aplikasi`;
+INSERT INTO `properti_config` VALUES (73, 'VALIDASI_STOK_LAYANAN_BON_SISA_TIDAK_BOLEH_LEBIH_DARI_STOK_RUANGAN', 'TRUE', 'Validasi Layanan Bon Sisa, tidak dapat melakukan final apabila ada jumlah layanan yang melebihi stok');

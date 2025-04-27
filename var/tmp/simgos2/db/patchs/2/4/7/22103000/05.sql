@@ -1,0 +1,40 @@
+# DROP TRIGGER kemkes.data_kebutuhan_apd_before_update;
+# DROP TRIGGER kemkes.data_kebutuhan_sdm_before_update;
+# DROP TRIGGER kemkes.data_tempat_tidur_before_update;
+# DROP TRIGGER kemkes.kebutuhan_apd_after_insert;
+# DROP TRIGGER kemkes.kebutuhan_sdm_after_insert;
+# DROP TRIGGER kemkes.pasien_before_insert;
+# DROP TRIGGER kemkes.pasien_before_update;
+# DROP TRIGGER kemkes.tempat_tidur_after_insert;
+
+# DROP EVENT kemkes.runEveryMinute;
+# DROP EVENT kemkes.runEveryThreeMinute;
+
+# DROP PROCEDURE kemkes.executeTempatTidurRSOnline;
+# DROP PROCEDURE kemkes.statistikPasien;
+# DROP PROCEDURE kemkes.updateKamarSIMRSOnline;
+
+# DROP TABLE IF EXISTS kemkes.data_kebutuhan_apd;
+# DROP TABLE IF EXISTS kemkes.data_kebutuhan_sdm;
+# DROP TABLE IF EXISTS kemkes.data_tempat_tidur;
+# DROP TABLE IF EXISTS kemkes.diagnosa_pasien;
+# DROP TABLE IF EXISTS kemkes.icd_covid19;
+# DROP TABLE IF EXISTS kemkes.jenis_kelamin;
+# DROP TABLE IF EXISTS kemkes.jenis_pasien;
+# DROP TABLE IF EXISTS kemkes.kabupaten;
+# DROP TABLE IF EXISTS kemkes.kamar_simrs_rs_online;
+# DROP TABLE IF EXISTS kemkes.kebutuhan_apd;
+# DROP TABLE IF EXISTS kemkes.kebutuhan_sdm;
+# DROP TABLE IF EXISTS kemkes.kecamatan;
+# DROP TABLE IF EXISTS kemkes.kewarganegaraan;
+# DROP TABLE IF EXISTS kemkes.pasien;
+# DROP TABLE IF EXISTS kemkes.propinsi;
+# DROP TABLE IF EXISTS kemkes.rekap_pasien_keluar;
+# DROP TABLE IF EXISTS kemkes.rekap_pasien_komorbid;
+# DROP TABLE IF EXISTS kemkes.rekap_pasien_masuk;
+# DROP TABLE IF EXISTS kemkes.rekap_pasien_nonkomorbid;
+# DROP TABLE IF EXISTS kemkes.status_isolasi;
+# DROP TABLE IF EXISTS kemkes.status_keluar;
+# DROP TABLE IF EXISTS kemkes.status_rawat;
+# DROP TABLE IF EXISTS kemkes.sumber_penularan;
+# DROP TABLE IF EXISTS kemkes.tempat_tidur;

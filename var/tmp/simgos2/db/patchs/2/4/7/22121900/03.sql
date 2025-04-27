@@ -1,0 +1,51 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.8
+-- Server version:               8.0.23 - MySQL Community Server - GPL
+-- Server OS:                    Linux
+-- HeidiSQL Version:             11.2.0.6213
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+USE `kemkes-ihs`;
+-- Dumping structure for table kemkes-ihs.diagnostic_report
+CREATE TABLE IF NOT EXISTS `diagnostic_report` (
+  `id` char(36) DEFAULT NULL,
+  `identifier` json DEFAULT NULL COMMENT 'code_reference id = 56',
+  `basedOn` json DEFAULT NULL COMMENT 'kemkes-ihs.service_request id',
+  `status` varchar(30) NOT NULL,
+  `category` json DEFAULT NULL COMMENT 'tindakan_to_loinc KATEGORI',
+  `code` json DEFAULT NULL COMMENT 'tindakan_to_loinc LOIN_TERMINOLOGI',
+  `subject` json DEFAULT NULL COMMENT 'kemkes-ihs.patient id',
+  `encounter` json DEFAULT NULL COMMENT 'kemkes-ihs.encounter id',
+  `effectiveDateTime` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'kunjungan TANGGAL_FINAL_HASIL',
+  `issued` varchar(30) NOT NULL,
+  `performer` json DEFAULT NULL,
+  `resultInterpreter` json DEFAULT NULL,
+  `specimen` json DEFAULT NULL,
+  `result` json DEFAULT NULL,
+  `imagingStudy` json DEFAULT NULL,
+  `media` json DEFAULT NULL,
+  `conclusion` text,
+  `conclusionCode` json DEFAULT NULL,
+  `presentedForm` json DEFAULT NULL,
+  `refId` char(11) NOT NULL DEFAULT '',
+  `nopen` char(10) NOT NULL DEFAULT '',
+  `sendDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `send` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`refId`),
+  KEY `send` (`send`),
+  KEY `nopen` (`nopen`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

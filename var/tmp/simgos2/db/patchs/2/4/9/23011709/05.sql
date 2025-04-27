@@ -1,0 +1,21 @@
+USE aplikasi;
+
+UPDATE `properti_config` SET `ID`=25, `DESKRIPSI`='Jika TRUE maka akan otomatis tercetak' WHERE `ID`=25;
+UPDATE `properti_config` SET `ID`=26, `DESKRIPSI`='Jika TRUE maka akan melakukan otomatis tercetak' WHERE `ID`=26;
+UPDATE `properti_config` SET `ID`=29, `DESKRIPSI`='Jika TRUE maka akan menampilkan tombol cetak tracert di pelayanan rawat inap' WHERE `ID`=29;
+UPDATE `properti_config` SET `ID`=30, `DESKRIPSI`='Jika TRUE maka reservasi pendaftaran tidak digunakan' WHERE `ID`=30;
+UPDATE `properti_config` SET `ID`=35, `DESKRIPSI`='Jika di atur maka jika dalam waktu tersebut reservasi belum di gunakan maka otomatis akan di batalkan' WHERE `ID`=35;
+UPDATE `properti_config` SET `ID`=36, `DESKRIPSI`='Jika TRUE maka grouping E-Klaim Versi 6 akan tampil' WHERE `ID`=36;
+UPDATE `properti_config` SET `ID`=37, `DESKRIPSI`='Jika di atur waktunya maka sistem akan membuka lock login sampai waktu yang telah di atur' WHERE `ID`=37;
+UPDATE `properti_config` SET `ID`=38, `DESKRIPSI`='Jika di atur lebih besar 0 maka sistem akan memvalidasi berapa kali pengguna di perbolehkan gagal login' WHERE `ID`=38;
+UPDATE `properti_config` SET `ID`=39, `DESKRIPSI`='Jika TRUE maka penginputan captcha akan tampil di form login' WHERE `ID`=39;
+UPDATE `properti_config` SET `ID`=40, `DESKRIPSI`='Font yang ada di sistem ini' WHERE `ID`=40;
+UPDATE `properti_config` SET `ID`=41, `DESKRIPSI`='Jika TRUE maka gabung tagihan akan dibatalkan sesuai alur atau riwayat gabung' WHERE `ID`=41;
+UPDATE `properti_config` SET `ID`=44, `DESKRIPSI`='Jika di atur lebih besar dari 0 maka titiknya akan semakin banyak' WHERE `ID`=44;
+UPDATE `properti_config` SET `ID`=45, `DESKRIPSI`='Jika di atur lebih besar dari 0 maka garisnya akan semakin banyak' WHERE `ID`=45;
+UPDATE `properti_config` SET `ID`=47, `DESKRIPSI`='Jika di atur lebih besar dari 0 maka sistem akan melakukan auto lock jika selama waktu tersebut tidak ada aktifitas pengguna dalam satuan detik. Contoh: Sistem akan auto lock jika tidak ada aktifitas pengguna selama 15 menit maka nilai yang harus di inputkan adalah 60 * 15' WHERE `ID`=47;
+UPDATE `properti_config` SET `ID`=50, `DESKRIPSI`='Jika TRUE maka Petugas Pendaftaran dapat melakukann pendaftaran lagi walaupun ada pelayanan yang belum selesai (final)' WHERE `ID`=50;
+UPDATE `properti_config` SET `ID`=51, `DESKRIPSI`='Jika TRUE maka Sistem akan melakukan penyimpanan request pengguna ke database' WHERE `ID`=51;
+UPDATE `properti_config` SET `ID`=55, `DESKRIPSI`='Jika TRUE maka Otomatis generate nomor kuitansi pada saat di cetak' WHERE `ID`=55;
+UPDATE `properti_config` SET `ID`=56, `DESKRIPSI`='Pembulatan total pembayaran tunai' WHERE `ID`=56;
+UPDATE `properti_config` SET `ID`=57, `DESKRIPSI`='Jika TRUE maka Pasien BPJS Kelas 1 Naik VIP dimana tagihan yg harus di bayar pasien adalah 75% dari total tarif inacbg atau total tarif vip, mana yang lebih kecil' WHERE `ID`=57;

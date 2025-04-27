@@ -1,0 +1,4 @@
+USE `master`;
+
+ALTER TABLE `pegawai`
+	CHANGE COLUMN `SMF` `SMF` TINYINT NOT NULL DEFAULT '36' COMMENT 'Spesialis/Sub. Spesialis' AFTER `PROFESI`;

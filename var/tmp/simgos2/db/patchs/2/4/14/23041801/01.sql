@@ -1,0 +1,4 @@
+USE inacbg;
+
+ALTER TABLE `hasil_grouping`
+	ADD COLUMN `POST_DATA` TEXT NULL AFTER `DC_BPJS`;

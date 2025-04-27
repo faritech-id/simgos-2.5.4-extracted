@@ -1,0 +1,4 @@
+USE inventory;
+
+ALTER TABLE `stok_opname_detil`
+	ADD COLUMN `EXD` DATE NULL DEFAULT NULL AFTER `TANGGAL`;

@@ -1,0 +1,2 @@
+USE `aplikasi`;
+INSERT INTO `properti_config` VALUES (72, 'VALIDASI_QTY_PEMAKAIAN_BHP_TIDAK_BOLEH_LEBIH_DARI_STOK_RUANGAN', 'TRUE', 'Validasi Pemakaian BHP, tidak dapat melakukan final apabila ada jumlah layanan yang melebihi stok');

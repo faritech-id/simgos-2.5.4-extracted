@@ -1,0 +1,190 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.8
+-- Versi server:                 8.0.34 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               12.0.0.6468
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Membuang struktur basisdata untuk master
+USE `master`;
+
+-- membuang struktur untuk trigger master.onAfterInsertRuangan
+DROP TRIGGER IF EXISTS `onAfterInsertRuangan`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `onAfterInsertRuangan` AFTER INSERT ON `ruangan` FOR EACH ROW BEGIN
+	IF NEW.JENIS_KUNJUNGAN > 0 AND NEW.JENIS = 5 THEN
+	BEGIN
+		DECLARE VCONFIG JSON;
+		
+		SELECT r.CONFIG
+		  INTO VCONFIG
+		  FROM `master`.referensi r
+		 WHERE r.JENIS = 15
+		   AND r.ID = NEW.JENIS_KUNJUNGAN;
+		
+		INSERT INTO master.jenis_kunjungan_ruangan(JENIS_KUNJUNGAN, RUANGAN)
+		VALUES(NEW.JENIS_KUNJUNGAN, NEW.ID);
+		
+		IF NEW.JENIS_KUNJUNGAN = 3 THEN 
+			INSERT INTO master.ruangan_mutasi(RUANGAN, MUTASI)
+			VALUES(0, NEW.ID);
+			
+			INSERT INTO master.batas_ruangan_vip(RUANGAN, KELAS)
+			VALUES(NEW.ID, 4);
+		ELSEIF NEW.JENIS_KUNJUNGAN = 4 THEN 
+			INSERT INTO master.ruangan_laboratorium(RUANGAN, LABORATORIUM)
+			VALUES(0, NEW.ID);
+		ELSEIF NEW.JENIS_KUNJUNGAN = 5 THEN 
+			INSERT INTO master.ruangan_radiologi(RUANGAN, RADIOLOGI)
+			VALUES(0, NEW.ID);
+		ELSEIF NEW.JENIS_KUNJUNGAN = 11 THEN 
+			INSERT INTO master.ruangan_farmasi(RUANGAN, FARMASI)
+			VALUES(0, NEW.ID);
+		ELSE
+			IF NEW.JENIS_KUNJUNGAN != 0 THEN
+				IF NOT VCONFIG IS NULL THEN 
+					IF VCONFIG->'$.dapatDikonsul' THEN
+						INSERT INTO master.ruangan_konsul(RUANGAN, KONSUL)
+						VALUES(0, NEW.ID);
+					END IF;
+				END IF;
+				
+				IF NEW.JENIS_KUNJUNGAN = 6 THEN 
+					INSERT INTO master.ruangan_operasi(RUANGAN, OPERASI)
+					VALUES(0, NEW.ID);
+				END IF;
+			END IF;
+		END IF;
+	END;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- membuang struktur untuk trigger master.onAfterUpdateRuangan
+DROP TRIGGER IF EXISTS `onAfterUpdateRuangan`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `onAfterUpdateRuangan` AFTER UPDATE ON `ruangan` FOR EACH ROW BEGIN
+	IF OLD.JENIS = 5 THEN
+	BEGIN
+		DECLARE VCONFIG JSON;
+		
+		SELECT r.CONFIG
+		  INTO VCONFIG
+		  FROM `master`.referensi r
+		 WHERE r.JENIS = 15
+		   AND r.ID = NEW.JENIS_KUNJUNGAN;
+		   
+		IF NOT EXISTS(SELECT 1 FROM master.jenis_kunjungan_ruangan WHERE RUANGAN = OLD.ID) THEN
+			INSERT INTO master.jenis_kunjungan_ruangan(JENIS_KUNJUNGAN, RUANGAN)
+			VALUES(NEW.JENIS_KUNJUNGAN, OLD.ID);
+		END IF;
+		
+		IF NEW.JENIS_KUNJUNGAN = 3 THEN 
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_mutasi WHERE RUANGAN = 0 AND MUTASI = OLD.ID) THEN
+				INSERT INTO master.ruangan_mutasi(RUANGAN, MUTASI)
+				VALUES(0, NEW.ID);
+			END IF;
+		ELSEIF NEW.JENIS_KUNJUNGAN = 4 THEN 	
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_laboratorium WHERE RUANGAN = 0 AND LABORATORIUM = OLD.ID) THEN
+				IF NOT VCONFIG IS NULL THEN 
+					IF VCONFIG->'$.lab.hasil' AND VCONFIG->'$.dapatDiorder' THEN
+						INSERT INTO master.ruangan_laboratorium(RUANGAN, LABORATORIUM)
+						VALUES(0, NEW.ID);
+					END IF;
+				END IF;
+			END IF;
+		ELSEIF NEW.JENIS_KUNJUNGAN = 5 THEN 
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_radiologi WHERE RUANGAN = 0 AND RADIOLOGI = OLD.ID) THEN
+				IF NOT VCONFIG IS NULL THEN 
+					IF VCONFIG->'$.rad.hasil' AND VCONFIG->'$.dapatDiorder' THEN
+						INSERT INTO master.ruangan_radiologi(RUANGAN, RADIOLOGI)
+						VALUES(0, NEW.ID);
+					END IF;
+				END IF;
+			END IF;		
+		ELSEIF NEW.JENIS_KUNJUNGAN = 11 THEN 						
+			IF NOT EXISTS(SELECT 1 FROM master.ruangan_farmasi WHERE RUANGAN = 0 AND FARMASI = OLD.ID) THEN
+				IF NOT VCONFIG IS NULL THEN 
+					IF VCONFIG->'$.farmasi.layanan' AND VCONFIG->'$.dapatDiorder' THEN
+						INSERT INTO master.ruangan_farmasi(RUANGAN, FARMASI)
+						VALUES(0, NEW.ID);
+					END IF;
+				END IF;
+			END IF;
+		ELSE
+			IF NEW.JENIS_KUNJUNGAN != 0 THEN 
+				IF NOT EXISTS(SELECT 1 FROM master.ruangan_konsul WHERE RUANGAN = 0 AND KONSUL = OLD.ID) THEN
+					IF NOT VCONFIG IS NULL THEN 
+						IF VCONFIG->'$.dapatDikonsul' THEN
+							INSERT INTO master.ruangan_konsul(RUANGAN, KONSUL)
+							VALUES(0, NEW.ID);
+						END IF;
+					END IF;
+				END IF;
+				
+				IF NEW.JENIS_KUNJUNGAN = 6 THEN 
+					IF NOT EXISTS(SELECT 1 FROM master.ruangan_operasi WHERE RUANGAN = 0 AND OPERASI = OLD.ID) THEN
+						INSERT INTO master.ruangan_operasi(RUANGAN, OPERASI)
+						VALUES(0, NEW.ID);
+					END IF;
+				END IF;
+			END IF;
+		END IF;
+	END;
+	END IF;	
+	
+	IF OLD.JENIS = 5 THEN
+		UPDATE master.jenis_kunjungan_ruangan
+		   SET STATUS = NEW.STATUS,
+		   	 JENIS_KUNJUNGAN = NEW.JENIS_KUNJUNGAN
+		 WHERE RUANGAN = OLD.ID;
+		
+		UPDATE master.ruangan_konsul SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND KONSUL = OLD.ID;
+		UPDATE master.ruangan_mutasi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND MUTASI = OLD.ID;
+		UPDATE master.ruangan_laboratorium SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND LABORATORIUM = OLD.ID;
+		UPDATE master.ruangan_radiologi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND RADIOLOGI = OLD.ID;
+		UPDATE master.ruangan_operasi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND OPERASI = OLD.ID;
+		UPDATE master.ruangan_farmasi SET STATUS = NEW.STATUS WHERE RUANGAN = 0 AND FARMASI = OLD.ID;
+		
+		IF NEW.STATUS = 0 THEN
+			UPDATE master.ruang_kamar SET STATUS = NEW.STATUS WHERE RUANGAN = OLD.ID;
+		END IF;
+		
+		IF NEW.JENIS_KUNJUNGAN != OLD.JENIS_KUNJUNGAN THEN
+			IF OLD.JENIS_KUNJUNGAN = 3 THEN 
+				DELETE FROM master.ruangan_mutasi WHERE MUTASI = OLD.ID;
+			ELSEIF OLD.JENIS_KUNJUNGAN = 4 THEN 
+				DELETE FROM master.ruangan_laboratorium WHERE LABORATORIUM = OLD.ID;
+			ELSEIF OLD.JENIS_KUNJUNGAN = 5 THEN 
+				DELETE FROM master.ruangan_radiologi WHERE RADIOLOGI = OLD.ID;
+			ELSEIF OLD.JENIS_KUNJUNGAN = 11 THEN 
+				DELETE FROM master.ruangan_farmasi WHERE FARMASI = OLD.ID;
+			ELSE
+				IF OLD.JENIS_KUNJUNGAN != 0 THEN 
+					DELETE FROM master.ruangan_konsul WHERE KONSUL = OLD.ID;
+					DELETE FROM master.ruangan_operasi WHERE OPERASI = OLD.ID;
+				END IF;
+			END IF;
+		END IF;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

@@ -1,0 +1,1 @@
+INSERT INTO `master`.`jenis_laporan_detil` (`JENIS`, `DESKRIPSI`, `REPORT_PARAMS`) VALUES ('14', 'Penerimaan IKS', '{\r\n  NAME: \'pembayaran.LaporanSetoranIKS\',\r\n  TYPE: \'Pdf\', \r\n  EXT: \'pdf\',\r\n  PARAMETER: {\r\nCARABAYAR: \'\',	\r\n   NOMOR: \'\',\r\n   KASIR: \'\'\r\n  },\r\n  REQUEST_FOR_PRINT: false,\r\n  PRINT_NAME: \'CetakLaporan\'\r\n}');

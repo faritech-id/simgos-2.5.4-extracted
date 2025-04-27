@@ -1,0 +1,4 @@
+USE `penjualan`;
+
+ALTER TABLE `penjualan_detil`
+	ADD COLUMN `PPN` INT NOT NULL DEFAULT '0' COMMENT 'ID PPN' AFTER `MARGIN`;

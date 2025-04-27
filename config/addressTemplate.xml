@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.openmrs.layout.address.AddressTemplate>
+    <nameMappings class="properties">
+        <property name="address1" value="Alamat (Nama Jalan, Nomor Rumah)"/>
+        <property name="address2" value="RT/RW"/>
+        <property name="cityVillage" value="Kelurahan/Desa"/>
+        <property name="countyDistrict" value="Kecamatan"/>
+        <property name="stateProvince" value="Provinsi"/>
+        <property name="address3" value="Kabupaten/Kota"/>
+        <property name="postalCode" value="Kode Pos"/>
+        <property name="country" value="Negara"/>
+        <!-- Administrative Codes -->
+        <property name="address4" value="Kode Provinsi"/>
+        <property name="address5" value="Kode Kabupaten/Kota"/>
+        <property name="address6" value="Kode Kecamatan"/>
+        <property name="address7" value="Kode Kelurahan/Desa"/>
+    </nameMappings>
+    <sizeMappings class="properties">
+        <property name="address1" value="60"/>
+        <property name="address2" value="20"/>
+        <property name="cityVillage" value="40"/>
+        <property name="countyDistrict" value="40"/>
+        <property name="stateProvince" value="40"/>
+        <property name="address3" value="40"/>
+        <property name="postalCode" value="10"/>
+        <property name="country" value="40"/>
+        <property name="address4" value="2"/>
+        <property name="address5" value="4"/>
+        <property name="address6" value="6"/>
+        <property name="address7" value="10"/>
+    </sizeMappings>
+    <lineByLineFormat>
+        <string>address1</string>
+        <string>address2</string>
+        <string>cityVillage address7</string>
+        <string>countyDistrict address6</string>
+        <string>address3 address5</string>
+        <string>stateProvince address4</string>
+        <string>country postalCode</string>
+    </lineByLineFormat>
+    <requiredElements>
+        <string>address1</string>
+        <string>address2</string>
+        <string>cityVillage</string>
+        <string>countyDistrict</string>
+        <string>stateProvince</string>
+        <string>address3</string>
+        <string>postalCode</string>
+        <string>country</string>
+        <string>address4</string>
+        <string>address5</string>
+        <string>address6</string>
+        <string>address7</string>
+    </requiredElements>
+    <elementDefaults class="properties">
+        <property name="country" value="ID"/>
+    </elementDefaults>
+    <elementRegex class="properties">
+        <property name="postalCode" value="^\d{5}$"/>
+        <property name="address2" value="^\d+/\d+$"/>
+        <property name="address4" value="^\d{2}$"/>
+        <property name="address5" value="^\d{4}$"/>
+        <property name="address6" value="^\d{6}$"/>
+        <property name="address7" value="^\d{10}$"/>
+    </elementRegex>
+    <elementRegexFormats class="properties">
+        <property name="postalCode" value="5 digit postal code"/>
+        <property name="address2" value="RT/RW format (e.g., 001/002)"/>
+        <property name="address4" value="2 digit province code"/>
+        <property name="address5" value="4 digit district/city code"/>
+        <property name="address6" value="6 digit sub-district code"/>
+        <property name="address7" value="10 digit village code"/>
+    </elementRegexFormats>
+</org.openmrs.layout.address.AddressTemplate> 

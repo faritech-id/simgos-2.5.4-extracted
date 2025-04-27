@@ -1,0 +1,4 @@
+USE medicalrecord;
+ALTER TABLE `indikator_keperawatan`
+	ADD COLUMN `KATEGORI` TINYINT NOT NULL DEFAULT '0' COMMENT '1: Data Mayor 2: Data Minor' AFTER `DESKRIPSI`,
+	ADD INDEX `KATEGORI` (`KATEGORI`);

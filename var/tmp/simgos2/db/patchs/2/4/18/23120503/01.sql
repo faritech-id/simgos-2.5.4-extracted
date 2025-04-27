@@ -1,0 +1,1 @@
+UPDATE `master`.`pasien` SET `LOCK_AKSES`=0 WHERE  `LOCK_AKSES`=1;

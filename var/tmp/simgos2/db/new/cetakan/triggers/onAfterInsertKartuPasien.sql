@@ -1,0 +1,63 @@
+-- --------------------------------------------------------
+-- Host:                         192.168.137.2
+-- Versi server:                 8.0.11 - MySQL Community Server - GPL
+-- OS Server:                    Linux
+-- HeidiSQL Versi:               10.2.0.5599
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- membuang struktur untuk trigger cetakan.onAfterInsertKartuPasien
+DROP TRIGGER IF EXISTS `onAfterInsertKartuPasien`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `onAfterInsertKartuPasien` AFTER INSERT ON `kartu_pasien` FOR EACH ROW BEGIN
+	DECLARE VTAGIHAN CHAR(10);
+	DECLARE VTARIF_ID INT;
+	DECLARE VTARIF INT;
+	DECLARE VNOPEN CHAR(10);
+	DECLARE VTANGGAL_TAGIHAN DATETIME DEFAULT NULL;
+	DECLARE VTGL_DAFTAR_PASIEN DATETIME;
+	DECLARE VPASIEN_BARU TINYINT DEFAULT 0;
+	DECLARE VAKTIF_TARIF_ADM_BERDASARKAN_JENIS_PASIEN TINYINT DEFAULT FALSE;
+	
+	IF NEW.JENIS IN (1,2) THEN
+		SET VTAGIHAN = pembayaran.buatTagihan(NEW.NORM, '');
+		IF pembayaran.isFinalTagihan(VTAGIHAN) = 0 THEN
+			SELECT t.TANGGAL, p.TANGGAL INTO VTANGGAL_TAGIHAN, VTGL_DAFTAR_PASIEN
+			  FROM pembayaran.tagihan t, master.pasien p
+			 WHERE t.ID = VTAGIHAN
+			   AND t.JENIS = 1
+				AND p.NORM = t.REF
+			 LIMIT 1;
+			 
+			SET VPASIEN_BARU = IF(DATE(VTGL_DAFTAR_PASIEN) = DATE(VTANGGAL_TAGIHAN), 1, 0);
+			
+			
+			IF EXISTS(SELECT 1
+				  FROM aplikasi.properti_config pc
+				 WHERE pc.ID = 23
+				   AND VALUE = 'TRUE') THEN		
+				SET VAKTIF_TARIF_ADM_BERDASARKAN_JENIS_PASIEN = TRUE;
+			END IF;
+
+			IF NOT VAKTIF_TARIF_ADM_BERDASARKAN_JENIS_PASIEN THEN						   
+				CALL master.getTarifAdministrasi(1, 0, NOW(), VTARIF_ID, VTARIF);
+			ELSE
+				CALL master.getTarifAdministrasiBerdasarkanJenisPasien(1, 0, NOW(), VPASIEN_BARU, VTARIF_ID, VTARIF);
+			END IF;
+			
+			CALL pembayaran.storeRincianTagihan(VTAGIHAN, NEW.ID, 1, VTARIF_ID, 1, VTARIF, 0, 0, 0);
+		END IF;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

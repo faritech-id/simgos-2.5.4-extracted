@@ -1,0 +1,5 @@
+ALTER TABLE `medicalrecord`.`operasi`
+	CHANGE COLUMN `DOKTER` `DOKTER` SMALLINT DEFAULT NULL COMMENT 'Dokter Operator di alihkan ke Pelaksana Operasi' AFTER `KUNJUNGAN`,
+	CHANGE COLUMN `ASISTEN_DOKTER` `ASISTEN_DOKTER` VARCHAR(75) DEFAULT NULL COMMENT 'Asisten Dokter Operator  di alihkan ke Pelaksana Operasi' AFTER `DOKTER`,
+	CHANGE COLUMN `ANASTESI` `ANASTESI` SMALLINT DEFAULT NULL COMMENT 'Dokter Anastesi  di alihkan ke Pelaksana Operasi' AFTER `ASISTEN_DOKTER`,
+	CHANGE COLUMN `ASISTEN_ANASTESI` `ASISTEN_ANASTESI` VARCHAR(75) DEFAULT NULL COMMENT 'Asisten Dokter Anastesi / Perawat  di alihkan ke Pelaksana Operasi' AFTER `ANASTESI`;

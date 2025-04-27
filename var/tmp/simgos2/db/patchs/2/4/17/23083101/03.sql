@@ -1,0 +1,45 @@
+USE `layanan`;
+DROP TRIGGER IF EXISTS `onAfterInsertReturFarmasi`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `onAfterInsertReturFarmasi` AFTER INSERT ON `retur_farmasi` FOR EACH ROW BEGIN
+	DECLARE VTAGIHAN CHAR(10);
+	DECLARE VJUMLAH, VSISA DECIMAL(10, 2);
+	DECLARE VBARANG_RUANGAN BIGINT;
+	
+	SELECT TAGIHAN, JUMLAH INTO VTAGIHAN, VJUMLAH
+	  FROM pembayaran.rincian_tagihan rt
+	 WHERE rt.REF_ID = NEW.ID_FARMASI
+	   AND rt.JENIS = 4;
+	   
+	IF FOUND_ROWS() > 0 THEN
+		IF pembayaran.isFinalTagihan(VTAGIHAN) = 0 THEN
+			SET VSISA = VJUMLAH - NEW.JUMLAH; 
+			IF VSISA = 0 THEN
+				CALL pembayaran.batalRincianTagihan(VTAGIHAN, NEW.ID_FARMASI, 4);
+			ELSE
+				UPDATE pembayaran.rincian_tagihan
+				   SET JUMLAH = JUMLAH - NEW.JUMLAH
+				 WHERE TAGIHAN = VTAGIHAN
+				   AND REF_ID = NEW.ID_FARMASI
+				   AND JENIS = 4;
+			END IF;
+						
+			SELECT br.ID INTO VBARANG_RUANGAN
+			  FROM layanan.farmasi f
+			  		 LEFT JOIN pendaftaran.kunjungan k ON k.NOMOR = f.KUNJUNGAN
+			  		 LEFT JOIN inventory.barang_ruangan br ON br.RUANGAN = k.RUANGAN AND br.BARANG = f.FARMASI
+			 WHERE f.ID = NEW.ID_FARMASI;
+			
+			IF FOUND_ROWS() > 0 THEN
+				INSERT INTO inventory.transaksi_stok_ruangan(BARANG_RUANGAN, JENIS, REF, TANGGAL, JUMLAH)
+			  	     VALUES(VBARANG_RUANGAN, 34, NEW.ID, NEW.TANGGAL, NEW.JUMLAH);
+			END IF;
+			
+			CALL layanan.setTglBatasLayananAfterRetur(NEW.ID_FARMASI, NEW.JUMLAH);
+			
+		END IF;
+	END IF;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
